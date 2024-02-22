@@ -27,21 +27,134 @@
       bottom: 0;
       width: 100%;
     }
-    iframe {
-      width: 100%;
-      height: calc(100vh - 70px); /* Adjust height based on header and footer */
-      border: none;
-    }
   </style>
 </head>
 <body>
-  <header>
-    <img src="apexx-logo.png" alt="Apexx Logo">
-    <h1>Payment Page</h1>
-  </header>
-  <iframe src="https://pm-apexx.github.io/Apexx-Playground/" frameborder="0"></iframe>
-  <footer>
-    <p>&copy; 2024 Apexx Global. All rights reserved.</p>
-  </footer>
+  <iframe srcdoc="
+    <!DOCTYPE html>
+    <html lang=&quot;en&quot;>
+    <head>
+      <meta charset=&quot;UTF-8&quot;>
+      <meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;>
+      <title>Payment Page</title>
+      <link rel=&quot;stylesheet&quot; href=&quot;styles.css&quot;>
+    </head>
+    <body>
+      <header>
+        <img src=&quot;apexx-logo.png&quot; alt=&quot;Apexx Logo&quot;>
+        <h1>Payment Page</h1>
+      </header>
+      <main>
+        <button id=&quot;paymentButton&quot;>Proceed to Payment</button>
+      </main>
+      <footer>
+        <p>&copy; 2024 Apexx Global. All rights reserved.</p>
+      </footer>
+      <script>
+        class ApiClient {
+          constructor(baseUrl, apiKey) {
+            this.baseUrl = baseUrl;
+            this.apiKey = apiKey;
+          }
+        
+          async sendRequest(endpoint, method = 'POST', requestData = null) {
+            const url = `${this.baseUrl}/${endpoint}`;
+            const options = {
+              method,
+              headers: {
+                'Content-Type': 'application/json',
+                'X-APIKEY': this.apiKey
+              },
+            };
+        
+            if (requestData) {
+              options.body = JSON.stringify(requestData);
+            }
+        
+            try {
+              const response = await fetch(url, options);
+              const responseData = await response.json();
+        
+              if (!response.ok) {
+                throw new Error(`API request failed with status ${response.status}: ${response.statusText}`);
+              }
+        
+              return responseData;
+            } catch (error) {
+              throw new Error(`Error occurred while sending API request: ${error.message}`);
+            }
+          }
+        }
+        
+        const apiKey = '473be873A0912A4eedAb26cA2edf67bb4faa';
+        const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
+        const apiClient = new ApiClient(baseUrl, apiKey);
+        const paymentData = {
+          organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
+          currency: 'EUR',
+          amount: 1000,
+          capture_now: true,
+          dynamic_descriptor: 'Demo Merchant Test Purchase',
+          merchant_reference: 'ghjhgjhfgf',
+          return_url: 'https://sandbox.apexx.global/atomic/v1/api/return',
+          webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
+          transaction_type: 'first',
+          duplicate_check: false,
+          locale: 'en_GB',
+          card: {
+            create_token: true
+          },
+          billing_address: {
+            first_name: 'FIRSTNAME',
+            last_name: 'LASTNAME',
+            email: 'EMAIL@DOMAIN.COM',
+            address: '12',
+            city: 'CITY',
+            state: 'STATE',
+            postal_code: '34',
+            country: 'GB',
+            phone: 44123456789
+          },
+          three_ds: {
+            three_ds_required: true,
+            three_ds_version: '2.0'
+          }
+        };
+        
+        let paymentInitiated = false; // Flag to track if payment has been initiated
+        
+        const redirectToPaymentPage = () => {
+          if (!paymentInitiated) {
+            apiClient.sendRequest('', 'POST', paymentData)
+              .then(responseData => {
+                console.log('API Response Data:', responseData);
+                if (responseData && responseData.url) {
+                  console.log('Redirecting to:', responseData.url);
+                  window.location.href = responseData.url; // Redirecting to the received URL
+                  paymentInitiated = true; // Update flag to indicate payment initiated
+                }
+              })
+              .catch(error => {
+                console.error('Error occurred while sending API request:', error);
+              });
+          } else {
+            // If payment already initiated, simply reload the page
+            location.reload();
+          }
+        };
+        
+        document.getElementById('paymentButton').addEventListener('click', redirectToPaymentPage);
+        
+        // Force a reload of the page when navigating back
+        window.addEventListener('pageshow', function(event) {
+          if (event.persisted) {
+            location.reload();
+          }
+        });
+      </script>
+    </body>
+    </html>
+  " style="width: 100%; height: 100vh; border: none;"></iframe>
 </body>
 </html>
+
