@@ -1,5 +1,3 @@
-// GitHub Repository URL: https://github.com/pm-apexx/Apexx-Playground
-
 class ApiClient {
     constructor(baseUrl, apiKey) {
         this.baseUrl = baseUrl;
@@ -72,6 +70,7 @@ const paymentData = {
 
 let paymentInitiated = false; // Flag to track if payment has been initiated
 
+// Function to initiate payment
 const redirectToPaymentPage = () => {
     if (!paymentInitiated) {
         apiClient.sendRequest('', 'POST', paymentData)
@@ -93,6 +92,12 @@ const redirectToPaymentPage = () => {
         location.reload();
     }
 };
+
+// Add event listener to wait for the iframe to load before initiating payment
+document.getElementById('paymentFrame').addEventListener('load', () => {
+    // Call the redirectToPaymentPage function once the iframe is fully loaded
+    redirectToPaymentPage();
+});
 
 // Add event listener for the message event to handle messages from the payment iframe
 window.addEventListener('message', event => {
