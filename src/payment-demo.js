@@ -1,3 +1,5 @@
+// GitHub Repository URL: https://github.com/pm-apexx/Apexx-Playground
+
 class ApiClient {
     constructor(baseUrl, apiKey) {
         this.baseUrl = baseUrl;
