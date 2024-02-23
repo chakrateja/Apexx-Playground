@@ -77,8 +77,9 @@ const redirectToPaymentPage = () => {
                 console.log('API Response Data:', responseData);
                 if (responseData && responseData.url) {
                     console.log('Redirecting to:', responseData.url);
-                    // Send a message to the parent window with the payment URL
-                    window.parent.postMessage({ type: 'redirectToPayment', url: responseData.url }, '*');
+                    // Send a message to the payment iframe to initiate payment
+                    const paymentFrame = document.getElementById('paymentFrame');
+                    paymentFrame.contentWindow.postMessage({ type: 'initiatePayment' }, '*');
                     paymentInitiated = true; // Update flag to indicate payment initiated
                 }
             })
@@ -91,10 +92,11 @@ const redirectToPaymentPage = () => {
     }
 };
 
-// Add event listener for the message event to handle messages from the parent window
+// Add event listener for the message event to handle messages from the payment iframe
 window.addEventListener('message', event => {
-    if (event.data && event.data.type === 'initiatePayment') {
-        redirectToPaymentPage(); // Initiate payment when message received from parent window
+    if (event.data && event.data.type === 'redirectToPayment') {
+        // Redirect to the payment URL received from the payment iframe
+        window.location.href = event.data.url;
     }
 });
 
