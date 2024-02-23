@@ -94,10 +94,7 @@ const redirectToPaymentPage = () => {
 };
 
 // Add event listener to wait for the iframe to load before initiating payment
-document.getElementById('paymentFrame').addEventListener('load', () => {
-    // Call the redirectToPaymentPage function once the iframe is fully loaded
-    redirectToPaymentPage();
-});
+document.getElementById('paymentFrame').addEventListener('load', redirectToPaymentPage);
 
 // Add event listener for the message event to handle messages from the payment iframe
 window.addEventListener('message', event => {
