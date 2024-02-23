@@ -3,136 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payment Page</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #f2f2f2;
-      padding: 20px;
-      text-align: center;
-    }
-    main {
-      text-align: center;
-      padding: 20px;
-    }
-    footer {
-      background-color: #f2f2f2;
-      padding: 10px;
-      text-align: center;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-    }
-    iframe {
-      width: 100%;
-      height: 80vh; /* Adjust height as needed */
-      border: none;
-    }
-  </style>
+  <title>Embedded Apexx Payment Demo</title>
 </head>
 <body>
-  <header>
-    <img src="apexx-logo.png" alt="Apexx Logo">
-    <h1>Payment Page</h1>
-  </header>
-  <main>
-    <button id="paymentButton">Proceed to Payment</button>
-    <iframe id="paymentFrame" style="display: none;"></iframe>
-  </main>
-  <footer>
-    <p>&copy; 2024 Apexx Global. All rights reserved. | <a href="https://pm-apexx.github.io/Apexx-Playground/">GitHub Repository</a></p>
-  </footer>
-  <script>
-    document.getElementById('paymentButton').addEventListener('click', function() {
-      const apiKey = '473be873A0912A4eedAb26cA2edf67bb4faa';
-      const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
-      const apiClient = new ApiClient(baseUrl, apiKey);
-      const paymentData = {
-        organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
-        currency: 'EUR',
-        amount: 1000,
-        capture_now: true,
-        dynamic_descriptor: 'Demo Merchant Test Purchase',
-        merchant_reference: 'ghjhgjhghfgf',
-        return_url: 'https://sandbox.apexx.global/atomic/v1/api/return',
-        webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
-        transaction_type: 'first',
-        duplicate_check: false,
-        locale: 'en_GB',
-        card: {
-          create_token: true
-        },
-        billing_address: {
-          first_name: 'FIRSTNAME',
-          last_name: 'LASTNAME',
-          email: 'EMAIL@DOMAIN.COM',
-          address: '12',
-          city: 'CITY',
-          state: 'STATE',
-          postal_code: '34',
-          country: 'GB',
-          phone: 44123456789
-        },
-        three_ds: {
-          three_ds_required: true,
-          three_ds_version: '2.0'
-        }
-      };
-
-      apiClient.sendRequest('', 'POST', paymentData)
-        .then(responseData => {
-          console.log('API Response Data:', responseData);
-          if (responseData && responseData.url) {
-            console.log('Redirecting to:', responseData.url);
-            const paymentFrame = document.getElementById('paymentFrame');
-            paymentFrame.src = responseData.url;
-            paymentFrame.style.display = 'block';
-          }
-        })
-        .catch(error => {
-          console.error('Error occurred while sending API request:', error);
-        });
-    });
-
-    class ApiClient {
-      constructor(baseUrl, apiKey) {
-        this.baseUrl = baseUrl;
-        this.apiKey = apiKey;
-      }
-
-      async sendRequest(endpoint, method = 'POST', requestData = null) {
-        const url = `${this.baseUrl}/${endpoint}`;
-        const options = {
-          method,
-          headers: {
-            'Content-Type': 'application/json',
-            'X-APIKEY': this.apiKey
-          },
-        };
-
-        if (requestData) {
-          options.body = JSON.stringify(requestData);
-        }
-
-        try {
-          const response = await fetch(url, options);
-          const responseData = await response.json();
-
-          if (!response.ok) {
-            throw new Error(`API request failed with status ${response.status}: ${response.statusText}`);
-          }
-
-          return responseData;
-        } catch (error) {
-          throw new Error(`Error occurred while sending API request: ${error.message}`);
-        }
-      }
-    }
-  </script>
+  <iframe srcdoc='
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Apexx Payment Demo</title>
+      <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+      <header>
+        <img src="apexx-logo.png" alt="Apexx Logo">
+        <h1>Apexx Payment Demo</h1>
+      </header>
+      <main>
+        <button id="paymentButton">Proceed to Payment</button>
+      </main>
+      <footer>
+        <p>&copy; 2024 Apexx Global. All rights reserved.</p>
+      </footer>
+      <script src="payment-script.js"></script>
+    </body>
+    </html>'
+    width="600"
+    height="400"
+    frameborder="0"
+    scrolling="auto">
+  </iframe>
 </body>
 </html>
 
