@@ -166,17 +166,6 @@ const redirectToPaymentPage = () => {
     }
 };
 
-// Add event listener to wait for the iframe to load before initiating payment
-document.getElementById('paymentFrame').addEventListener('load', redirectToPaymentPage);
-
-// Add event listener for the message event to handle messages from the payment iframe
-window.addEventListener('message', event => {
-    if (event.data && event.data.type === 'redirectToPayment') {
-        // Redirect to the payment URL received from the payment iframe
-        window.location.href = event.data.url;
-    }
-});
-
 // Force a reload of the page when navigating back
 window.addEventListener('pageshow', function (event) {
     if (event.persisted) {
