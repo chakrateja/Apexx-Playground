@@ -106,3 +106,6 @@ window.addEventListener('pageshow', function (event) {
         location.reload();
     }
 });
+
+// Add an event listener to the button to initiate payment
+document.getElementById('paymentButton').addEventListener('click', redirectToPaymentPage);
