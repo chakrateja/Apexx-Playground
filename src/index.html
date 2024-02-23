@@ -29,7 +29,7 @@
     }
     iframe {
       width: 100%;
-      height: calc(100vh - 150px); /* Adjust height as needed */
+      height: 80vh; /* Adjust height as needed */
       border: none;
     }
   </style>
@@ -41,11 +41,11 @@
   </header>
   <main>
     <button id="paymentButton">Proceed to Payment</button>
+    <iframe id="paymentFrame" style="display: none;"></iframe>
   </main>
   <footer>
     <p>&copy; 2024 Apexx Global. All rights reserved. | <a href="https://pm-apexx.github.io/Apexx-Playground/">GitHub Repository</a></p>
   </footer>
-  <iframe id="paymentFrame" style="display: none;"></iframe>
   <script>
     document.getElementById('paymentButton').addEventListener('click', function() {
       const apiKey = '473be873A0912A4eedAb26cA2edf67bb4faa';
@@ -135,4 +135,5 @@
   </script>
 </body>
 </html>
+
 
