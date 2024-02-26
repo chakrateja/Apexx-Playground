@@ -60,7 +60,7 @@ const displayBasketItems = () => {
 };
 
 // Call the function to display basket items when the page loads
-displayBasketItems();
+document.addEventListener('DOMContentLoaded', displayBasketItems);
 
 let paymentInitiated = false; // Flag to track if payment has been initiated
 
