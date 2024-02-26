@@ -38,7 +38,7 @@ const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
 const apiClient = new ApiClient(baseUrl, apiKey);
 const paymentData = {
     organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
-    currency: 'EUR',
+    currency: 'GBP',
     amount: 1000,
     capture_now: true,
     dynamic_descriptor: 'Demo Merchant Test Purchase',
