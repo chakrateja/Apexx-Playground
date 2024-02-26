@@ -36,37 +36,31 @@ class ApiClient {
 const apiKey = '473be873A0912A4eedAb26cA2edf67bb4faa';
 const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
 const apiClient = new ApiClient(baseUrl, apiKey);
-const paymentData = {
-  organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
-  currency: 'EUR',
-  amount: 1000,
-  capture_now: true,
-  dynamic_descriptor: 'Demo Merchant Test Purchase',
-  merchant_reference: 'ghjhgjhghfgf',
-  return_url: 'https://sandbox.apexx.global/atomic/v1/api/return',
-  webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
-  transaction_type: 'first',
-  duplicate_check: false,
-  locale: 'en_GB',
-  card: {
-    create_token: true
-  },
-  billing_address: {
-    first_name: 'FIRSTNAME',
-    last_name: 'LASTNAME',
-    email: 'EMAIL@DOMAIN.COM',
-    address: '12',
-    city: 'CITY',
-    state: 'STATE',
-    postal_code: '34',
-    country: 'GB',
-    phone: 44123456789
-  },
-  three_ds: {
-    three_ds_required: true,
-    three_ds_version: '2.0'
-  }
+
+// Define sample basket items
+const basketItems = [
+  { name: 'Product 1', price: 20 },
+  { name: 'Product 2', price: 30 },
+  { name: 'Product 3', price: 15 }
+];
+
+// Function to display basket items
+const displayBasketItems = () => {
+  const basketItemsContainer = document.getElementById('basketItems');
+
+  // Clear existing items
+  basketItemsContainer.innerHTML = '';
+
+  // Add each item to the basket
+  basketItems.forEach(item => {
+    const itemElement = document.createElement('div');
+    itemElement.textContent = `${item.name}: $${item.price}`;
+    basketItemsContainer.appendChild(itemElement);
+  });
 };
+
+// Call the function to display basket items when the page loads
+displayBasketItems();
 
 let paymentInitiated = false; // Flag to track if payment has been initiated
 
