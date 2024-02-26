@@ -60,13 +60,7 @@ const displayBasketItems = () => {
 };
 
 // Call the function to display basket items when the page loads
-document.addEventListener('DOMContentLoaded', () => {
-  displayBasketItems();
-
-  // Add event listener to the "Proceed to Payment" button
-  const paymentButton = document.getElementById('paymentButton');
-  paymentButton.addEventListener('click', redirectToPaymentPage);
-});
+document.addEventListener('DOMContentLoaded', displayBasketItems);
 
 let paymentInitiated = false; // Flag to track if payment has been initiated
 
@@ -75,24 +69,5 @@ const redirectToPaymentPage = () => {
     apiClient.sendRequest('', 'POST', paymentData)
       .then(responseData => {
         console.log('API Response Data:', responseData);
-        if (responseData && responseData.url) {
-          console.log('Redirecting to:', responseData.url);
-          window.location.href = responseData.url; // Redirecting to the received URL
-          paymentInitiated = true; // Update flag to indicate payment initiated
-        }
-      })
-      .catch(error => {
-        console.error('Error occurred while sending API request:', error);
-      });
-  } else {
-    // If payment already initiated, simply reload the page
-    location.reload();
-  }
-};
+        if (respo
 
-// Force a reload of the page when navigating back
-window.addEventListener('pageshow', function(event) {
-  if (event.persisted) {
-    location.reload();
-  }
-});
