@@ -60,7 +60,13 @@ const displayBasketItems = () => {
 };
 
 // Call the function to display basket items when the page loads
-document.addEventListener('DOMContentLoaded', displayBasketItems);
+document.addEventListener('DOMContentLoaded', () => {
+  displayBasketItems();
+
+  // Add event listener to the "Proceed to Payment" button
+  const paymentButton = document.getElementById('paymentButton');
+  paymentButton.addEventListener('click', redirectToPaymentPage);
+});
 
 let paymentInitiated = false; // Flag to track if payment has been initiated
 
@@ -83,8 +89,6 @@ const redirectToPaymentPage = () => {
     location.reload();
   }
 };
-
-document.getElementById('paymentButton').addEventListener('click', redirectToPaymentPage);
 
 // Force a reload of the page when navigating back
 window.addEventListener('pageshow', function(event) {
