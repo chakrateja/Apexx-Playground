@@ -67,7 +67,7 @@ let paymentInitiated = false; // Flag to track if payment has been initiated
 const paymentData = {
   organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
   currency: 'GBP',
-  amount: 1000,
+  amount: 100,
   capture_now: true,
   dynamic_descriptor: 'Demo Merchant Test Purchase',
   merchant_reference: 'ghjhgjhghfgf',
