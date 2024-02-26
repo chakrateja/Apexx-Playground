@@ -1,61 +1,60 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payment Demo</title>
-  <link rel="stylesheet" href="./styles.css" />
+  <title>Payment Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #f2f2f2;
+      padding: 20px;
+      text-align: center;
+    }
+    main {
+      text-align: center;
+      padding: 20px;
+    }
+    footer {
+      background-color: #f2f2f2;
+      padding: 10px;
+      text-align: center;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+    iframe {
+      width: 100%;
+      height: 80vh; /* Adjust height as needed */
+      border: none;
+    }
+  </style>
 </head>
-<body class="light">
+<body>
+  <header>
+    <img src="apexx-logo.png" alt="Apexx Logo">
+    <h1>Payment Page</h1>
+  </header>
+  <main>
+    <button id="paymentButton">Proceed to Payment</button>
+    <iframe id="paymentFrame" style="display: none;"></iframe>
+  </main>
+  <footer>
+    <p>&copy; 2024 Apexx Global. All rights reserved. | <a href="https://pm-apexx.github.io/Apexx-Playground/">GitHub Repository</a></p>
+  </footer>
   <script>
-    if (window.self !== window.top) {
-      // JavaScript for managing payment, embedded directly for iframe context
-      class CustomApiClient {
-        constructor(baseUrl, apiKey) {
-          this.baseUrl = baseUrl;
-          this.apiKey = apiKey;
-        }
-
-        async sendRequest(endpoint, method = 'POST', requestData = null) {
-          const url = `${this.baseUrl}/${endpoint}`;
-          const options = {
-            method,
-            headers: {
-              'Content-Type': 'application/json',
-              'X-APIKEY': this.apiKey
-            },
-          };
-
-          if (requestData) {
-            options.body = JSON.stringify(requestData);
-          }
-
-          try {
-            const response = await fetch(url, options);
-            const responseData = await response.json();
-
-            if (!response.ok) {
-              throw new Error(`API request failed with status ${response.status}: ${response.statusText}`);
-            }
-
-            return responseData;
-          } catch (error) {
-            throw new Error(`Error occurred while sending API request: ${error.message}`);
-          }
-        }
-      }
-
-      const customApiKey = '473be873A0912A4eedAb26cA2edf67bb4faa';
-      const customBaseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
-      const customApiClient = new CustomApiClient(customBaseUrl, customApiKey);
-
-      let customPaymentInitiated = false; // Flag to track if payment has been initiated
-
-      const customPaymentData = {
+    document.getElementById('paymentButton').addEventListener('click', function() {
+      const apiKey = '473be873A0912A4eedAb26cA2edf67bb4faa';
+      const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
+      const apiClient = new ApiClient(baseUrl, apiKey);
+      const paymentData = {
         organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
-        currency: 'GBP',
-        amount: 100,
+        currency: 'EUR',
+        amount: 1000,
         capture_now: true,
         dynamic_descriptor: 'Demo Merchant Test Purchase',
         merchant_reference: 'ghjhgjhghfgf',
@@ -84,66 +83,56 @@
         }
       };
 
-      document.addEventListener('DOMContentLoaded', function() {
-        const paymentOptionRadio = document.getElementById('cards');
-        paymentOptionRadio.addEventListener('change', function() {
-          const paymentForm = document.getElementById('payment-form');
-          paymentForm.style.display = 'block';
+      apiClient.sendRequest('', 'POST', paymentData)
+        .then(responseData => {
+          console.log('API Response Data:', responseData);
+          if (responseData && responseData.url) {
+            console.log('Redirecting to:', responseData.url);
+            const paymentFrame = document.getElementById('paymentFrame');
+            paymentFrame.src = responseData.url;
+            paymentFrame.style.display = 'block';
+          }
+        })
+        .catch(error => {
+          console.error('Error occurred while sending API request:', error);
         });
+    });
 
-        const paymentButton = document.getElementById('paymentButton');
-        paymentButton.addEventListener('click', redirectToPaymentPage);
+    class ApiClient {
+      constructor(baseUrl, apiKey) {
+        this.baseUrl = baseUrl;
+        this.apiKey = apiKey;
+      }
 
-        const inputs = document.querySelectorAll('#inputs input');
-        inputs.forEach(input => {
-          input.addEventListener('input', function() {
-            const cardholder = document.getElementById('cardholder').value;
-            const cardNumber = document.getElementById('card-number').value;
-            const expiryDate = document.getElementById('expiry-date').value;
-            const cvv = document.getElementById('cvv').value;
+      async sendRequest(endpoint, method = 'POST', requestData = null) {
+        const url = `${this.baseUrl}/${endpoint}`;
+        const options = {
+          method,
+          headers: {
+            'Content-Type': 'application/json',
+            'X-APIKEY': this.apiKey
+          },
+        };
 
-            if (cardholder && cardNumber && expiryDate && cvv) {
-              paymentButton.removeAttribute('disabled');
-            } else {
-              paymentButton.setAttribute('disabled', 'disabled');
-            }
-          });
-        });
-      });
-
-      const redirectToPaymentPage = () => {
-        if (!customPaymentInitiated) {
-          customApiClient.sendRequest('', 'POST', customPaymentData)
-            .then(responseData => {
-              console.log('API Response Data:', responseData);
-              if (responseData && responseData.url) {
-                console.log('Redirecting to:', responseData.url);
-                window.location.href = responseData.url; // Redirecting to the received URL
-                customPaymentInitiated = true; // Update flag to indicate payment initiated
-              }
-            })
-            .catch(error => {
-              console.error('Error occurred while sending API request:', error);
-              displayPaymentOutcome(false); // Display payment failure outcome
-            });
-        } else {
-          // Prevents reloading the page if payment has already been initiated
-          console.log('Payment has already been initiated.');
+        if (requestData) {
+          options.body = JSON.stringify(requestData);
         }
-      };
 
-      const displayPaymentOutcome = (success) => {
-        const outcomeDiv = document.getElementById('outcome');
-        outcomeDiv.textContent = success ? 'Payment Successful' : 'Payment Failed';
-      };
-    } else {
-      document.write(`
-        <h2>Payment Section</h2>
-        <iframe src="https://pm-apexx.github.io/Apexx-Playground/" width="100%" height="600" frameborder="0"></iframe>
-      `);
+        try {
+          const response = await fetch(url, options);
+          const responseData = await response.json();
+
+          if (!response.ok) {
+            throw new Error(`API request failed with status ${response.status}: ${response.statusText}`);
+          }
+
+          return responseData;
+        } catch (error) {
+          throw new Error(`Error occurred while sending API request: ${error.message}`);
+        }
+      }
     }
   </script>
-  <!-- This script tag should be placed correctly at the end of the body -->
-  <script src="payment-script.js"></script>
 </body>
 </html>
+
