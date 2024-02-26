@@ -83,6 +83,8 @@
           if (responseData && responseData.url) {
             console.log('Redirecting to:', responseData.url);
             window.location.href = responseData.url; // Redirecting to the received URL
+          } else {
+            console.error('No payment URL received in the response data.');
           }
         })
         .catch(error => {
@@ -129,3 +131,4 @@
   </script>
 </body>
 </html>
+
