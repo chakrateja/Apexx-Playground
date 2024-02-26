@@ -47,6 +47,7 @@ const basketItems = [
 // Function to display basket items
 const displayBasketItems = () => {
   const basketItemsContainer = document.getElementById('basketItems');
+  if (!basketItemsContainer) return;
 
   // Clear existing items
   basketItemsContainer.innerHTML = '';
@@ -59,8 +60,22 @@ const displayBasketItems = () => {
   });
 };
 
-// Call the function to display basket items when the page loads
-document.addEventListener('DOMContentLoaded', displayBasketItems);
+document.addEventListener('DOMContentLoaded', () => {
+  displayBasketItems();
+
+  // Setup payment button click listener
+  const paymentButton = document.getElementById('paymentButton');
+  if (paymentButton) {
+    paymentButton.addEventListener('click', redirectToPaymentPage);
+  }
+
+  // Force a reload of the page when navigating back
+  window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+      window.location.reload();
+    }
+  });
+});
 
 let paymentInitiated = false; // Flag to track if payment has been initiated
 
@@ -111,16 +126,8 @@ const redirectToPaymentPage = () => {
         console.error('Error occurred while sending API request:', error);
       });
   } else {
-    // If payment already initiated, simply reload the page
-    location.reload();
+    // Prevents reloading the page if payment has already been initiated
+    console.log('Payment has already been initiated.');
   }
 };
 
-document.getElementById('paymentButton').addEventListener('click', redirectToPaymentPage);
-
-// Force a reload of the page when navigating back
-window.addEventListener('pageshow', function(event) {
-  if (event.persisted) {
-    location.reload();
-  }
-});
