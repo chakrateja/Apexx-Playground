@@ -138,11 +138,11 @@
         outcomeDiv.textContent = success ? 'Payment Successful' : 'Payment Failed';
       };
     } else {
-      // When loaded as top-level document, display the iframe embed code
+      // When loaded as top-level document, dynamically create and append the iframe
       document.write(`
         <h2>Payment Section</h2>
-        <iframe src="payment-test.html" width="100%" height="600" frameborder="0"></iframe>`);
-  <iframe src="https://pm-apexx.github.io/Apexx-Playground/" width="100%" height="600" frameborder="0"></iframe>
+        <iframe src="https://pm-apexx.github.io/Apexx-Playground/" width="100%" height="600" frameborder="0"></iframe>
+      `);
     }
   </script>
 </body>
