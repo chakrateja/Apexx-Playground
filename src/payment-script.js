@@ -38,23 +38,24 @@ const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
 const apiClient = new ApiClient(baseUrl, apiKey);
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Assign click event listeners to each "Buy Now" button for products
   document.querySelectorAll('.paymentButton').forEach(button => {
     button.addEventListener('click', function() {
-      const amount = this.getAttribute('data-amount'); // Get the product price from the button's data-amount attribute
-      initiatePayment(amount); // Call initiatePayment function with the selected product's amount
+      const productName = this.getAttribute('data-product-name'); // Dynamic product name
+      const amount = this.getAttribute('data-amount'); // Dynamic product price
+      const productId = this.getAttribute('data-product-id'); // Product ID if needed
+      initiatePayment(amount, productName, productId);
     });
   });
 });
 
-let paymentInitiated = false; // Flag to avoid multiple submissions
+let paymentInitiated = false;
 
-const initiatePayment = (amount) => {
+const initiatePayment = (amount, productName, productId) => {
   if (!paymentInitiated) {
     const paymentData = {
       organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
       currency: 'GBP',
-      amount: amount, // Set this dynamically based on the product selected
+      amount: amount,
       capture_now: true,
       dynamic_descriptor: 'Demo Merchant Test Purchase',
       merchant_reference: 'ghjhgjhghfgf',
@@ -95,7 +96,7 @@ const initiatePayment = (amount) => {
         }
       })
       .catch(error => {
-        console.error('Error occurred while sending API request:', error);
+        console.error('Error occurred while initiating payment:', error);
       });
   } else {
     console.log('Payment has already been initiated.');
