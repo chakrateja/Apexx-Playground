@@ -10,7 +10,7 @@ class ApiClient {
       method,
       headers: {
         'Content-Type': 'application/json',
-        'X-APIKEY': this.apiKey
+        'X-APIKEY': this.apiKey,
       },
     };
 
@@ -37,97 +37,67 @@ const apiKey = '473be873A0912A4eedAb26cA2edf67bb4faa';
 const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
 const apiClient = new ApiClient(baseUrl, apiKey);
 
-// Define sample basket items
-const basketItems = [
-  { name: 'Product 1', price: 20 },
-  { name: 'Product 2', price: 30 },
-  { name: 'Product 3', price: 15 }
-];
-
-// Function to display basket items
-const displayBasketItems = () => {
-  const basketItemsContainer = document.getElementById('basketItems');
-  if (!basketItemsContainer) return;
-
-  // Clear existing items
-  basketItemsContainer.innerHTML = '';
-
-  // Add each item to the basket
-  basketItems.forEach(item => {
-    const itemElement = document.createElement('div');
-    itemElement.textContent = `${item.name}: $${item.price}`;
-    basketItemsContainer.appendChild(itemElement);
-  });
-};
-
 document.addEventListener('DOMContentLoaded', () => {
-  displayBasketItems();
-
-  // Setup payment button click listener
-  const paymentButton = document.getElementById('paymentButton');
-  if (paymentButton) {
-    paymentButton.addEventListener('click', redirectToPaymentPage);
-  }
-
-  // Force a reload of the page when navigating back
-  window.addEventListener('pageshow', function(event) {
-    if (event.persisted) {
-      window.location.reload();
-    }
+  // Assign click event listeners to each "Buy Now" button for products
+  document.querySelectorAll('.paymentButton').forEach(button => {
+    button.addEventListener('click', function() {
+      const amount = this.getAttribute('data-amount'); // Get the product price from the button's data-amount attribute
+      initiatePayment(amount); // Call initiatePayment function with the selected product's amount
+    });
   });
 });
 
-let paymentInitiated = false; // Flag to track if payment has been initiated
+let paymentInitiated = false; // Flag to avoid multiple submissions
 
-const paymentData = {
-  organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
-  currency: 'GBP',
-  amount: 100,
-  capture_now: true,
-  dynamic_descriptor: 'Demo Merchant Test Purchase',
-  merchant_reference: 'ghjhgjhghfgf',
-  return_url: 'https://sandbox.apexx.global/atomic/v1/api/return',
-  webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
-  transaction_type: 'first',
-  duplicate_check: false,
-  locale: 'en_GB',
-  card: {
-    create_token: true
-  },
-  billing_address: {
-    first_name: 'FIRSTNAME',
-    last_name: 'LASTNAME',
-    email: 'EMAIL@DOMAIN.COM',
-    address: '12',
-    city: 'CITY',
-    state: 'STATE',
-    postal_code: '34',
-    country: 'GB',
-    phone: 44123456789
-  },
-  three_ds: {
-    three_ds_required: true,
-    three_ds_version: '2.0'
-  }
-};
-
-const redirectToPaymentPage = () => {
+const initiatePayment = (amount) => {
   if (!paymentInitiated) {
+    const paymentData = {
+      organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
+      currency: 'GBP',
+      amount: amount, // Set this dynamically based on the product selected
+      capture_now: true,
+      dynamic_descriptor: 'Demo Merchant Test Purchase',
+      merchant_reference: 'ghjhgjhghfgf',
+      return_url: 'https://sandbox.apexx.global/atomic/v1/api/return',
+      webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
+      transaction_type: 'first',
+      duplicate_check: false,
+      locale: 'en_GB',
+      card: {
+        create_token: true
+      },
+      billing_address: {
+        first_name: 'FIRSTNAME',
+        last_name: 'LASTNAME',
+        email: 'EMAIL@DOMAIN.COM',
+        address: '12',
+        city: 'CITY',
+        state: 'STATE',
+        postal_code: '34',
+        country: 'GB',
+        phone: 44123456789
+      },
+      three_ds: {
+        three_ds_required: true,
+        three_ds_version: '2.0'
+      }
+    };
+
     apiClient.sendRequest('', 'POST', paymentData)
       .then(responseData => {
         console.log('API Response Data:', responseData);
         if (responseData && responseData.url) {
           console.log('Redirecting to:', responseData.url);
-          window.location.href = responseData.url; // Redirecting to the received URL
-          paymentInitiated = true; // Update flag to indicate payment initiated
+          window.location.href = responseData.url;
+          paymentInitiated = true;
+        } else {
+          console.error('No payment URL received in the response data.');
         }
       })
       .catch(error => {
         console.error('Error occurred while sending API request:', error);
       });
   } else {
-    // Prevents reloading the page if payment has already been initiated
     console.log('Payment has already been initiated.');
   }
 };
-
