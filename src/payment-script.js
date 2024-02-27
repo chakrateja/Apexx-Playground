@@ -37,25 +37,42 @@ const apiKey = '473be873A0912A4eedAb26cA2edf67bb4faa';
 const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
 const apiClient = new ApiClient(baseUrl, apiKey);
 
+let basket = [];
+
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.paymentButton').forEach(button => {
+  document.querySelectorAll('.addToBasket').forEach(button => {
     button.addEventListener('click', function() {
-      const productName = this.getAttribute('data-product-name'); // Dynamic product name
-      const amount = this.getAttribute('data-amount'); // Dynamic product price
-      const productId = this.getAttribute('data-product-id'); // Product ID if needed
-      initiatePayment(amount, productName, productId);
+      const productName = this.getAttribute('data-product-name');
+      const amount = this.getAttribute('data-amount');
+      const productId = this.getAttribute('data-product-id');
+      
+      basket.push({
+        id: productId,
+        name: productName,
+        price: amount
+      });
+
+      console.log('Basket:', basket);
     });
   });
+
+  document.getElementById('checkoutButton').addEventListener('click', checkout);
 });
 
 let paymentInitiated = false;
 
-const initiatePayment = (amount, productName, productId) => {
+const checkout = () => {
+  if (basket.length === 0) {
+    console.log('Your basket is empty.');
+    return;
+  }
   if (!paymentInitiated) {
+    const totalAmount = basket.reduce((acc, item) => acc + parseFloat(item.price), 0);
+
     const paymentData = {
       organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
       currency: 'GBP',
-      amount: amount,
+      amount: totalAmount.toFixed(2),
       capture_now: true,
       dynamic_descriptor: 'Demo Merchant Test Purchase',
       merchant_reference: 'ghjhgjhghfgf',
@@ -76,7 +93,7 @@ const initiatePayment = (amount, productName, productId) => {
         state: 'STATE',
         postal_code: '34',
         country: 'GB',
-        phone: 44123456789
+        phone: '44123456789'
       },
       three_ds: {
         three_ds_required: true,
@@ -96,7 +113,7 @@ const initiatePayment = (amount, productName, productId) => {
         }
       })
       .catch(error => {
-        console.error('Error occurred while initiating payment:', error);
+        console.error('Error occurred during checkout:', error);
       });
   } else {
     console.log('Payment has already been initiated.');
