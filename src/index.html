@@ -11,7 +11,7 @@
       padding: 0;
     }
     nav {
-      background-color: #333;
+      background-color: #000000; /* Changed color to black */
       color: white;
       padding: 10px;
       text-align: center;
@@ -28,13 +28,15 @@
       width: calc(25% - 20px);
       padding: 10px;
       box-shadow: 0 0 10px #ccc;
+      border-radius: 5px; /* Added border radius */
     }
     .product img {
       max-width: 100%;
       height: auto;
     }
     footer {
-      background-color: #f2f2f2;
+      background-color: #333333; /* Changed color to a darker shade */
+      color: white; /* Added text color */
       padding: 10px;
       text-align: center;
       position: fixed;
@@ -49,7 +51,7 @@
       text-align: center;
       text-decoration: none;
       display: inline-block;
-      font-size: 16px;
+      font-size: 18px; /* Updated font-size */
       margin: 4px 2px;
       cursor: pointer;
     }
@@ -100,7 +102,7 @@
           method,
           headers: {
             'Content-Type': 'application/json',
-            'X-APIKEY': this.apiKey
+            'X-Api-Key': this.apiKey // Changed to 'X-Api-Key'
           },
         };
 
@@ -124,7 +126,7 @@
     }
 
     const apiKey = '473be873A0912A4eedAb26cA2edf67bb4faa';
-    const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
+    const baseUrl = 'https://sandbox.apexx.global/atomic/v1'; // Removed additional path
     const apiClient = new ApiClient(baseUrl, apiKey);
 
     document.querySelectorAll('.paymentButton').forEach(button => {
