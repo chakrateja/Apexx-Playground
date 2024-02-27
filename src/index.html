@@ -6,6 +6,7 @@
     <title>Payment Integration Example</title>
 </head>
 <body>
+    <!-- Your button here -->
     <button id="paymentButton">Pay Now</button>
 
     <script>
@@ -51,7 +52,7 @@
         const paymentData = {
             organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
             currency: 'GBP',
-            amount: 100,
+            amount: 100, // Default amount, can be dynamically updated based on product selection
             capture_now: true,
             dynamic_descriptor: 'Demo Merchant Test Purchase',
             merchant_reference: 'ghjhgjhghfgf',
@@ -80,7 +81,10 @@
             }
         };
 
-        const redirectToPaymentPage = () => {
+        const redirectToPaymentPage = (amount = paymentData.amount) => {
+            // Update the paymentData object's amount with the passed parameter or default
+            paymentData.amount = amount;
+
             apiClient.sendRequest('', 'POST', paymentData)
                 .then(responseData => {
                     console.log('API Response Data:', responseData);
@@ -96,7 +100,9 @@
                 });
         };
 
-        document.getElementById('paymentButton').addEventListener('click', redirectToPaymentPage);
+        // Example of attaching the event listener to a dynamically set amount
+        // This could be adapted based on how you're setting the amount, e.g., user input or selecting a product
+        document.getElementById('paymentButton').addEventListener('click', () => redirectToPaymentPage(5000)); // Passing a new amount as an example
     </script>
 </body>
 </html>
