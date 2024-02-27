@@ -1,49 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payment Page</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
+<script>
+  class ApiClient {
+    constructor(baseUrl, apiKey) {
+      this.baseUrl = baseUrl;
+      this.apiKey = apiKey;
     }
-    header {
-      background-color: #f2f2f2;
-      padding: 20px;
-      text-align: center;
+
+    async sendRequest(endpoint, method = 'POST', requestData = null) {
+      const url = `${this.baseUrl}/${endpoint}`;
+      const options = {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          'X-APIKEY': this.apiKey
+        },
+      };
+
+      if (requestData) {
+        options.body = JSON.stringify(requestData);
+      }
+
+      try {
+        const response = await fetch(url, options);
+        const responseData = await response.json();
+
+        if (!response.ok) {
+          throw new Error(`API request failed with status ${response.status}: ${response.statusText}`);
+        }
+
+        return responseData;
+      } catch (error) {
+        throw new Error(`Error occurred while sending API request: ${error.message}`);
+      }
     }
-    main {
-      text-align: center;
-      padding: 20px;
-    }
-    footer {
-      background-color: #f2f2f2;
-      padding: 10px;
-      text-align: center;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <img src="apexx-logo.png" alt="Apexx Logo">
-    <h1>Payment Page</h1>
-  </header>
-  <main>
-    <button id="paymentButton">Proceed to Payment</button>
-  </main>
-  <footer>
-    <p>&copy; 2024 Apexx Global. All rights reserved.</p>
-  </footer>
-  <script>
-    const apiKey = '473be873A0912A4eedAb26cA2edf67bb4faa';
-    const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
-    const apiClient = new ApiClient(baseUrl, apiKey);
+  }
+
+  const apiKey = '473be873A0912A4eedAb26cA2edf67bb4faa';
+  const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
+  const apiClient = new ApiClient(baseUrl, apiKey);
     const paymentData = {
       organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
       currency: 'GBP',
