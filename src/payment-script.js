@@ -33,9 +33,8 @@ class ApiClient {
   }
 }
 
-// Update these values with your actual API key and the correct URL for your payment gateway
-const apiKey = 'YourActualAPIKey';
-const baseUrl = 'https://YourPaymentGatewayURL.com/api/payment/hosted';
+const apiKey = '473be873A0912A4eedAb26cA2edf67bb4faa';
+const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
 const apiClient = new ApiClient(baseUrl, apiKey);
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -53,16 +52,15 @@ let paymentInitiated = false;
 
 const initiatePayment = (amount, productName, productId) => {
   if (!paymentInitiated) {
-    // Ensure these details match what your backend expects
     const paymentData = {
-      organisation: 'YourOrganisationID',
+      organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
       currency: 'GBP',
       amount: amount,
       capture_now: true,
-      dynamic_descriptor: productName, // Now dynamic based on product
-      merchant_reference: `Purchase-${productId}`, // Example merchant reference
-      return_url: 'https://YourReturnURLAfterPayment.com',
-      webhook_transaction_update: 'https://YourWebhookURLForPaymentUpdates.com',
+      dynamic_descriptor: 'Demo Merchant Test Purchase',
+      merchant_reference: 'ghjhgjhghfgf',
+      return_url: 'https://sandbox.apexx.global/atomic/v1/api/return',
+      webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
       transaction_type: 'first',
       duplicate_check: false,
       locale: 'en_GB',
@@ -73,12 +71,12 @@ const initiatePayment = (amount, productName, productId) => {
         first_name: 'FIRSTNAME',
         last_name: 'LASTNAME',
         email: 'EMAIL@DOMAIN.COM',
-        address: 'ADDRESS',
+        address: '12',
         city: 'CITY',
         state: 'STATE',
-        postal_code: 'POSTAL_CODE',
-        country: 'COUNTRY_CODE',
-        phone: 'PHONE_NUMBER'
+        postal_code: '34',
+        country: 'GB',
+        phone: 44123456789
       },
       three_ds: {
         three_ds_required: true,
