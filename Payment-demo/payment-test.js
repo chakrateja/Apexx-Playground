@@ -70,7 +70,39 @@ function initiateCheckout() {
       product_id: item.productId,
       price: item.price
     }));
-
+const initiatePayment = (amount, productName, productId) => {
+  if (!paymentInitiated) {
+    const paymentData = {
+      organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
+      currency: 'GBP',
+      amount: amount,
+      capture_now: true,
+      dynamic_descriptor: 'Demo Merchant Test Purchase',
+      merchant_reference: 'ghjhgjhghfgf',
+      return_url: 'https://sandbox.apexx.global/atomic/v1/api/return',
+      webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
+      transaction_type: 'first',
+      duplicate_check: false,
+      locale: 'en_GB',
+      card: {
+        create_token: true
+      },
+      billing_address: {
+        first_name: 'FIRSTNAME',
+        last_name: 'LASTNAME',
+        email: 'EMAIL@DOMAIN.COM',
+        address: '12',
+        city: 'CITY',
+        state: 'STATE',
+        postal_code: '34',
+        country: 'GB',
+        phone: 44123456789
+      },
+      three_ds: {
+        three_ds_required: true,
+        three_ds_version: '2.0'
+      }
+    };
     // Here we would send the payment data to the API
     apiClient.sendRequest('checkout', 'POST', paymentData)
       .then(responseData => {
