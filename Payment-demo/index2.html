@@ -15,6 +15,15 @@
       color: white;
       padding: 10px;
       text-align: center;
+      position: relative; /* Added for basket icon positioning */
+    }
+    /* Basket icon style */
+    .basket-icon {
+      position: absolute;
+      right: 20px;
+      top: 10px;
+      cursor: pointer;
+      color: white; /* Ensure visibility against nav background */
     }
     .product-container {
       display: flex;
@@ -58,6 +67,7 @@
 <body>
   <nav>
     <h1>Apexx Integration Demo</h1>
+    <div class="basket-icon" onclick="alert('Go to checkout page')">Basket 🛒</div>
   </nav>
   <main>
     <div class="product-container">
@@ -66,115 +76,31 @@
         <img src="https://uploads-ssl.webflow.com/61af29be59d5d50e79b0c881/61af79f52edd42f9fbdf143d_Nike-Air-Max-270-Off-Noir-Habanero-Red-2-p-800.jpeg" alt="Product 1">
         <h2>Product 1</h2>
         <p>Price: £50.00</p>
-        <button class="paymentButton" data-amount="5000" data-name="Product 1">Buy Now</button>
+        <button onclick="addToBasket('Product 1', 5000)">Add to Basket</button>
       </div>
       <!-- Product 2 -->
       <div class="product">
         <img src="https://uploads-ssl.webflow.com/61af29be59d5d50e79b0c881/61af29be59d5d536e7b0c8a1_image%201.png" alt="Product 2">
         <h2>Product 2</h2>
         <p>Price: £75.00</p>
-        <button class="paymentButton" data-amount="7500" data-name="Product 2">Buy Now</button>
+        <button onclick="addToBasket('Product 2', 7500)">Add to Basket</button>
       </div>
       <!-- Product 3 -->
       <div class="product">
         <img src="https://uploads-ssl.webflow.com/61af29be59d5d50e79b0c881/61af29be59d5d521edb0c8a3_image%203.png" alt="Product 3">
         <h2>Product 3</h2>
         <p>Price: £100.00</p>
-        <button class="paymentButton" data-amount="10000" data-name="Product 3">Buy Now</button>
+        <button onclick="addToBasket('Product 3', 10000)">Add to Basket</button>
       </div>
     </div>
   </main>
   <script>
-    class ApiClient {
-      constructor(baseUrl, apiKey) {
-        this.baseUrl = baseUrl;
-        this.apiKey = apiKey;
-      }
-
-      async sendRequest(endpoint, method = 'POST', requestData = null) {
-        const url = `${this.baseUrl}/${endpoint}`;
-        const options = {
-          method,
-          headers: {
-            'Content-Type': 'application/json',
-            'X-APIKEY': this.apiKey
-          },
-        };
-
-        if (requestData) {
-          options.body = JSON.stringify(requestData);
-        }
-
-        try {
-          const response = await fetch(url, options);
-          const responseData = await response.json();
-
-          if (!response.ok) {
-            throw new Error(`API request failed with status ${response.status}: ${response.statusText}`);
-          }
-
-          return responseData;
-        } catch (error) {
-          throw new Error(`Error occurred while sending API request: ${error.message}`);
-        }
-      }
+    // Add basket functionality here
+    function addToBasket(productName, price) {
+      // Implement adding to basket logic
+      console.log(`Added ${productName} to basket!`);
+      alert(`${productName} added to basket!`);
     }
-
-   const apiKey = '473be873A0912A4eedAb26cA2edf67bb4faa';
-    const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
-    const apiClient = new ApiClient(baseUrl, apiKey);
-
-    document.querySelectorAll('.paymentButton').forEach(button => {
-      button.addEventListener('click', function() {
-        const amount = this.getAttribute('data-amount'); // Amount in minor units (e.g., cents, pence)
-        const productName = this.getAttribute('data-name');
-        const paymentData = {
-          organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
-          currency: 'GBP',
-          amount: amount,
-          capture_now: true,
-          dynamic_descriptor: `Purchase of ${productName}`,
-          merchant_reference: `ref_${Date.now()}`, // Example dynamic reference
-          return_url: 'https://sandbox.apexx.global/atomic/v1/api/return',
-          webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
-          transaction_type: 'first',
-          duplicate_check: false,
-          locale: 'en_GB',
-          card: {
-            create_token: true
-          },
-          },
-          billing_address: {
-            first_name: 'John',
-            last_name: 'Doe',
-            email: 'john.doe@example.com',
-            address: '12',
-            city: 'London',
-            state: 'London',
-            postal_code: 'SW1A 1AA',
-            country: 'GB',
-            phone: '441234567890'
-          },
-          three_ds: {
-            three_ds_required: true,
-            three_ds_version: '2.0'
-          }
-        };
-
-        apiClient.sendRequest('', 'POST', paymentData)
-          .then(responseData => {
-            if (responseData && responseData.url) {
-              window.location.href = responseData.url;
-            } else {
-              alert('Failed to initiate payment');
-            }
-          })
-          .catch(error => {
-            console.error('Payment initiation failed:', error);
-            alert('Error initiating payment. Please try again.');
-          });
-      });
-    });
   </script>
 </body>
 </html>
