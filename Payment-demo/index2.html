@@ -16,20 +16,20 @@
       padding: 10px;
       text-align: center;
     }
-    .product-container, .basket-container {
+    .product-container {
       display: flex;
       justify-content: space-around;
       flex-wrap: wrap;
       padding: 20px;
     }
-    .product, .basket-item {
+    .product {
       border: 1px solid #ddd;
       margin: 10px;
       width: calc(25% - 20px);
       padding: 10px;
       box-shadow: 0 0 10px #ccc;
     }
-    .product img, .basket-item img {
+    .product img {
       max-width: 100%;
       height: auto;
     }
@@ -53,9 +53,6 @@
       margin: 4px 2px;
       cursor: pointer;
     }
-    .hidden {
-      display: none;
-    }
   </style>
 </head>
 <body>
@@ -64,127 +61,121 @@
   </nav>
   <main>
     <div class="product-container">
-      <!-- Products will be dynamically loaded here -->
-    </div>
-    <div class="basket-container hidden">
-      <h2>Your Basket</h2>
-      <!-- Basket items will be dynamically loaded here -->
-      <button id="goToCheckout">Go to Checkout</button>
-    </div>
-    <form id="checkoutForm" class="hidden">
-      <!-- Add input fields for payment details here -->
-      <button type="submit">Confirm Order</button>
-    </form>
-    <div id="paymentSuccess" class="hidden">
-      <p>Payment successful! Thank you for your purchase.</p>
+      <!-- Product 1 -->
+      <div class="product">
+        <img src="https://uploads-ssl.webflow.com/61af29be59d5d50e79b0c881/61af79f52edd42f9fbdf143d_Nike-Air-Max-270-Off-Noir-Habanero-Red-2-p-800.jpeg" alt="Product 1">
+        <h2>Product 1</h2>
+        <p>Price: £50.00</p>
+        <button class="paymentButton" data-amount="5000" data-name="Product 1">Buy Now</button>
+      </div>
+      <!-- Product 2 -->
+      <div class="product">
+        <img src="https://uploads-ssl.webflow.com/61af29be59d5d50e79b0c881/61af29be59d5d536e7b0c8a1_image%201.png" alt="Product 2">
+        <h2>Product 2</h2>
+        <p>Price: £75.00</p>
+        <button class="paymentButton" data-amount="7500" data-name="Product 2">Buy Now</button>
+      </div>
+      <!-- Product 3 -->
+      <div class="product">
+        <img src="https://uploads-ssl.webflow.com/61af29be59d5d50e79b0c881/61af29be59d5d521edb0c8a3_image%203.png" alt="Product 3">
+        <h2>Product 3</h2>
+        <p>Price: £100.00</p>
+        <button class="paymentButton" data-amount="10000" data-name="Product 3">Buy Now</button>
+      </div>
     </div>
   </main>
-  <footer>
-    <p>Footer content</p>
-  </footer>
   <script>
-    // Product data could be fetched from an API or defined here directly
-    const products = [
-      {
-        id: 1,
-        name: 'Product 1',
-        price: 50.00,
-        imageUrl: 'path_to_image'
-      },
-      // ... other products
-    ];
+    class ApiClient {
+      constructor(baseUrl, apiKey) {
+        this.baseUrl = baseUrl;
+        this.apiKey = apiKey;
+      }
 
-    // Basket array to hold products added by the user
-    let basket = [];
+      async sendRequest(endpoint, method = 'POST', requestData = null) {
+        const url = `${this.baseUrl}/${endpoint}`;
+        const options = {
+          method,
+          headers: {
+            'Content-Type': 'application/json',
+            'X-APIKEY': this.apiKey
+          },
+        };
 
-    function addToBasket(product) {
-      basket.push(product);
-      // Update UI
-      renderBasket();
+        if (requestData) {
+          options.body = JSON.stringify(requestData);
+        }
+
+        try {
+          const response = await fetch(url, options);
+          const responseData = await response.json();
+
+          if (!response.ok) {
+            throw new Error(`API request failed with status ${response.status}: ${response.statusText}`);
+          }
+
+          return responseData;
+        } catch (error) {
+          throw new Error(`Error occurred while sending API request: ${error.message}`);
+        }
+      }
     }
 
-    function renderProducts() {
-      const container = document.querySelector('.product-container');
-      products.forEach(product => {
-        const productDiv = document.createElement('div');
-        productDiv.className = 'product';
-        productDiv.innerHTML = `
-          <img src="${product.imageUrl}" alt="${product.name}">
-          <h2>${product.name}</h2>
-          <p>Price: £${product.price}</p>
-          <button onclick="addToBasket(${product.id})">Add to Basket</button>
-        `;
-        container.appendChild(productDiv);
+    // Use the values from your Apexx Playground GitHub repository
+    const apiKey = 'YOUR_API_KEY';
+    const organisationId = 'YOUR_ORGANISATION_ID';
+    const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
+    const apiClient = new ApiClient(baseUrl, apiKey);
+
+    document.querySelectorAll('.paymentButton').forEach(button => {
+      button.addEventListener('click', function() {
+        const amount = this.getAttribute('data-amount'); // Amount in minor units (e.g., cents, pence)
+        const productName = this.getAttribute('data-name');
+        const paymentData = {
+          organisation: organisationId,
+          currency: 'GBP',
+          amount: amount,
+          capture_now: true,
+          dynamic_descriptor: `Purchase of ${productName}`,
+          merchant_reference: `ref_${Date.now()}`, // Example dynamic reference
+          return_url: 'https://github.com/PM-Apexx/Apexx-Playground/return',
+          webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
+          transaction_type: 'first',
+          duplicate_check: false,
+          locale: 'en_GB',
+          card: {
+            create_token: true
+          },
+          billing_address: {
+            first_name: 'John',
+            last_name: 'Doe',
+            email: 'john.doe@example.com',
+            address: '12',
+            city: 'London',
+            state: 'London',
+            postal_code: 'SW1A 1AA',
+            country: 'GB',
+            phone: '441234567890'
+          },
+          three_ds: {
+            three_ds_required: true,
+            three_ds_version: '2.0'
+          }
+        };
+
+        apiClient.sendRequest('', 'POST', paymentData)
+          .then(responseData => {
+            if (responseData && responseData.url) {
+              window.location.href = responseData.url;
+            } else {
+              alert('Failed to initiate payment');
+            }
+          })
+          .catch(error => {
+            console.error('Payment initiation failed:', error);
+            alert('Error initiating payment. Please try again.');
+          });
       });
-    }
-
-    function renderBasket() {
-      const basketContainer = document.querySelector('.basket-container');
-      basketContainer.innerHTML = '<h2>Your Basket</h2>'; // Clear and add title
-      basket.forEach(item => {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'basket-item';
-        itemDiv.innerHTML = `
-          <img src="${item.imageUrl}" alt="${item.name}">
-          <h3>${item.name}</h3>
-          <p>Price: £${item.price}</p>
-        `;
-        basketContainer.appendChild(itemDiv);
-      });
-      basketContainer.appendChild(document.getElementById('goToCheckout'));
-      basketContainer.classList.remove('hidden'); // Show basket
-    }
-
-    document.getElementById('goToCheckout').addEventListener('click', () => {
-      document.querySelector('.product-container').classList.add('hidden'); // Hide products
-      documentIt seems like there was an error with the previous content. If you're looking for a complete HTML example with "Add to Basket", checkout functionality, and a payment success message, you would need to implement a more interactive front-end that can handle state management and possibly a back-end to process payments.
-
-However, as an AI developed by OpenAI, I'm unable to execute or test full web applications directly. What I can do is provide you with a skeletal structure of how your HTML, CSS, and JavaScript might look, which you can expand upon:
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Apexx Integration Demo</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <nav>
-    <h1>Apexx Integration Demo</h1>
-  </nav>
-  <main>
-    <!-- Products List -->
-    <section id="products">
-      <!-- Products will be generated here by JavaScript -->
-    </section>
-
-    <!-- Basket -->
-    <section id="basket" class="hidden">
-      <h2>Basket</h2>
-      <!-- Basket items will be listed here -->
-      <button id="checkoutButton">Checkout</button>
-    </section>
-
-    <!-- Checkout Form -->
-    <section id="checkout" class="hidden">
-      <h2>Checkout</h2>
-      <form id="paymentForm">
-        <!-- Add form fields for payment -->
-        <button type="submit">Pay</button>
-      </form>
-    </section>
-
-    <!-- Payment Success Message -->
-    <section id="paymentSuccess" class="hidden">
-      <h2>Payment Successful!</h2>
-      <p>Thank you for your purchase.</p>
-    </section>
-  </main>
-  <footer>
-    <p>© 2024 Apexx Integration Demo</p>
-  </footer>
-  <script src="script.js"></script>
+    });
+  </script>
 </body>
 </html>
