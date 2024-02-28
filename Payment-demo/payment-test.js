@@ -1,4 +1,3 @@
-
 class ApiClient {
   constructor(baseUrl, apiKey) {
     this.baseUrl = baseUrl;
@@ -59,7 +58,6 @@ function addToBasket(productName, price, productId) {
 }
 
 function updateBasketCounter() {
-  // Assuming there's an element with id="basket-counter" to display the count
   const counterElement = document.getElementById('basket-counter');
   if (counterElement) {
     counterElement.textContent = basket.length.toString();
@@ -68,22 +66,29 @@ function updateBasketCounter() {
 
 function initiateCheckout() {
   if (basket.length > 0) {
-    console.log('Initiating payment for:', basket);
-    // Example of compiling basket into payment data format
     const paymentData = basket.map(item => ({
       product_id: item.productId,
       price: item.price
     }));
-    console.log('Compiled payment data:', paymentData);
 
-    // Example payment initiation (mock)
-    console.log('Mock sending payment data...', paymentData);
-    setTimeout(() => {
-      console.log('Payment successful!');
-      basket = []; // Clear the basket after successful payment
-      updateBasketCounter(); // Update the basket counter
-    }, 1000); // Mock async operation like an API call
+    // Here we would send the payment data to the API
+    apiClient.sendRequest('checkout', 'POST', paymentData)
+      .then(responseData => {
+        if (responseData && responseData.url) {
+          window.location.href = responseData.url; // Redirect to the payment form
+        } else {
+          console.error('No payment URL received in the response data.');
+        }
+      })
+      .catch(error => {
+        console.error('Error occurred while initiating payment:', error);
+      });
   } else {
     console.log('Basket is empty.');
   }
+}
+
+// Mock function, replace with your actual checkout button or process trigger
+function checkoutButtonClicked() {
+  initiateCheckout();
 }
