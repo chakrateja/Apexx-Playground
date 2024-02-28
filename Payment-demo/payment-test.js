@@ -64,13 +64,9 @@ function updateBasketCounter() {
   }
 }
 
-function initiateCheckout() {
-  if (basket.length > 0) {
-    const paymentData = basket.map(item => ({
-      product_id: item.productId,
-      price: item.price
-    }));
-const initiatePayment = (amount, productName, productId) => {
+let paymentInitiated = false;
+
+function initiatePayment(amount, productName, productId) {
   if (!paymentInitiated) {
     const paymentData = {
       organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
@@ -96,18 +92,19 @@ const initiatePayment = (amount, productName, productId) => {
         state: 'STATE',
         postal_code: '34',
         country: 'GB',
-        phone: 44123456789
+        phone: '44123456789'
       },
       three_ds: {
         three_ds_required: true,
         three_ds_version: '2.0'
       }
     };
-    // Here we would send the payment data to the API
-    apiClient.sendRequest('checkout', 'POST', paymentData)
+
+    apiClient.sendRequest('', 'POST', paymentData)
       .then(responseData => {
         if (responseData && responseData.url) {
           window.location.href = responseData.url; // Redirect to the payment form
+          paymentInitiated = true;
         } else {
           console.error('No payment URL received in the response data.');
         }
@@ -116,11 +113,25 @@ const initiatePayment = (amount, productName, productId) => {
         console.error('Error occurred while initiating payment:', error);
       });
   } else {
+    console.log('Payment has already been initiated.');
+  }
+}
+
+function initiateCheckout() {
+  if (basket.length > 0) {
+    // Compile the basket into paymentData here
+    // This is just an example, modify according to your payment API requirements
+    const paymentData = basket.map(item => ({
+      product_id: item.productId,
+      price: item.price
+    }));
+    initiatePayment(paymentData.totalAmount, paymentData.products, paymentData.productIds); // Example call
+  } else {
     console.log('Basket is empty.');
   }
 }
 
-// Mock function, replace with your actual checkout button or process trigger
+// Replace this with your actual checkout process trigger
 function checkoutButtonClicked() {
   initiateCheckout();
 }
