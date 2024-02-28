@@ -1,1 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apexx Integration Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    nav {
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+    .product-container, .basket-container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      padding: 20px;
+    }
+    .product, .basket-item {
+      border: 1px solid #ddd;
+      margin: 10px;
+      width: calc(25% - 20px);
+      padding: 10px;
+      box-shadow: 0 0 10px #ccc;
+    }
+    .product img, .basket-item img {
+      max-width: 100%;
+      height: auto;
+    }
+    footer {
+      background-color: #f2f2f2;
+      padding: 10px;
+      text-align: center;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+    button {
+      background-color: #4CAF50; /* Green */
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <h1>Apexx Integration Demo</h1>
+  </nav>
+  <main>
+    <div class="product-container">
+      <!-- Products will be dynamically loaded here -->
+    </div>
+    <div class="basket-container hidden">
+      <h2>Your Basket</h2>
+      <!-- Basket items will be dynamically loaded here -->
+      <button id="goToCheckout">Go to Checkout</button>
+    </div>
+    <form id="checkoutForm" class="hidden">
+      <!-- Add input fields for payment details here -->
+      <button type="submit">Confirm Order</button>
+    </form>
+    <div id="paymentSuccess" class="hidden">
+      <p>Payment successful! Thank you for your purchase.</p>
+    </div>
+  </main>
+  <footer>
+    <p>Footer content</p>
+  </footer>
+  <script>
+    // Product data could be fetched from an API or defined here directly
+    const products = [
+      {
+        id: 1,
+        name: 'Product 1',
+        price: 50.00,
+        imageUrl: 'path_to_image'
+      },
+      // ... other products
+    ];
 
+    // Basket array to hold products added by the user
+    let basket = [];
+
+    function addToBasket(product) {
+      basket.push(product);
+      // Update UI
+      renderBasket();
+    }
+
+    function renderProducts() {
+      const container = document.querySelector('.product-container');
+      products.forEach(product => {
+        const productDiv = document.createElement('div');
+        productDiv.className = 'product';
+        productDiv.innerHTML = `
+          <img src="${product.imageUrl}" alt="${product.name}">
+          <h2>${product.name}</h2>
+          <p>Price: £${product.price}</p>
+          <button onclick="addToBasket(${product.id})">Add to Basket</button>
+        `;
+        container.appendChild(productDiv);
+      });
+    }
+
+    function renderBasket() {
+      const basketContainer = document.querySelector('.basket-container');
+      basketContainer.innerHTML = '<h2>Your Basket</h2>'; // Clear and add title
+      basket.forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'basket-item';
+        itemDiv.innerHTML = `
+          <img src="${item.imageUrl}" alt="${item.name}">
+          <h3>${item.name}</h3>
+          <p>Price: £${item.price}</p>
+        `;
+        basketContainer.appendChild(itemDiv);
+      });
+      basketContainer.appendChild(document.getElementById('goToCheckout'));
+      basketContainer.classList.remove('hidden'); // Show basket
+    }
+
+    document.getElementById('goToCheckout').addEventListener('click', () => {
+      document.querySelector('.product-container').classList.add('hidden'); // Hide products
+      documentIt seems like there was an error with the previous content. If you're looking for a complete HTML example with "Add to Basket", checkout functionality, and a payment success message, you would need to implement a more interactive front-end that can handle state management and possibly a back-end to process payments.
+
+However, as an AI developed by OpenAI, I'm unable to execute or test full web applications directly. What I can do is provide you with a skeletal structure of how your HTML, CSS, and JavaScript might look, which you can expand upon:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apexx Integration Demo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav>
+    <h1>Apexx Integration Demo</h1>
+  </nav>
+  <main>
+    <!-- Products List -->
+    <section id="products">
+      <!-- Products will be generated here by JavaScript -->
+    </section>
+
+    <!-- Basket -->
+    <section id="basket" class="hidden">
+      <h2>Basket</h2>
+      <!-- Basket items will be listed here -->
+      <button id="checkoutButton">Checkout</button>
+    </section>
+
+    <!-- Checkout Form -->
+    <section id="checkout" class="hidden">
+      <h2>Checkout</h2>
+      <form id="paymentForm">
+        <!-- Add form fields for payment -->
+        <button type="submit">Pay</button>
+      </form>
+    </section>
+
+    <!-- Payment Success Message -->
+    <section id="paymentSuccess" class="hidden">
+      <h2>Payment Successful!</h2>
+      <p>Thank you for your purchase.</p>
+    </section>
+  </main>
+  <footer>
+    <p>© 2024 Apexx Integration Demo</p>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
