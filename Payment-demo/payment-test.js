@@ -92,8 +92,3 @@ function initiateCheckout() {
 function checkoutButtonClicked() {
   initiateCheckout();
 }
-
-// Mock function, replace with your actual checkout button or process trigger
-function checkoutButtonClicked() {
-  initiateCheckout();
-}
