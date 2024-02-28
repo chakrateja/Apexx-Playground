@@ -120,9 +120,7 @@
       }
     }
 
-    // Use the values from your Apexx Playground GitHub repository
-    const apiKey = 'YOUR_API_KEY';
-    const organisationId = 'YOUR_ORGANISATION_ID';
+   const apiKey = '473be873A0912A4eedAb26cA2edf67bb4faa';
     const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
     const apiClient = new ApiClient(baseUrl, apiKey);
 
@@ -131,19 +129,20 @@
         const amount = this.getAttribute('data-amount'); // Amount in minor units (e.g., cents, pence)
         const productName = this.getAttribute('data-name');
         const paymentData = {
-          organisation: organisationId,
+          organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
           currency: 'GBP',
           amount: amount,
           capture_now: true,
           dynamic_descriptor: `Purchase of ${productName}`,
           merchant_reference: `ref_${Date.now()}`, // Example dynamic reference
-          return_url: 'https://github.com/PM-Apexx/Apexx-Playground/return',
+          return_url: 'https://sandbox.apexx.global/atomic/v1/api/return',
           webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
           transaction_type: 'first',
           duplicate_check: false,
           locale: 'en_GB',
           card: {
             create_token: true
+          },
           },
           billing_address: {
             first_name: 'John',
