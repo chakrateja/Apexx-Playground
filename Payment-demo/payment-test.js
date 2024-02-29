@@ -36,23 +36,27 @@ class ApiClient {
 const apiKey = '473be873A0912A4eedAb26cA2edf67bb4faa';
 const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
 const apiClient = new ApiClient(baseUrl, apiKey);
-let basket = []; // Initialize an empty basket
+let basket = [];
 
-function handleProductSelection(product) {
+document.addEventListener('DOMContentLoaded', () => {
+  // The rest of your DOMContentLoaded code
+});
+
+function handleProductSelection() {
+  const paymentFormIframe = document.getElementById('payment-form-iframe');
+  paymentFormIframe.src = 'https://sandbox.apexx.global/atomic/v1/api/payment/checkout/0dcbc063ad3f457f8317e67f01c1cf9d20240229/page';
   document.getElementById('payment-form-container').style.display = 'block';
 }
 
 function initiatePayment(event) {
   event.preventDefault();
 
-  const cardNumber = document.getElementById('card-number').value;
-  const expiryDate = document.getElementById('expiry-date').value;
-  const cvv = document.getElementById('cvv').value;
-
+  // Gather the selected product and payment details
+  const selectedShop = document.querySelector('input[name="shop"]:checked').value;
   const paymentData = {
     organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
     currency: 'GBP',
-    amount: 2499, // Assuming a fixed amount for demo purposes
+    amount: 2499, // The amount in minor units (pence)
     capture_now: true,
     dynamic_descriptor: 'Demo Merchant Test Purchase',
     merchant_reference: 'ghjhgjhghfgf',
@@ -62,9 +66,6 @@ function initiatePayment(event) {
     duplicate_check: false,
     locale: 'en_GB',
     card: {
-      number: cardNumber,
-      expiry_date: expiryDate,
-      cvv: cvv,
       create_token: true
     },
     billing_address: {
@@ -84,8 +85,10 @@ function initiatePayment(event) {
     }
   };
 
+  // Here you would handle the payment form data submission to the API
   apiClient.sendRequest('', 'POST', paymentData)
     .then(responseData => {
+      // Handle the response, such as redirecting to the provided URL
       if (responseData && responseData.url) {
         window.location.href = responseData.url;
       } else {
@@ -96,7 +99,3 @@ function initiatePayment(event) {
       console.error('Error occurred while initiating payment:', error);
     });
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  // Additional code to handle document ready state
-});
