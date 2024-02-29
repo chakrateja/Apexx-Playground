@@ -5,61 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Apexx Integration Demo</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
+    /* Existing styles... */
+    /* Additional styles for the payment form */
+    .payment-form-container {
+      display: none;
+      margin-top: 20px;
     }
-    nav {
-      background-color: #333;
-      color: white;
-      padding: 10px;
-      text-align: center;
-      position: relative; /* Added for basket icon positioning */
-    }
-    /* Basket icon style */
-    .basket-icon {
-      position: absolute;
-      right: 20px;
-      top: 10px;
-      cursor: pointer;
-      color: white; /* Ensure visibility against nav background */
-    }
-    .product-container {
+    .payment-form {
       display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
-      padding: 20px;
+      flex-direction: column;
+      width: 300px; /* Adjust as needed */
+      margin: auto;
     }
-    .product {
-      border: 1px solid #ddd;
-      margin: 10px;
-      width: calc(25% - 20px);
-      padding: 10px;
-      box-shadow: 0 0 10px #ccc;
-    }
-    .product img {
-      max-width: 100%;
-      height: auto;
-    }
-    footer {
-      background-color: #f2f2f2;
-      padding: 10px;
-      text-align: center;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-    }
-    button {
-      background-color: #4CAF50; /* Green */
-      border: none;
-      color: white;
-      padding: 15px 32px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
+    .payment-form input,
+    .payment-form button {
+      margin-bottom: 10px;
+      padding: 8px;
       font-size: 16px;
-      margin: 4px 2px;
+    }
+    .payment-form button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
       cursor: pointer;
     }
   </style>
@@ -67,34 +34,32 @@
 <body>
   <nav>
     <h1>Apexx Integration Demo</h1>
-    <div class="basket-icon" onclick="alert('Go to checkout page')">Basket 🛒</div>
+    <!-- Basket icon -->
   </nav>
+
   <main>
     <div class="product-container">
-      <!-- Product 1 -->
-      <div class="product">
-        <img src="https://uploads-ssl.webflow.com/61af29be59d5d50e79b0c881/61af79f52edd42f9fbdf143d_Nike-Air-Max-270-Off-Noir-Habanero-Red-2-p-800.jpeg" alt="Product 1">
-        <h2>Product 1</h2>
-        <p>Price: £50.00</p>
-        <button onclick="addToBasket('Product 1', 5000)">Add to Basket</button>
+      <!-- Product Selection -->
+      <div class="radio-group">
+        <label><input type="radio" name="shop" value="Shirts Shop" onchange="handleProductSelection('Shirts Shop')"> Shirts Shop</label>
+        <label><input type="radio" name="shop" value="Tools Shop" onchange="handleProductSelection('Tools Shop')"> Tools Shop</label>
       </div>
-      <!-- Product 2 -->
-      <div class="product">
-        <img src="https://uploads-ssl.webflow.com/61af29be59d5d50e79b0c881/61af29be59d5d536e7b0c8a1_image%201.png" alt="Product 2">
-        <h2>Product 2</h2>
-        <p>Price: £75.00</p>
-        <button onclick="addToBasket('Product 2', 7500)">Add to Basket</button>
-      </div>
-      <!-- Product 3 -->
-      <div class="product">
-        <img src="https://uploads-ssl.webflow.com/61af29be59d5d50e79b0c881/61af29be59d5d521edb0c8a3_image%203.png" alt="Product 3">
-        <h2>Product 3</h2>
-        <p>Price: £100.00</p>
-        <button onclick="addToBasket('Product 3', 10000)">Add to Basket</button>
+      <!-- Payment Form -->
+      <div class="payment-form-container" id="payment-form-container">
+        <form id="payment-form" onsubmit="initiatePayment(event)">
+          <input type="text" id="card-number" placeholder="Card number" required>
+          <input type="text" id="expiry-date" placeholder="MM/YY" required>
+          <input type="text" id="cvv" placeholder="CVV" required>
+          <button type="submit">PAY GBP 24.99</button>
+        </form>
       </div>
     </div>
   </main>
-   <script src="payment-test.js"></script>
-  </script>
+
+  <footer>
+    <!-- Footer content here -->
+  </footer>
+
+  <script src="payment-test.js"></script>
 </body>
 </html>
