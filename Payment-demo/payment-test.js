@@ -1,137 +1,79 @@
 class ApiClient {
-  constructor(baseUrl, apiKey) {
-    this.baseUrl = baseUrl;
-    this.apiKey = apiKey;
-  }
-
-  async sendRequest(endpoint, method = 'POST', requestData = null) {
-    const url = `${this.baseUrl}/${endpoint}`;
-    const options = {
-      method,
-      headers: {
-        'Content-Type': 'application/json',
-        'X-APIKEY': this.apiKey,
-      },
-    };
-
-    if (requestData) {
-      options.body = JSON.stringify(requestData);
+    constructor(baseUrl, apiKey) {
+      this.baseUrl = baseUrl;
+      this.apiKey = apiKey;
     }
-
-    try {
-      const response = await fetch(url, options);
-      const responseData = await response.json();
-
-      if (!response.ok) {
-        throw new Error(`API request failed with status ${response.status}: ${response.statusText}`);
+  
+    async sendRequest(endpoint, method = 'POST', requestData = null) {
+      const url = `${this.baseUrl}/${endpoint}`;
+      const options = {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          'X-APIKEY': this.apiKey,
+        },
+      };
+  
+      if (requestData) {
+        options.body = JSON.stringify(requestData);
       }
-
-      return responseData;
-    } catch (error) {
-      throw new Error(`Error occurred while sending API request: ${error.message}`);
+  
+      try {
+        const response = await fetch(url, options);
+        const responseData = await response.json();
+  
+        if (!response.ok) {
+          throw new Error(`API request failed with status ${response.status}: ${response.statusText}`);
+        }
+  
+        return responseData;
+      } catch (error) {
+        throw new Error(`Error occurred while sending API request: ${error.message}`);
+      }
     }
   }
-}
-
-const apiKey = '473be873A0912A4eedAb26cA2edf67bb4faa';
-const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
-const apiClient = new ApiClient(baseUrl, apiKey);
-let basket = []; // Initialize an empty basket
-
-document.addEventListener('DOMContentLoaded', () => {
-  updateBasketCounter(); // Initial update
-
-  document.querySelectorAll('.add-to-basket').forEach(button => {
-    button.addEventListener('click', function() {
-      const productName = this.getAttribute('data-name');
-      const price = this.getAttribute('data-amount');
-      const productId = this.getAttribute('data-id');
-      addToBasket(productName, price, productId);
-      updateBasketCounter();
-    });
-  });
+  
+  const apiKey = '473be873A0912A4eedAb26cA2edf67bb4faa';
+  const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
+  const apiClient = new ApiClient(baseUrl, apiKey);
+  let basket = []; // Initialize an empty basket
+document.addEventListener('DOMContentLoaded', function() {
+  // Initial setup can go here
 });
 
-function addToBasket(productName, price, productId) {
-  basket.push({ productName, price, productId });
-  console.log(`${productName} added to basket!`);
+// Function to handle product selection
+function handleProductSelection(product) {
+  document.getElementById('payment-form-container').style.display = 'block';
 }
 
-function updateBasketCounter() {
-  const counterElement = document.getElementById('basket-counter');
-  if (counterElement) {
-    counterElement.textContent = basket.length.toString();
-  }
-}
+// Function to initiate payment
+function initiatePayment(event) {
+  event.preventDefault();
+  
+  // Gather payment details from form
+  const cardNumber = document.getElementById('card-number').value;
+  const expiryDate = document.getElementById('expiry-date').value;
+  const cvv = document.getElementById('cvv').value;
+  
+  // Construct payment data object
+  const paymentData = {
+    cardNumber: cardNumber,
+    expiryDate: expiryDate,
+    cvv: cvv,
+    amount: 2499 // The amount in minor units (pence)
+  };
 
-let paymentInitiated = false;
+  // Log payment data for demonstration purposes
+  console.log('Payment data:', paymentData);
 
-function initiatePayment(amount, productName, productId) {
-  if (!paymentInitiated) {
-    const paymentData = {
-      organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
-      currency: 'GBP',
-      amount: amount,
-      capture_now: true,
-      dynamic_descriptor: 'Demo Merchant Test Purchase',
-      merchant_reference: 'ghjhgjhghfgf',
-      return_url: 'https://sandbox.apexx.global/atomic/v1/api/return',
-      webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
-      transaction_type: 'first',
-      duplicate_check: false,
-      locale: 'en_GB',
-      card: {
-        create_token: true
-      },
-      billing_address: {
-        first_name: 'FIRSTNAME',
-        last_name: 'LASTNAME',
-        email: 'EMAIL@DOMAIN.COM',
-        address: '12',
-        city: 'CITY',
-        state: 'STATE',
-        postal_code: '34',
-        country: 'GB',
-        phone: '44123456789'
-      },
-      three_ds: {
-        three_ds_required: true,
-        three_ds_version: '2.0'
-      }
-    };
-
-    apiClient.sendRequest('', 'POST', paymentData)
-      .then(responseData => {
-        if (responseData && responseData.url) {
-          window.location.href = responseData.url; // Redirect to the payment form
-          paymentInitiated = true;
-        } else {
-          console.error('No payment URL received in the response data.');
-        }
-      })
-      .catch(error => {
-        console.error('Error occurred while initiating payment:', error);
-      });
-  } else {
-    console.log('Payment has already been initiated.');
-  }
-}
-
-function initiateCheckout() {
-  if (basket.length > 0) {
-    // Compile the basket into paymentData here
-    // This is just an example, modify according to your payment API requirements
-    const paymentData = basket.map(item => ({
-      product_id: item.productId,
-      price: item.price
-    }));
-    initiatePayment(paymentData.totalAmount, paymentData.products, paymentData.productIds); // Example call
-  } else {
-    console.log('Basket is empty.');
-  }
-}
-
-// Replace this with your actual checkout process trigger
-function checkoutButtonClicked() {
-  initiateCheckout();
+  // Call the sendRequest method from your ApiClient
+  apiClient.sendRequest('your_payment_endpoint', 'POST', paymentData)
+    .then(responseData => {
+      // Handle the response data, such as redirecting to a success page
+      console.log('Payment successful:', responseData);
+    })
+    .catch(error => {
+      // Handle any errors that occur during the payment process
+      console.error('Payment failed:', error);
+    });
 }
