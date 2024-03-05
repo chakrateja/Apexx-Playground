@@ -34,17 +34,14 @@ class ApiClient {
   }
 }
 
-// Replace placeholders with actual data before use
 const apiKey = '473be873A0912A4eedAb26cA2edf67bb4faa';
 const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
 const apiClient = new ApiClient(baseUrl, apiKey);
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Basket functionality
   const cartButton = document.getElementById('cart');
   const basket = [];
 
-  // Update the basket count
   function updateBasketCount() {
     cartButton.textContent = `Basket (${basket.length})`;
   }
@@ -57,13 +54,11 @@ document.addEventListener('DOMContentLoaded', () => {
       };
       basket.push(product);
       updateBasketCount();
-      console.log('Added to basket:', product);
     });
   });
 
   cartButton.addEventListener('click', function() {
     if (basket.length > 0) {
-      // Proceed to show payment form or page
       initiatePayment(basket);
     } else {
       alert('Your basket is empty.');
@@ -73,11 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 let paymentInitiated = false;
 
-// Function to handle payment initiation
 const initiatePayment = (basket) => {
   if (!paymentInitiated) {
     const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
-
+    
     const paymentData = {
       organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
       currency: 'GBP',
@@ -107,26 +101,20 @@ const initiatePayment = (basket) => {
       three_ds: {
         three_ds_required: true,
         three_ds_version: '2.0'
-      }      // ... prepare your payment data using the items in the basket ...
-      // You will need to aggregate the basket items into a single paymentData object.
-      amount: totalAmount.toString(),
-      // ... other required payment data fields ...
-    };
-
-    apiClient.sendRequest('', 'POST', paymentData)
-      .then(responseData => {
-        if (responseData && responseData.url) {
-          window.location.href = responseData.url;
-          paymentInitiated = true;
-        } else {
-          alert('Failed to initiate payment');
-        }
-      })
-      .catch(error => {
-        console.error('Payment initiation failed:', error);
-        alert('Error initiating payment. Please try again.');
-      });
-  } else {
-    console.log('Payment has already been initiated.');
-  }
+      }     apiClient.sendRequest('', 'POST', paymentData)
+  .then(responseData => {
+    if (responseData && responseData.url) {
+      window.location.href = responseData.url;
+      paymentInitiated = true;
+    } else {
+      alert('Failed to initiate payment');
+    }
+  })
+  .catch(error => {
+    console.error('Payment initiation failed:', error);
+    alert('Error initiating payment. Please try again.');
+  });
+} else {
+console.log('Payment has already been initiated.');
+}
 };
