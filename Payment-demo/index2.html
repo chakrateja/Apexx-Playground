@@ -15,65 +15,53 @@
       </div>
     </nav>
   </header>
- <main>
+  <main>
     <div class="product-container">
-      <!-- Product 1 -->
+      <!-- Single Product Display with Color Options -->
       <div class="product">
-        <img src="https://uploads-ssl.webflow.com/61af29be59d5d50e79b0c881/61af79f52edd42f9fbdf143d_Nike-Air-Max-270-Off-Noir-Habanero-Red-2-p-800.jpeg" alt="Product 1">
-        <h2>Product 1</h2>
+        <img src="your-single-product-image-url" alt="Product">
+        <h2>Product</h2>
         <p>Price: £50.00</p>
-        <button class="paymentButton" data-amount="5000" data-name="Product 1">Add TO BASKET</button>
-      </div>
-      <!-- Product 2 -->
-      <div class="product">
-        <img src="https://uploads-ssl.webflow.com/61af29be59d5d50e79b0c881/61af29be59d5d536e7b0c8a1_image%201.png" alt="Product 2">
-        <h2>Product 2</h2>
-        <p>Price: £75.00</p>
-        <button class="paymentButton" data-amount="7500" data-name="Product 2">Add TO BASKET</button>
-      </div>
-      <!-- Product 3 -->
-      <div class="product">
-        <img src="https://uploads-ssl.webflow.com/61af29be59d5d50e79b0c881/61af29be59d5d521edb0c8a3_image%203.png" alt="Product 3">
-        <h2>Product 3</h2>
-        <p>Price: £100.00</p>
-        <button class="paymentButton" data-amount="10000" data-name="Product 3">Add TO BASKET</button>
+        <!-- Color Choices -->
+        <div class="color-options">
+          <label for="colorChoice">Choose a color:</label>
+          <select id="colorChoice">
+            <option value="color1">Color 1</option>
+            <option value="color2">Color 2</option>
+            <option value="color3">Color 3</option>
+          </select>
+        </div>
+        <!-- Size Options -->
+        <div class="size-options">
+          <label for="sizeChoice">Choose a size:</label>
+          <select id="sizeChoice">
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
+          </select>
+        </div>
+        <!-- Add to Basket Button -->
+        <button class="paymentButton" data-amount="5000" data-name="Product">Add TO BASKET</button>
       </div>
     </div>
+    <!-- Payment Form -->
+    <div id="paymentForm" class="modal" style="display:none;">
+      <form action="your-payment-processing-endpoint" method="post">
+        <!-- The form fields will go here -->
+        <input type="text" id="cardNumber" name="cardNumber" placeholder="Card Number">
+        <input type="text" id="expiryDate" name="expiryDate" placeholder="Expiry Date">
+        <input type="text" id="cvc" name="cvc" placeholder="CVC">
+        <!-- A form submit button will go here -->
+        <input type="submit" value="Pay Now">
+      </form>
+    </div>
   </main>
-  <div id="paymentModal" class="modal">
-const paymentData = {
-          organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
-          currency: 'GBP',
-          amount: amount,
-          capture_now: true,
-          dynamic_descriptor: `Purchase of ${productName}`,
-          merchant_reference: `ref_${Date.now()}`, // Example dynamic reference
-          return_url: 'https://sandbox.apexx.global/atomic/v1/api/return',
-          webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
-          transaction_type: 'first',
-          duplicate_check: false,
-          locale: 'en_GB',
-          card: {
-            create_token: true
-          },
-          billing_address: {
-            first_name: 'John',
-            last_name: 'Doe',
-            email: 'john.doe@example.com',
-            address: '12',
-            city: 'London',
-            state: 'London',
-            postal_code: 'SW1A 1AA',
-            country: 'GB',
-            phone: '441234567890'
-          },
-          three_ds: {
-            three_ds_required: true,
-            three_ds_version: '2.0'
-          }
-        };
-  </div>
   <script src="payment-test.js"></script>
+  <script>
+    // Here you would add your JavaScript to handle the payment modal display and submission
+    document.getElementById('cart').addEventListener('click', function() {
+      document.getElementById('paymentForm').style.display = 'block';
+    });
+  </script>
 </body>
 </html>
-
