@@ -9,59 +9,42 @@
 <body>
   <header>
     <nav>
-      <h1>Apexx demo page</h1>
+      <h1>Apexx Demp Page</h1>
       <div class="cart-container">
         <button id="cart">Basket (0)</button>
       </div>
     </nav>
   </header>
   <main>
-    <div class="product-container">
-      <!-- Single Product Display with Color Options -->
-      <div class="product">
-        <img src="https://uploads-ssl.webflow.com/61af29be59d5d50e79b0c881/61af79f52edd42f9fbdf143d_Nike-Air-Max-270-Off-Noir-Habanero-Red-2-p-800.jpeg" alt="Product 1" alt="Product">
-        <h2>Product</h2>
-        <p>Price: £50.00</p>
-        <!-- Color Choices -->
-        <div class="color-options">
-          <label for="colorChoice">Choose a color:</label>
-          <select id="colorChoice">
-            <option value="color1">Red</option>
-            <option value="color2">Green</option>
-            <option value="color3">Blue</option>
-          </select>
-        </div>
-        <!-- Size Options -->
-        <div class="size-options">
-          <label for="sizeChoice">Choose a size:</label>
-          <select id="sizeChoice">
-            <option value="small">Small</option>
-            <option value="medium">Medium</option>
-            <option value="large">Large</option>
-          </select>
-        </div>
-        <!-- Add to Basket Button -->
-        <button class="paymentButton" data-amount="5000" data-name="Product">Add TO BASKET</button>
+    <section class="product-display">
+      <h2>MEN'S SHOE</h2>
+      <h3>AIR EDGE 270</h3>
+      <p>The Air Edge 270 takes the look of retro basketball and puts it through a modern lens.</p>
+      <img src="your-single-product-image-url" alt="Product Image">
+      <!-- Color selection -->
+      <div class="color-choices">
+        <span class="color-option" style="background: #f0c05a;"></span>
+        <span class="color-option" style="background: #6cace4;"></span>
+        <span class="color-option" style="background: #e1d555;"></span>
       </div>
-    </div>
-    <!-- Payment Form -->
-    <div id="paymentForm" class="modal" style="display:none;">
-      <form action="your-payment-processing-endpoint" method="post">
-        <!-- The form fields will go here -->
-        <input type="text" id="cardNumber" name="cardNumber" placeholder="Card Number">
-        <input type="text" id="expiryDate" name="expiryDate" placeholder="Expiry Date">
-        <input type="text" id="cvc" name="cvc" placeholder="CVC">
-        <!-- A form submit button will go here -->
-        <input type="submit" value="Pay Now">
-      </form>
-    </div>
+      <!-- Size selection -->
+      <div class="size-options">
+        <button class="size-option">8</button>
+        <button class="size-option">8.5</button>
+        <!-- Add more sizes as needed -->
+      </div>
+      <div class="price-and-cart">
+        <span class="price">£120</span>
+        <button class="add-to-cart">ADD TO CART</button>
+      </div>
+      <!-- Buy Now Pay Later Section -->
+      <div class="buy-now-pay-later">
+        <span>Buy Now Pay Later</span>
+        <!-- Add your BNPL details here -->
+      </div>
+    </section>
   </main>
   <script src="payment-test.js"></script>
-  <script>
-    // Here you would add your JavaScript to handle the payment modal display and submission
-    document.getElementById('cart').addEventListener('click', function() {
-      document.getElementById('paymentForm').style.display = 'block';
-    });
-  </script>
+  <!-- Include additional scripts if necessary -->
 </body>
 </html>
