@@ -1,3 +1,4 @@
+// Ensure to use correct API keys and endpoints suited for server-side operations
 class ApiClient {
   constructor(baseUrl, apiKey) {
     this.baseUrl = baseUrl;
@@ -10,7 +11,7 @@ class ApiClient {
       method,
       headers: {
         'Content-Type': 'application/json',
-        'X-APIKEY': this.apiKey,
+        'X-APIKEY': this.apiKey
       },
     };
 
@@ -33,69 +34,71 @@ class ApiClient {
   }
 }
 
-const apiKey = '473be873A0912A4eedAb26cA2edf67bb4faa';
-const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
+// Replace placeholders with actual data before use
+const apiKey = 'YOUR_REAL_API_KEY';
+const baseUrl = 'YOUR_REAL_API_ENDPOINT';
 const apiClient = new ApiClient(baseUrl, apiKey);
-let basket = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-  // The rest of your DOMContentLoaded code
+  // Basket functionality
+  const cartButton = document.getElementById('cart');
+  const basket = [];
+
+  // Update the basket count
+  function updateBasketCount() {
+    cartButton.textContent = `Basket (${basket.length})`;
+  }
+
+  document.querySelectorAll('.paymentButton').forEach(button => {
+    button.addEventListener('click', function() {
+      const product = {
+        name: this.getAttribute('data-name'),
+        amount: this.getAttribute('data-amount')
+      };
+      basket.push(product);
+      updateBasketCount();
+      console.log('Added to basket:', product);
+    });
+  });
+
+  cartButton.addEventListener('click', function() {
+    if (basket.length > 0) {
+      // Proceed to show payment form or page
+      initiatePayment(basket);
+    } else {
+      alert('Your basket is empty.');
+    }
+  });
 });
 
-function handleProductSelection() {
-  const paymentFormIframe = document.getElementById('payment-form-iframe');
-  paymentFormIframe.src = 'https://sandbox.apexx.global/atomic/v1/api/payment/checkout/0dcbc063ad3f457f8317e67f01c1cf9d20240229/page';
-  document.getElementById('payment-form-container').style.display = 'block';
-}
+let paymentInitiated = false;
 
-function initiatePayment(event) {
-  event.preventDefault();
+// Function to handle payment initiation
+const initiatePayment = (basket) => {
+  if (!paymentInitiated) {
+    const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
 
-  // Gather the selected product and payment details
-  const selectedShop = document.querySelector('input[name="shop"]:checked').value;
-  const paymentData = {
-    organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
-    currency: 'GBP',
-    amount: 2499, // The amount in minor units (pence)
-    capture_now: true,
-    dynamic_descriptor: 'Demo Merchant Test Purchase',
-    merchant_reference: 'ghjhgjhghfgf',
-    return_url: 'https://sandbox.apexx.global/atomic/v1/api/return',
-    webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
-    transaction_type: 'first',
-    duplicate_check: false,
-    locale: 'en_GB',
-    card: {
-      create_token: true
-    },
-    billing_address: {
-      first_name: 'FIRSTNAME',
-      last_name: 'LASTNAME',
-      email: 'EMAIL@DOMAIN.COM',
-      address: '12',
-      city: 'CITY',
-      state: 'STATE',
-      postal_code: '34',
-      country: 'GB',
-      phone: '44123456789'
-    },
-    three_ds: {
-      three_ds_required: true,
-      three_ds_version: '2.0'
-    }
-  };
+    const paymentData = {
+      // ... prepare your payment data using the items in the basket ...
+      // You will need to aggregate the basket items into a single paymentData object.
+      amount: totalAmount.toString(),
+      // ... other required payment data fields ...
+    };
 
-  // Here you would handle the payment form data submission to the API
-  apiClient.sendRequest('', 'POST', paymentData)
-    .then(responseData => {
-      // Handle the response, such as redirecting to the provided URL
-      if (responseData && responseData.url) {
-        window.location.href = responseData.url;
-      } else {
-        console.error('No payment URL received in the response data.');
-      }
-    })
-    .catch(error => {
-      console.error('Error occurred while initiating payment:', error);
-    });
-}
+    apiClient.sendRequest('', 'POST', paymentData)
+      .then(responseData => {
+        if (responseData && responseData.url) {
+          window.location.href = responseData.url;
+          paymentInitiated = true;
+        } else {
+          alert('Failed to initiate payment');
+        }
+      })
+      .catch(error => {
+        console.error('Payment initiation failed:', error);
+        alert('Error initiating payment. Please try again.');
+      });
+  } else {
+    console.log('Payment has already been initiated.');
+  }
+};
