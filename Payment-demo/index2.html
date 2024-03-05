@@ -3,76 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Apexx Integration Demo</title>
-  <script src="payment-test.js" defer></script>
-  <style>
-    /* Your existing styles */
-  </style>
+  <title>Simple E-Commerce Page</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <nav>
-    <h1>Apexx Integration Demo</h1>
-    <!-- Basket icon -->
-  </nav>
-
+  <header>
+    <nav>
+      <h1>Simple E-Commerce Page</h1>
+      <div class="cart-container">
+        <button id="cart">Basket (0)</button>
+      </div>
+    </nav>
+  </header>
   <main>
     <div class="product-container">
-      <!-- Product Selection -->
-      <div class="radio-group">
-        <label><input type="radio" name="shop" value="Shirts Shop" onchange="handleProductSelection('Shirts Shop')"> Shirts Shop</label>
-        <label><input type="radio" name="shop" value="Tools Shop" onchange="handleProductSelection('Tools Shop')"> Tools Shop</label>
-      </div>
-const customApiKey = '473be873A0912A4eedAb26cA2edf67bb4faa';
-      const customBaseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
-      const customApiClient = new CustomApiClient(customBaseUrl, customApiKey);
-
-      let customPaymentInitiated = false; // Flag to track if payment has been initiated
-
-      const customPaymentData = {
-        organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
-        currency: 'GBP',
-        amount: 100,
-        capture_now: true,
-        dynamic_descriptor: 'Demo Merchant Test Purchase',
-        merchant_reference: 'ghjhgjhghfgf',
-        return_url: 'https://your-return-url.com', // Update with your return URL
-        webhook_transaction_update: 'https://your-webhook-url.com', // Update with your webhook URL
-        transaction_type: 'first',
-        duplicate_check: false,
-        locale: 'en_GB',
-        card: {
-          create_token: true
-        },
-        billing_address: {
-          first_name: 'FIRSTNAME',
-          last_name: 'LASTNAME',
-          email: 'EMAIL@DOMAIN.COM',
-          address: '12',
-          city: 'CITY',
-          state: 'STATE',
-          postal_code: '34',
-          country: 'GB',
-          phone: '44123456789' // Wrap in quotes
-        },
-        three_ds: {
-          three_ds_required: true,
-          three_ds_version: '2.0'
-        }
-      };      <div class="payment-form-container" id="payment-form-container">
-        <form id="payment-form" onsubmit="initiatePayment(event)">
-          <input type="text" id="card-number" placeholder="Card number" required>
-          <input type="text" id="expiry-date" placeholder="MM/YY" required>
-          <input type="text" id="cvv" placeholder="CVV" required>
-          <button type="submit">PAY GBP 24.99</button>
-        </form>
-      </div>
+      <!-- Products here -->
     </div>
   </main>
-
-  <footer>
-    <!-- Footer content here -->
-  </footer>
-  <script src="payment-test.js"></script>
+  <div id="paymentModal" class="modal">
+    <!-- Payment form here -->
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
 
