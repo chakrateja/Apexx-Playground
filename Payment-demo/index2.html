@@ -27,9 +27,9 @@
         <p>Price: £50.00</p>
         <!-- Color Options -->
         <div class="color-options">
-          <label><input type="radio" name="color" value="color1" checked> Color 1</label>
-          <label><input type="radio" name="color" value="color2"> Color 2</label>
-          <label><input type="radio" name="color" value="color3"> Color 3</label>
+          <label><input type="radio" name="color" value="White" checked> White </label>
+          <label><input type="radio" name="color" value="Black"> Black </label>
+          <label><input type="radio" name="color" value="Blue"> Blue </label>
         </div>
         <!-- Size Options -->
         <div class="size-options">
@@ -44,15 +44,6 @@
   </main>
   <script src="payment-test.js"></script>
   <script>
-    // JavaScript for handling the cart button and payment form goes here
-  </script>
-</body>
-</html>
-
-  </main>
-  <script src="payment-test.js"></script>
-  <script>
-    // Here you would add your JavaScript to handle the payment modal display and submission
     document.getElementById('cart').addEventListener('click', function() {
       document.getElementById('paymentForm').style.display = 'block';
     });
