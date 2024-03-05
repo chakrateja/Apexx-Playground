@@ -36,7 +36,7 @@ class ApiClient {
 
 // Replace placeholders with actual data before use
 const apiKey = '473be873A0912A4eedAb26cA2edf67bb4faa';
-const baseUrl = 'YOUR_REAL_API_ENDPOINT';
+const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
 const apiClient = new ApiClient(baseUrl, apiKey);
 
 document.addEventListener('DOMContentLoaded', () => {
