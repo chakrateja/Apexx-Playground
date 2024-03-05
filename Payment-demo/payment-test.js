@@ -71,14 +71,15 @@ let paymentInitiated = false;
 const initiatePayment = (basket) => {
   if (!paymentInitiated) {
     const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
-    
+
+    // Correct the 'amount' property to use 'totalAmount' instead of an undefined 'amount' variable
     const paymentData = {
       organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
       currency: 'GBP',
-      amount: amount,
+      amount: totalAmount, // Use the calculated total amount
       capture_now: true,
       dynamic_descriptor: 'Demo Merchant Test Purchase',
-      merchant_reference: 'ghjhgjhghfgf',
+      merchant_reference: 'ref_' + Date.now(), // Dynamically generate a reference
       return_url: 'https://sandbox.apexx.global/atomic/v1/api/return',
       webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
       transaction_type: 'first',
@@ -88,33 +89,36 @@ const initiatePayment = (basket) => {
         create_token: true
       },
       billing_address: {
-        first_name: 'FIRSTNAME',
-        last_name: 'LASTNAME',
-        email: 'EMAIL@DOMAIN.COM',
-        address: '12',
-        city: 'CITY',
-        state: 'STATE',
-        postal_code: '34',
-        country: 'GB',
-        phone: 44123456789
+        first_name: 'John', // Placeholder for real customer data
+        last_name: 'Doe', // Placeholder for real customer data
+        email: 'john.doe@example.com', // Placeholder for real customer data
+        address: '123 Main Street', // Placeholder for real customer data
+        city: 'London', // Placeholder for real customer data
+        state: 'London', // Placeholder for real customer data
+        postal_code: 'SW1A 1AA', // Placeholder for real customer data
+        country: 'GB', // Placeholder for real customer data
+        phone: '441234567890' // Placeholder for real customer data
       },
       three_ds: {
         three_ds_required: true,
         three_ds_version: '2.0'
-      }     apiClient.sendRequest('', 'POST', paymentData)
-  .then(responseData => {
-    if (responseData && responseData.url) {
-      window.location.href = responseData.url;
-      paymentInitiated = true;
-    } else {
-      alert('Failed to initiate payment');
-    }
-  })
-  .catch(error => {
-    console.error('Payment initiation failed:', error);
-    alert('Error initiating payment. Please try again.');
-  });
-} else {
-console.log('Payment has already been initiated.');
-}
-};
+      }
+    };
+
+    apiClient.sendRequest('', 'POST', paymentData)
+      .then(responseData => {
+        if (responseData && responseData.url) {
+          window.location.href = responseData.url;
+          paymentInitiated = true;
+        } else {
+          alert('Failed to initiate payment');
+        }
+      })
+      .catch(error => {
+        console.error('Payment initiation failed:', error);
+        alert('Error initiating payment. Please try again.');
+      });
+  } else {
+    console.log('Payment has already been initiated.');
+  }
+}; // This closing curly brace was missing
