@@ -22,24 +22,18 @@
         <img src="https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/825d33b9f25a4a69b2baac4600ea0e04_9366/ESSENTIALS_BIG_LOGO_T-Shirt_Black_GK9120_01_laydown.jpg" alt="Product">
         <h2>Product</h2>
         <p>Price: £50.00</p>
-        <!-- Color Choices -->
-        <div class="color-options">
-          <label for="colorChoice">Choose a color:</label>
-          <select id="colorChoice">
-            <option value="Red">Color 1</option>
-            <option value="Green">Color 2</option>
-            <option value="Blue">Color 3</option>
-          </select>
-        </div>
-        <!-- Size Options -->
-        <div class="size-options">
-          <label for="sizeChoice">Choose a size:</label>
-          <select id="sizeChoice">
-            <option value="small">Small</option>
-            <option value="medium">Medium</option>
-            <option value="large">Large</option>
-          </select>
-        </div>
+       <div class="product-options">
+  <div class="color-options">
+    <label><input type="radio" name="color" value="color1" checked> Color 1</label>
+    <label><input type="radio" name="color" value="color2"> Color 2</label>
+    <label><input type="radio" name="color" value="color3"> Color 3</label>
+  </div>
+  <div class="size-options">
+    <label><input type="radio" name="size" value="small" checked> Small</label>
+    <label><input type="radio" name="size" value="medium"> Medium</label>
+    <label><input type="radio" name="size" value="large"> Large</label>
+  </div>
+</div>
         <!-- Add to Basket Button -->
         <button class="paymentButton" data-amount="5000" data-name="Product">Add TO BASKET</button>
       </div>
