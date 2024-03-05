@@ -35,7 +35,7 @@ class ApiClient {
 }
 
 // Replace placeholders with actual data before use
-const apiKey = 'YOUR_REAL_API_KEY';
+const apiKey = '473be873A0912A4eedAb26cA2edf67bb4faa';
 const baseUrl = 'YOUR_REAL_API_ENDPOINT';
 const apiClient = new ApiClient(baseUrl, apiKey);
 
