@@ -1,62 +1,102 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap'); 
 
-nav {
-  background-color: #333;
-  color: white;
-  padding: 10px;
-  text-align: center;
-}
+* { 
+	margin: 0; 
+	padding: 0; 
+	box-sizing: border-box; 
+	border: none; 
+	outline: none; 
+	font-family: 'Poppins', sans-serif; 
+	text-transform: capitalize; 
+	transition: all 0.2s linear; 
+} 
 
-.product-container {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  padding: 20px;
-}
+.container { 
+	display: flex; 
+	justify-content: center; 
+	align-items: center; 
+	min-height: 100vh; 
+	padding: 25px; 
+	background: #d6eef1; 
+} 
 
-.product {
-  border: 1px solid #ddd;
-  margin: 10px;
-  width: calc(25% - 20px);
-  padding: 10px;
-  box-shadow: 0 0 10px #ccc;
-}
+.container form { 
+	width: 700px; 
+	padding: 20px; 
+	background: #fff; 
+	box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.2); 
+} 
 
-.product img {
-  max-width: 100%;
-  height: auto;
-}
+.container form .row { 
+	display: flex; 
+	flex-wrap: wrap; 
+	gap: 15px; 
+} 
 
-footer {
-  background-color: #f2f2f2;
-  padding: 10px;
-  text-align: center;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-}
+.container form .row .col { 
+	flex: 1 1 250px; 
+} 
 
-button {
-  background-color: #4CAF50; /* Green */
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-}
+.col .title { 
+	font-size: 20px; 
+	color: rgb(237, 55, 23); 
+	padding-bottom: 5px; 
+} 
 
-#payment-iframe {
-  width: 100%;
-  height: 600px; /* Adjust as needed */
-  border: none;
-  display: none; /* Hidden by default */
-}
+.col .inputBox { 
+	margin: 15px 0; 
+} 
 
+.col .inputBox label { 
+	margin-bottom: 10px; 
+	display: block; 
+} 
+
+.col .inputBox input, 
+.col .inputBox select { 
+	width: 100%; 
+	border: 1px solid #ccc; 
+	padding: 10px 15px; 
+	font-size: 15px; 
+} 
+
+.col .inputBox input:focus, 
+.col .inputBox select:focus { 
+	border: 1px solid #000; 
+} 
+
+.col .flex { 
+	display: flex; 
+	gap: 15px; 
+} 
+
+.col .flex .inputBox { 
+	flex: 1 1; 
+	margin-top: 5px; 
+} 
+
+.col .inputBox img { 
+	height: 34px; 
+	margin-top: 5px; 
+	filter: drop-shadow(0 0 1px #000); 
+} 
+
+.container form .submit_btn { 
+	width: 100%; 
+	padding: 12px; 
+	font-size: 17px; 
+	background: rgb(1, 143, 34); 
+	color: #fff; 
+	margin-top: 5px; 
+	cursor: pointer; 
+	letter-spacing: 1px; 
+} 
+
+.container form .submit_btn:hover { 
+	background: #3d17fb; 
+} 
+
+input::-webkit-inner-spin-button, 
+input::-webkit-outer-spin-button { 
+	display: none; 
+}
