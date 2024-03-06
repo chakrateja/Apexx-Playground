@@ -4,108 +4,59 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Apexx Integration Demo</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    nav {
-      background-color: #333;
-      color: white;
-      padding: 10px;
-      text-align: center;
-    }
-    .product-container {
-      display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
-      padding: 20px;
-    }
-    .product {
-      border: 1px solid #ddd;
-      margin: 10px;
-      width: calc(25% - 20px);
-      padding: 10px;
-      box-shadow: 0 0 10px #ccc;
-    }
-    .product img {
-      max-width: 100%;
-      height: auto;
-    }
-    footer {
-      background-color: #f2f2f2;
-      padding: 10px;
-      text-align: center;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-    }
-    button {
-      background-color: #4CAF50; /* Green */
-      border: none;
-      color: white;
-      padding: 15px 32px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 16px;
-      margin: 4px 2px;
-      cursor: pointer;
-    }
-    #payment-iframe {
-      width: 100%;
-      height: 600px; /* Adjust as needed */
-      border: none;
-      display: none; /* Hidden by default */
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <nav>
-    <h1>Apexx Integration Demo</h1>
-  </nav>
+  <header>
+    <nav>
+      <h1>Apexx Integration Demo</h1>
+      <div class="cart-container">
+        <!-- This button will be used to trigger the display of the payment form -->
+        <button id="cart">Basket (0)</button>
+      </div>
+    </nav>
+  </header>
   <main>
     <div class="product-container">
-      <!-- Product 1 -->
+      <!-- Product display container -->
       <div class="product">
-        <img src="https://uploads-ssl.webflow.com/61af29be59d5d50e79b0c881/61af79f52edd42f9fbdf143d_Nike-Air-Max-270-Off-Noir-Habanero-Red-2-p-800.jpeg" alt="Product 1">
-        <h2>Product 1</h2>
-        <p>Price: £50.00</p>
-        <button class="paymentButton" data-amount="5000" data-name="Product 1">Buy Now</button>
-      </div>
-      <!-- Product 2 -->
-      <div class="product">
-        <img src="https://uploads-ssl.webflow.com/61af29be59d5d50e79b0c881/61af29be59d5d536e7b0c8a1_image%201.png" alt="Product 2">
-        <h2>Product 2</h2>
-        <p>Price: £75.00</p>
-        <button class="paymentButton" data-amount="7500" data-name="Product 2">Buy Now</button>
-      </div>
-      <!-- Product 3 -->
-      <div class="product">
-        <img src="https://uploads-ssl.webflow.com/61af29be59d5d50e79b0c881/61af29be59d5d521edb0c8a3_image%203.png" alt="Product 3">
-        <h2>Product 3</h2>
-        <p>Price: £100.00</p>
-        <button class="paymentButton" data-amount="10000" data-name="Product 3">Buy Now</button>
+        <img src="your-product-image-url.jpg" alt="Product Image">
+        <div class="product-details">
+          <h2>Product</h2>
+          <p>Price: £50.00</p>
+          <!-- Color options -->
+          <div class="color-options">
+            <label><input type="radio" name="color" value="color1" checked> Color 1</label>
+            <label><input type="radio" name="color" value="color2"> Color 2</label>
+            <label><input type="radio" name="color" value="color3"> Color 3</label>
+          </div>
+          <!-- Size options -->
+          <div class="size-options">
+            <label><input type="radio" name="size" value="small" checked> Small</label>
+            <label><input type="radio" name="size" value="medium"> Medium</label>
+            <label><input type="radio" name="size" value="large"> Large</label>
+          </div>
+          <!-- Add to basket button -->
+          <button class="add-to-basket" data-amount="5000" data-name="Product">Add to Basket</button>
+        </div>
       </div>
     </div>
-    <!-- Payment Iframe -->
-    <iframe id="payment-iframe" src="https://sandbox.apexx.global/atomic/v1/api/payment/hosted"></iframe>
   </main>
   <footer>
     <p>© 2024 Apexx Demo Store</p>
   </footer>
 
-  <script>
-    // Insert the revised JavaScript here, from the previous steps.
-  </script>
-</body>
-</html>
-
   <script src="payment-test.js"></script>
   <script>
     document.getElementById('cart').addEventListener('click', function() {
-      document.getElementById('paymentForm').style.display = 'block';
+      // Assuming you have an element with id 'payment-form' that needs to be displayed
+      var paymentForm = document.getElementById('payment-form');
+      if (paymentForm) {
+        paymentForm.style.display = 'block';
+      } else {
+        // Handle the case where the payment form is not found
+        console.error('Payment form not found');
+      }
     });
   </script>
 </body>
