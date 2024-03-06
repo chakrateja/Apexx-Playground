@@ -121,4 +121,12 @@ const initiatePayment = (basket) => {
   } else {
     console.log('Payment has already been initiated.');
   }
-}; // This closing curly brace was missing
+};
+document.getElementById('cart').addEventListener('click', function() {
+  var paymentIframe = document.getElementById('payment-iframe');
+  if (paymentIframe) {
+    paymentIframe.style.display = 'block';
+  } else {
+    console.error('No element with ID "payment-iframe" found.');
+  }
+});
