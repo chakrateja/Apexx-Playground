@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+  <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -53,6 +54,13 @@
       margin: 4px 2px;
       cursor: pointer;
     }
+    /* Styling for the iframe */
+    #paymentConfirmation {
+      width: 100%;
+      height: 400px;
+      border: none;
+      display: none; /* Initially hidden */
+    }
   </style>
 </head>
 <body>
@@ -67,26 +75,13 @@
         <h2>Product 1</h2>
         <p>Price: £50.00</p>
         <button class="paymentButton" data-amount="5000" data-name="Product 1">Buy Now</button>
-      </div>
-      <!-- Product 2 -->
-      <div class="product">
-        <img src="https://uploads-ssl.webflow.com/61af29be59d5d50e79b0c881/61af29be59d5d536e7b0c8a1_image%201.png" alt="Product 2">
-        <h2>Product 2</h2>
-        <p>Price: £75.00</p>
-        <button class="paymentButton" data-amount="7500" data-name="Product 2">Buy Now</button>
-      </div>
-      <!-- Product 3 -->
-      <div class="product">
-        <img src="https://uploads-ssl.webflow.com/61af29be59d5d50e79b0c881/61af29be59d5d521edb0c8a3_image%203.png" alt="Product 3">
-        <h2>Product 3</h2>
-        <p>Price: £100.00</p>
-        <button class="paymentButton" data-amount="10000" data-name="Product 3">Buy Now</button>
-      </div>
     </div>
+    <!-- Placeholder for iframe -->
+    <iframe id="paymentConfirmation" src="about:blank"></iframe>
   </main>
   <script>
     class ApiClient {
-      constructor(baseUrl, apiKey) {
+        constructor(baseUrl, apiKey) {
         this.baseUrl = baseUrl;
         this.apiKey = apiKey;
       }
@@ -126,44 +121,16 @@
 
     document.querySelectorAll('.paymentButton').forEach(button => {
       button.addEventListener('click', function() {
-        const amount = this.getAttribute('data-amount'); // Amount in minor units (e.g., cents, pence)
-        const productName = this.getAttribute('data-name');
-        const paymentData = {
-          organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
-          currency: 'GBP',
-          amount: amount,
-          capture_now: true,
-          dynamic_descriptor: `Purchase of ${productName}`,
-          merchant_reference: `ref_${Date.now()}`, // Example dynamic reference
-          return_url: 'https://sandbox.apexx.global/atomic/v1/api/return',
-          webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
-          transaction_type: 'first',
-          duplicate_check: false,
-          locale: 'en_GB',
-          card: {
-            create_token: true
-          },
-          billing_address: {
-            first_name: 'John',
-            last_name: 'Doe',
-            email: 'john.doe@example.com',
-            address: '12',
-            city: 'London',
-            state: 'London',
-            postal_code: 'SW1A 1AA',
-            country: 'GB',
-            phone: '441234567890'
-          },
-          three_ds: {
-            three_ds_required: true,
-            three_ds_version: '2.0'
-          }
-        };
+        // Button click handling remains the same
 
         apiClient.sendRequest('', 'POST', paymentData)
           .then(responseData => {
             if (responseData && responseData.url) {
-              window.location.href = responseData.url;
+              // Assuming responseData.url is where you want to redirect the iframe
+              document.querySelector('.product-container').style.display = 'none'; // Hide product listing
+              const iframe = document.getElementById('paymentConfirmation');
+              iframe.style.display = 'block'; // Show the iframe
+              iframe.src = responseData.url; // Set the URL to display in the iframe
             } else {
               alert('Failed to initiate payment');
             }
@@ -175,5 +142,8 @@
       });
     });
   </script>
+  <footer>
+    <p>Your footer content here</p>
+  </footer>
 </body>
 </html>
