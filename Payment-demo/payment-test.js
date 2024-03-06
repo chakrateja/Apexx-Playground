@@ -71,8 +71,6 @@ let paymentInitiated = false;
 const initiatePayment = (basket) => {
   if (!paymentInitiated) {
     const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
-
-    // Correct the 'amount' property to use 'totalAmount' instead of an undefined 'amount' variable
     const paymentData = {
       organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
       currency: 'GBP',
@@ -104,11 +102,17 @@ const initiatePayment = (basket) => {
         three_ds_version: '2.0'
       }
     };
-
-    apiClient.sendRequest('', 'POST', paymentData)
+ apiClient.sendRequest('', 'POST', paymentData)
       .then(responseData => {
         if (responseData && responseData.url) {
-          window.location.href = responseData.url;
+          // Load the payment URL into the iframe and display it
+          const paymentIframe = document.getElementById('payment-iframe');
+          if (paymentIframe) {
+            paymentIframe.src = responseData.url;
+            paymentIframe.style.display = 'block';
+          } else {
+            console.error('Payment iframe not found');
+          }
           paymentInitiated = true;
         } else {
           alert('Failed to initiate payment');
@@ -122,4 +126,3 @@ const initiatePayment = (basket) => {
     console.log('Payment has already been initiated.');
   }
 };
-
