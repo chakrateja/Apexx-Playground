@@ -122,11 +122,4 @@ const initiatePayment = (basket) => {
     console.log('Payment has already been initiated.');
   }
 };
-document.getElementById('cart').addEventListener('click', function() {
-  var paymentIframe = document.getElementById('payment-iframe');
-  if (paymentIframe) {
-    paymentIframe.style.display = 'block';
-  } else {
-    console.error('No element with ID "payment-iframe" found.');
-  }
-});
+
