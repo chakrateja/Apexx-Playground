@@ -20,18 +20,28 @@ class ApiClient {
   
       try {
         const response = await fetch(url, options);
-        const responseData = await response.json();
-  
-        if (!response.ok) {
-          throw new Error(`API request failed with status ${response.status}: ${response.statusText}`);
+        
+        // Check if the response is JSON
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.indexOf("application/json") !== -1) {
+          const responseData = await response.json();
+          if (!response.ok) {
+            throw new Error(`API request failed with status ${response.status}: ${response.statusText}, Details: ${JSON.stringify(responseData)}`);
+          }
+          return responseData;
+        } else {
+          // Response is not JSON
+          const responseText = await response.text();
+          throw new Error(`API request failed with status ${response.status}: ${response.statusText}, Response not JSON: ${responseText}`);
         }
-  
-        return responseData;
       } catch (error) {
         throw new Error(`Error occurred while sending API request: ${error.message}`);
       }
     }
-  }
+}
+
+// The rest of your code remains the same...
+
   const apiKey = '473be873A0912A4eedAb26cA2edf67bb4faa';
   const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
   const apiClient = new ApiClient(baseUrl, apiKey);
