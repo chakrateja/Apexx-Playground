@@ -1,65 +1,106 @@
-/* styles.css */
+:root {
+  --primary-color: #005f73;
+  --secondary-color: #0a9396;
+  --background-color: #e9d8a6;
+  --text-color: #36313d;
+  --button-hover-color: #003d5b;
+}
+
 body {
-  font-family: Arial, sans-serif;
-}
-
-header {
-  background-color: #333;
-  color: white;
-  padding: 10px 15px;
-}
-
-nav h1 {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
   margin: 0;
+  padding: 0;
 }
 
-.cart-container {
-  text-align: right;
+nav ul {
+  list-style: none;
+  padding-left: 0;
 }
 
-.product-container {
-  display: flex;
-  justify-content: center;
+nav li {
+  display: inline;
+  margin-right: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.main-container, .cart-container, footer {
+  max-width: 1200px;
+  margin: auto;
   padding: 20px;
 }
 
-.product {
-  margin: 15px;
+.product, .product-details, #payment-form {
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-.product img {
-  max-width: 100%;
-  height: auto;
-  display: block;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
 }
 
-.product-details {
-  text-align: center;
-}
-
-button {
-  background-color: #008cba;
+button, .add-to-basket {
+  background-color: var(--primary-color);
   color: white;
   border: none;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
+  padding: 10px 15px;
+  border-radius: 5px;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-button:hover {
-  background-color: #005f73;
+button:hover, .add-to-basket:hover {
+  background-color: var(--button-hover-color);
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--primary-color);
+  outline: none;
 }
 
 footer {
-  background-color: #333;
-  color: white;
   text-align: center;
-  padding: 10px 15px;
-  position: relative;
-  bottom: 0;
-  width: 100%;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .main-container, .product, .product-details, footer {
+    padding: 10px;
+  }
+
+  nav li {
+    display: block;
+    margin: 5px 0;
+  }
 }
