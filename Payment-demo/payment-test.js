@@ -33,7 +33,7 @@ class ApiClient {
     }
   }
   const apiKey = '473be873A0912A4eedAb26cA2edf67bb4faa';
-  const baseUrl = 'https://pm-apexx.github.io/Apexx-Playground/hosted';
+  const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
   const apiClient = new ApiClient(baseUrl, apiKey);
   
   let paymentInitiated = false;
