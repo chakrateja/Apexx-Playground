@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Apexx Payment Demo</title>
   <link rel="stylesheet" href="styles.css">
-  <script src="payment-test.js"></script>
 </head>
 <body>
   <!-- Navigation and Site Title -->
   <header class="container-fluid">
     <div class="title-switch">
       <h1>Apexx Payment Demo</h1>
+      <!-- Dark Mode Toggle -->
       <label class="switch">
         <input type="checkbox" id="theme-switch">
         <span class="slider round"></span>
@@ -47,7 +47,9 @@
       <!-- Iframe Section -->
       <section class="iframe-section">
         <h3>Selected Products:</h3>
-        <div id="selected-products"></div>
+        <ul id="selected-products-list">
+          <!-- List of selected products will be added here by JavaScript -->
+        </ul>
         <!-- Placeholder for Iframe Formats -->
         <div>
           <input type="radio" id="format1" name="format" value="format1" checked>
@@ -65,9 +67,6 @@
       <a href="#">Terms of Service</a> • <a href="#">Privacy Policy</a>
     </small>
   </footer>
-</body>
-</html>
-
 
   <script src="payment-test.js"></script>
 </body>
