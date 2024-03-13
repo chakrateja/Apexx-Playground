@@ -27,7 +27,6 @@ background-color: #ffecd1;
 .product:nth-child(even) {
 background-color: #c6f7e2;
 }
-
 .addon:nth-child(odd) {
 background-color: #fbc1cc;
 }
@@ -70,5 +69,63 @@ font-size: 1.1rem;
 grid-template-columns: 1fr;
 }
 }
+/* Existing styles.css content */
 
+/* Additions for the checkout section */
 
+/* Section Title */
+.container h1 {
+  color: var(--primary-color);
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Products and Addons Grid */
+.grid .product, .grid .addon {
+  background-color: #ffffff; /* Resets the background */
+  border: none; /* Removes border */
+}
+
+/* Pastel Background for Products */
+.product:nth-of-type(1) {
+  background-color: #ffecd1; /* A pastel color for the first product */
+}
+
+.product:nth-of-type(2) {
+  background-color: #c6f7e2; /* A pastel color for the second product */
+}
+
+/* Pastel Background for Addons */
+.addon:nth-of-type(1) {
+  background-color: #fbc1cc; /* A pastel color for the first addon */
+}
+
+.addon:nth-of-type(2) {
+  background-color: #f6bed6; /* A pastel color for the second addon */
+}
+
+/* Basket Button Style */
+#cart {
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  display: block; /* Make it a block-level element */
+  margin: 20px auto; /* Center it horizontally */
+}
+
+/* Responsive Design Adjustments */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns
+: 1fr; /* Adjusts grid for mobile devices */
+}
+
+/* Adjust the basket button for smaller screens /
+#cart {
+width: 100%; / Full width */
+text-align: center;
+}
+}
