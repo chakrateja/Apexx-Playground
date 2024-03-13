@@ -106,4 +106,4 @@ const initiatePayment = (basket) => {
             console.error('Payment initiation failed:', error);
             alert('Error initiating payment. Please try again.');
         });
-};
+});
