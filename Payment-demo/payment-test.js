@@ -89,6 +89,16 @@ const initiatePayment = (basket) => {
           three_ds_version: '2.0'
         }
       };
+    const displayPaymentForm = () => {
+  console.log('Attempting to display payment form...'); // Debugging line
+  const paymentIframe = document.getElementById('payment-iframe');
+  if (paymentIframe) {
+    paymentIframe.style.display = 'block'; // This should make the iframe visible
+    console.log('Payment form should now be visible.');
+  } else {
+    console.error('Payment form not found');
+  }
+};
    apiClient.sendRequest('', 'POST', paymentData)
         .then(responseData => {
           if (responseData && responseData.url) {
