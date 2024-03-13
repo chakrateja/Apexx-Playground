@@ -3,95 +3,71 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Apexx Integration Demo</title>
- <link rel="stylesheet" href="styles.css">
+  <title>Apexx Payment Demo</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="payment-test.js"></script>
 </head>
 <body>
-  <nav class="container-fluid">
-    <ul>
-      <li><strong>Apexx Integration Demo</strong></li>
-    </ul>
-    <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Products</a></li>
-      <li><a href="#" role="button">Contact</a></li>
-    </ul>
-  </nav>
+  <!-- Navigation and Site Title -->
+  <header class="container-fluid">
+    <div class="title-switch">
+      <h1>Apexx Payment Demo</h1>
+      <label class="switch">
+        <input type="checkbox" id="theme-switch">
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="https://www.postman.com/flight-cosmonaut-99887655/workspace/apexx-workspace" target="_blank">Postman</a></li>
+        <li><a href="https://sandbox.apexx.global/atomic/redoc/api/doc#operation/hostedPayUsingPOST" target="_blank">API Reference</a></li>
+        <li><a href="https://sandboxportalv2.apexx.global/" target="_blank">Portal</a></li>
+      </ul>
+    </nav>
+  </header>
 
   <main class="container">
     <div class="grid">
-      <section>
-        <hgroup>
-          <h2>Featured Product</h2>
-          <h3>Complete Your Purchase</h3>
-        </hgroup>
+      <!-- Product Section -->
+      <section class="product-section">
+        <!-- Product 1 -->
         <div class="product">
-          <img src="https://uploads-ssl.webflow.com/61af29be59d5d50e79b0c881/61af79f52edd42f9fbdf143d_Nike-Air-Max-270-Off-Noir-Habanero-Red-2-p-800.jpeg" alt="Product 1">
-          <div class="product-details">
-            <h3>Product 1</h3>
-            <p>Price: £50.00</p>
-            <!-- Add color and size options here -->
-            <button class="add-to-basket" data-amount="5000" data-name="Product 1">Add to Basket</button>
-          </div>
+          <h2>Product 1</h2>
+          <p>Price: £10</p>
+          <button class="buy-button" data-amount="10" data-name="Product 1">BUY</button>
         </div>
-        <!-- Add more products as needed -->
+        <!-- Product 2 -->
+        <div class="product">
+          <h2>Product 2</h2>
+          <p>Price: £100</p>
+          <button class="buy-button" data-amount="100" data-name="Product 2">BUY</button>
+        </div>
+      </section>
+
+      <!-- Iframe Section -->
+      <section class="iframe-section">
+        <h3>Selected Products:</h3>
+        <div id="selected-products"></div>
+        <!-- Placeholder for Iframe Formats -->
+        <div>
+          <input type="radio" id="format1" name="format" value="format1" checked>
+          <label for="format1">Format 1</label><br>
+          <input type="radio" id="format2" name="format" value="format2">
+          <label for="format2">Format 2</label><br>
+        </div>
+        <iframe id="payment-iframe" src="about:blank" style="width:100%; height:600px; border:none;"></iframe>
       </section>
     </div>
   </main>
-
-  <!-- Start of newly added section -->
-  <section class="container">
-    <h1>Apexx Payment Demo</h1>
-    <div class="grid">
-      <!-- Product List -->
-      <div class="product card" style="background-color: #ffecd1;">
-        <img src="https://via.placeholder.com/80" alt="Product 1">
-        <div>
-          <h2>Product 1</h2>
-          <p>£100.00 x 1 unit</p>
-          <p>Total: £100.00</p>
-          <button>Remove</button>
-        </div>
-      </div>
-      <div class="product card" style="background-color: #c6f7e2;">
-        <img src="https://via.placeholder.com/80" alt="Product 2">
-        <div>
-          <h2>Product 2</h2>
-          <p>£10.00 x 1 unit</p>
-          <p>Total: £10.00</p>
-          <button>Remove</button>
-        </div>
-      </div>
-      <!-- Recommended Addons -->
-      <div class="product card" style="background-color: #fbc1cc;">
-        <img src="https://via.placeholder.com/80" alt="Addon 1">
-        <div>
-          <h2>Addon 1</h2>
-          <p>£1000.00 x 1 unit</p>
-          <p>Total: £1000.00</p>
-          <button>Add</button>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- End of newly added section -->
-
-  <div class="cart-container">
-    <!-- This button will be used to trigger the display of the payment form -->
-    <button id="cart">Basket (0)</button>
-  </div>
-
-  <!-- Placeholder for payment form -->
-  <div id="payment-form" style="display: none;">
-    <!-- Payment form iframe -->
-    <iframe id="payment-iframe" src="about:blank" style="width:100%; height:600px; border:none;"></iframe>
-  </div>
 
   <footer class="container">
     <small>
       <a href="#">Terms of Service</a> • <a href="#">Privacy Policy</a>
     </small>
   </footer>
+</body>
+</html>
+
 
   <script src="payment-test.js"></script>
 </body>
