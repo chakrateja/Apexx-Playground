@@ -1,106 +1,74 @@
-:root {
-  --primary-color: #005f73;
-  --secondary-color: #0a9396;
-  --background-color: #e9d8a6;
-  --text-color: #36313d;
-  --button-hover-color: #003d5b;
+/* Additional styles for the new section */
+.product.card {
+  background-color: var(--background-color); /* Use the existing background color variable */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px
+  ;
+padding: 10px;
+margin-bottom: 20px;
+transition: all 0.3s ease;
 }
 
-body {
-  background-color: var(--background-color);
-  color: var(--text-color);
-  font-family: 'Open Sans', sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-  margin: 0;
-  padding: 0;
+.product.card:hover {
+box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
-nav ul {
-  list-style: none;
-  padding-left: 0;
+.product img {
+width: 60px; /* Reduced size */
+height: auto;
+margin-right: 10px;
 }
 
-nav li {
-  display: inline;
-  margin-right: 20px;
+/* You can choose your own pastel colors here */
+.product:nth-child(odd) {
+background-color: #ffecd1;
 }
 
-nav a {
-  text-decoration: none;
-  color: var(--text-color);
+.product:nth-child(even) {
+background-color: #c6f7e2;
 }
 
-.main-container, .cart-container, footer {
-  max-width: 1200px;
-  margin: auto;
-  padding: 20px;
+.addon:nth-child(odd) {
+background-color: #fbc1cc;
 }
 
-.product, .product-details, #payment-form {
-  margin-bottom: 20px;
-  padding: 15px;
-  border-radius: 8px;
-  background: white;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+.addon:nth-child(even) {
+background-color: #f6bed6;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+/* Hide the '/month' and 'Apply coupon' */
+.coupon,
+.monthly {
+display: none;
 }
 
-button, .add-to-basket {
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+/* Update this path with the actual location of your logo */
+nav a img {
+height: auto;
+width: auto;
+max-height: 50px;
 }
 
-button:hover, .add-to-basket:hover {
-  background-color: var(--button-hover-color);
+/* Adjust the section title */
+.container h1 {
+color: var(--primary-color);
+text-align: center;
+margin-top: 20px;
 }
 
-input, select, textarea {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
+/* Fix the product titles to match your mockup design */
+.product h2,
+.addon h2 {
+margin: 0;
+color: var(--primary-color);
+font-size: 1.1rem;
 }
 
-input:focus, select:focus, textarea:focus {
-  border-color: var(--primary-color);
-  outline: none;
-}
-
-footer {
-  text-align: center;
-  background-color: var(--primary-color);
-  color: white;
-  padding: 10px;
-  margin-top: 20px;
-}
-
+/* Additional media queries if needed to handle responsiveness */
 @media (max-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-
-  .main-container, .product, .product-details, footer {
-    padding: 10px;
-  }
-
-  nav li {
-    display: block;
-    margin: 5px 0;
-  }
+.grid {
+grid-template-columns: 1fr;
 }
+}
+
+
