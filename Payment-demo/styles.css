@@ -1,131 +1,267 @@
+/* Original styles */
+
+:root {
+  --primary-color: #005f73;
+  --secondary-color: #0a9396;
+  --background-color: #e9d8a6;
+  --text-color: #36313d;
+  --button-hover-color: #003d5b;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+nav li {
+  display: inline;
+  margin-right: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.main-container, .cart-container, footer {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+.product, .product-details, #payment-form {
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+button, .add-to-basket {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button:hover, .add-to-basket:hover {
+  background-color: var(--button-hover-color);
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+footer {
+  text-align: center;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .main-container, .product, .product-details, footer {
+    padding: 10px;
+  }
+
+  nav li {
+    display: block;
+    margin: 5px 0;
+  }
+}
+
 /* Additional styles for the new section */
+
 .product.card {
   background-color: var(--background-color); /* Use the existing background color variable */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 8px
-  ;
-padding: 10px;
-margin-bottom: 20px;
-transition: all 0.3s ease;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
 }
 
 .product.card:hover {
-box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
 .product img {
-width: 60px; /* Reduced size */
-height: auto;
-margin-right: 10px;
+  width: 60px; /* Reduced size */
+  height: auto;
+  margin-right: 10px;
 }
 
 /* You can choose your own pastel colors here */
 .product:nth-child(odd) {
-background-color: #ffecd1;
+  background-color: #ffecd1;
 }
 
 .product:nth-child(even) {
-background-color: #c6f7e2;
+  background-color: #c6f7e2;
 }
+
 .addon:nth-child(odd) {
-background-color: #fbc1cc;
+  background-color: #fbc1cc;
 }
 
 .addon:nth-child(even) {
-background-color: #f6bed6;
+  background-color: #f6bed6;
 }
 
 /* Hide the '/month' and 'Apply coupon' */
 .coupon,
 .monthly {
-display: none;
+  display: none;
 }
 
 /* Update this path with the actual location of your logo */
 nav a img {
-height: auto;
-width: auto;
-max-height: 50px;
+  height: auto;
+  width: auto;
+  max-height: 50px;
 }
 
 /* Adjust the section title */
-.container h1 {
-color: var(--primary-color);
-text-align: center;
-margin-top: 20px;
-}
-
-/* Fix the product titles to match your mockup design */
-.product h2,
-.addon h2 {
-margin: 0;
-color: var(--primary-color);
-font-size: 1.1rem;
-}
-
-/* Additional media queries if needed to handle responsiveness */
-@media (max-width: 768px) {
-.grid {
-grid-template-columns: 1fr;
-}
-}
-/* Existing styles.css content */
-
-/* Additions for the checkout section */
-
-/* Section Title */
 .container h1 {
   color: var(--primary-color);
   text-align: center;
   margin-top: 20px;
 }
 
-/* Products and Addons Grid */
-.grid .product, .grid .addon {
-  background-color: #ffffff; /* Resets the background */
-  border: none; /* Removes border */
+/* Fix the product titles to match your mockup design */
+.product h2,
+.addon h2 {
+  margin: 0;
+  color: var(--primary-color);
+  font-size: 1.1rem;
 }
 
-/* Pastel Background for Products */
-.product:nth-of-type(1) {
-  background-color: #ffecd1; /* A pastel color for the first product */
-}
-
-.product:nth-of-type(2) {
-  background-color: #c6f7e2; /* A pastel color for the second product */
-}
-
-/* Pastel Background for Addons */
-.addon:nth-of-type(1) {
-  background-color: #fbc1cc; /* A pastel color for the first addon */
-}
-
-.addon:nth-of-type(2) {
-  background-color: #f6bed6; /* A pastel color for the second addon */
-}
-
-/* Basket Button Style */
-#cart {
-  background-color: var(--secondary-color);
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  display: block; /* Make it a block-level element */
-  margin: 20px auto; /* Center it horizontally */
-}
-
-/* Responsive Design Adjustments */
+/* Additional media queries for responsiveness */
 @media (max-width: 768px) {
   .grid {
-    grid-template-columns
-: 1fr; /* Adjusts grid for mobile devices */
+    grid-template-columns: 1fr;
+  }
+
+  #cart {
+    width: 100%; /* Full width */
+    text-align: center;
+  }
 }
 
-/* Adjust the basket button for smaller screens /
-#cart {
-width: 100%; / Full width */
-text-align: center;
+/* Styles for dark mode toggle */
+.dark-mode-toggle {
+  position: fixed;
+  top: 10px;
+  right: 10px;
 }
+
+/* Dark mode styles */
+body.dark-mode {
+  --background-color: #333;
+  --text-color: #f9f9f9;
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --button-hover-color: #0056b3;
+}
+
+.dark-mode .product, .dark-mode .product-details, .dark-mode #payment-form {
+  background: #444;
+  color: var(--text-color);
+}
+
+.dark-mode nav a {
+  color: var(--text-color);
+}
+
+.dark-mode footer {
+background-color: var(--secondary-color);
+}
+
+/* Dark mode button style */
+.dark-mode-button {
+background-color: var(--secondary-color);
+color: white;
+padding: 10px;
+border-radius: 5px;
+cursor: pointer;
+}
+
+/* Style adjustments for iframe and product list /
+.iframe-container {
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+border-radius: 8px;
+overflow: hidden; / Ensures the iframe fits nicely in the container */
+}
+
+.iframe-container iframe {
+width: 100%;
+height: 600px; /* Adjust height as necessary */
+border: none;
+}
+
+.product-list {
+margin-bottom: 20px; /* Space between products and iframe */
+}
+
+/* Radio buttons for iframe format */
+.format-option {
+display: inline-block;
+margin-right: 20px;
+}
+
+/* Style adjustments for navigation to sections */
+.section-navigation {
+text-align: center;
+margin-top: 20px;
+}
+
+.section-navigation a {
+display: inline-block;
+margin: 0 10px;
+padding: 10px 15px;
+background-color: var(--primary-color);
+color: white;
+border-radius: 5px;
+text-decoration: none;
+}
+
+.section-navigation a:hover {
+background-color: var(--button-hover-color);
 }
