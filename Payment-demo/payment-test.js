@@ -107,4 +107,3 @@ const initiatePayment = (basket) => {
             alert('Error initiating payment. Please try again.');
         });
 };
-}
