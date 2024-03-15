@@ -110,7 +110,6 @@ organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     console.log('Payment has already been initiated.');
   }
 };
-
 const initiateSOFORTPayment = async (totalAmount) => {
   const paymentData = {
     "organisation": "ff439f6eAc78dA4667Ab05aAc89f92e27f76",
