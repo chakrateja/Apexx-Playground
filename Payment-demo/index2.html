@@ -12,7 +12,7 @@
       <li><strong>Apexx Integration Demo</strong></li>
     </ul>
     <ul>
-     <li><a href="https://www.postman.com/flight-cosmonaut-99887655/workspace/apexx-workspace/overview" target="_blank">Postman</a></li>
+      <li><a href="https://www.postman.com/flight-cosmonaut-99887655/workspace/apexx-workspace/overview" target="_blank">Postman</a></li>
       <li><a href="https://sandbox.apexx.global/atomic/redoc/api/doc#operation/hostedPayUsingPOST" target="_blank">API Reference</a></li>
       <li><a href="https://sandboxportalv2.apexx.global/" target="_blank" role="button">Portal</a></li>
     </ul>
@@ -26,13 +26,33 @@
           <h3>Complete Your Purchase</h3>
         </hgroup>
         <div class="product">
-          <img src="https://uploads-ssl.webflow.com/61af29be59d5d50e79b0c881/61af79f52edd42f9fbdf143d_Nike-Air-Max-270-Off-Noir-Habanero-Red-2-p-800.jpeg" alt="Product 1">
+          <img src="your-product-image-url.jpg" alt="Product 1">
           <div class="product-details">
             <h3>Product 1</h3>
             <p>Price: £50.00</p>
+            <!-- Add color and size options here -->
             <button class="add-to-basket" data-amount="5000" data-name="Product 1">Add to Basket</button>
           </div>
         </div>
+        <!-- Add more products as needed -->
+      </section>
+      <section>
+        <hgroup>
+          <h2>Select Payment Method</h2>
+        </hgroup>
+        <form id="payment-method-form">
+          <label>
+            <input type="radio" name="payment-method" value="card" checked> Credit/Debit Card
+          </label>
+          <label>
+            <input type="radio" name="payment-method" value="sofort"> SOFORT
+          </label>
+          <label>
+            <input type="radio" name="payment-method" value="ideal"> iDEAL
+          </label>
+          <!-- Add additional payment methods here -->
+          <button type="button" id="confirm-payment-method">Confirm Payment Method</button>
+        </form>
       </section>
     </div>
   </main>
