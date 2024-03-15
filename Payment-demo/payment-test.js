@@ -44,10 +44,10 @@ const apiKey = 'f742b7dcA75c6A406eAb1cbAf01be0047514';
 const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
 const apiClient = new ApiClient(baseUrl, apiKey);
 let paymentInitiated = false;
-let basket = [];
-const updateBasketCount = (basket) => {
+const updateBasketCount = () => {
   const cartButton = document.getElementById('cart');
-  cartButton.textContent = `Basket (${basket.length})`;
+  cartButton.textContent = `Basket (${basket.length})`; // Directly use the global `basket` variable
+};
 };
 
 const displayPaymentForm = () => {
@@ -177,9 +177,8 @@ document.addEventListener('DOMContentLoaded', () => {
         name: this.getAttribute('data-name'),
         amount: this.getAttribute('data-amount')
       };
-      let basket = [];
       basket.push(product);
-      updateBasketCount();
+updateBasketCount();
     });
   });
 
