@@ -3,7 +3,6 @@ class ApiClient {
     this.baseUrl = baseUrl;
     this.apiKey = apiKey;
   }
-
   async sendRequest(endpoint, method = 'POST', requestData = null) {
     const url = `${this.baseUrl}/${endpoint}`;
     const options = {
@@ -14,7 +13,6 @@ class ApiClient {
       },
       body: requestData ? JSON.stringify(requestData) : null
     };
-
     try {
       const response = await fetch(url, options);
       const contentType = response.headers.get('content-type');
@@ -112,43 +110,43 @@ const initiateCardPayment = async (totalAmount) => {
 };
 const initiateSOFORTPayment = async (totalAmount) => {
   const paymentData = {
-    "organisation": "ff439f6eAc78dA4667Ab05aAc89f92e27f76",
-    "capture_now": true,
-    "customer_ip": "10.20.0.186",
-    "recurring_type": "first",
-    "amount": totalAmount.toString(),
-    "currency": "EUR",
-    "user_agent": "string",
-    "locale": "en",
-    "dynamic_descriptor": "Apexx SOFORT Test",
-    "merchant_reference": "CT34540",
-    "webhook_transaction_update": "https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358",
-    "shopper_interaction": "ecommerce",
-    "sofort": {
-      "account_holder_name": "Test Name",
-      "redirection_parameters": {
-        "return_url": "https://sandbox.apexx.global/atomic/v1/api/return"
+    organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
+    capture_now: 'true',
+    customer_ip: '10.20.0.186',
+    recurring_type: 'first',
+    amount: '1000',
+    currency: 'EUR',
+    user_agent: 'string',
+    locale: 'en',
+    dynamic_descriptor: 'Apexx SOFORT Test',
+    merchant_reference: 'CT34540',
+    webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
+    shopper_interaction: 'ecommerce',
+    sofort: {
+      account_holder_name: 'Test Name',
+      redirection_parameters: {
+        return_url: 'https://sandbox.apexx.global/atomic/v1/api/return'
       } 
     },
-    "customer": {
-      "first_name": "AP",
-      "last_name": "Test",
-      "email": "test@test.com",
-      "phone": "01234567890",
-      "date_of_birth": "1994-08-11",
-      "address": {
-        "country": "DE"
+    customer: {
+      first_name: 'AP',
+      last_name: 'Test',
+      email: 'test@test.com',
+      phone: '01234567890',
+      date_of_birth: '1994-08-11',
+      address: {
+        country: 'DE'
       }
     },
-    "delivery_customer": {
-      "first_name": "Ppro",
-      "last_name": "Test",
-      "address": {
-        "address": "Add 1",
-        "city": "City",
-        "state": "CA",
-        "postal_code": "90002",
-        "country": "DE"
+    delivery_customer: {
+      first_name: 'Ppro',
+      last_name: 'Test',
+      address: {
+        address: 'Add 1',
+        city: 'City',
+        state: 'CA',
+        postal_code: '90002',
+        country: 'DE'
       }
     }
   };
