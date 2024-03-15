@@ -84,9 +84,7 @@ class ApiClient {
                 three_ds_required: true,
                 three_ds_version: '2.0'
               }
-      }
       };
-  
       try {
         const responseData = await apiClient.sendRequest('', 'POST', paymentData);
         if (responseData && responseData.url) {
