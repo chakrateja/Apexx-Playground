@@ -28,7 +28,7 @@ nav h1 {
 }
 
 .product img {
-  max-width: 60%;
+  max-width: 30%; /* Adjust the percentage as needed or set a fixed pixel width */
   height: auto;
   display: block;
 }
