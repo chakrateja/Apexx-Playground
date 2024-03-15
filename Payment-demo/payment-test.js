@@ -177,6 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
         name: this.getAttribute('data-name'),
         amount: this.getAttribute('data-amount')
       };
+      let basket = [];
       basket.push(product);
       updateBasketCount();
     });
