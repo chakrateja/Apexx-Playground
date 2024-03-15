@@ -60,7 +60,7 @@ const initiateCardPayment = async (totalAmount) => {
   if (!paymentInitiated) {
     paymentInitiated = true;
     const paymentData = {
-organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
+      organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
         currency: 'GBP',
         amount: totalAmount, // Use the calculated total amount
         capture_now: true,
