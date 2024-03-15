@@ -4,136 +4,56 @@ class ApiClient {
     this.apiKey = apiKey;
   }
 
-  async sendRequest(endpoint, method = 'POST', requestData = null) {
+  async sendRequest(endpoint, method, data) {
     const url = `${this.baseUrl}/${endpoint}`;
     const options = {
-      method,
+      method: method,
       headers: {
         'Content-Type': 'application/json',
         'X-APIKEY': this.apiKey
       },
+      body: JSON.stringify(data)
     };
-    if (requestData) {
-      options.body = JSON.stringify(requestData);
-    }
+
     try {
       const response = await fetch(url, options);
-
-      const contentType = response.headers.get("content-type");
-      if (contentType && contentType.includes("application/json")) {
-        const responseData = await response.json();
-        if (!response.ok) {
-          throw new Error(`API request failed with status ${response.status}: ${response.statusText}, Details: ${JSON.stringify(responseData)}`);
-        }
-        return responseData;
-      } else {
-        const responseText = await response.text();
-        throw new Error(`API request failed with status ${response.status}: ${response.statusText}, Response not JSON: ${responseText}`);
-      }
+      return await response.json();
     } catch (error) {
-      throw new Error(`Error occurred while sending API request: ${error.message}`);
+      console.error('Error occurred while sending API request:', error);
+      throw error;
     }
   }
 }
 
-const apiKey = 'f742b7dcA75c6A406eAb1cbAf01be0047514';
+// Update these constants with the correct values
+const apiKey = 'your-api-key';
 const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
 const apiClient = new ApiClient(baseUrl, apiKey);
-let paymentInitiated = false;
-
-const updateBasketCount = (basket) => {
-  const cartButton = document.getElementById('cart');
-  cartButton.textContent = `Basket (${basket.length})`;
-};
-
-const displayPaymentForm = () => {
-  const paymentForm = document.getElementById('payment-form');
-  if (paymentForm) {
-    paymentForm.style.display = 'block';
-  } else {
-    console.error('Payment form not found');
-  }
-};
-
-const initiatePayment = (basket) => {
-  if (!paymentInitiated) {
-    const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
-    const paymentData = {
-      organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
-      currency: 'GBP',
-      amount: totalAmount,
-      capture_now: true,
-      dynamic_descriptor: 'Demo Merchant Test Purchase',
-      merchant_reference: 'ref_' + Date.now(),
-      return_url: 'https://sandbox.apexx.global/atomic/v1/api/return',
-      webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
-      transaction_type: 'first',
-      duplicate_check: false,
-      locale: 'en_GB',
-      card: {
-        create_token: true
-      },
-      billing_address: {
-        first_name: 'John',
-        last_name: 'Doe',
-        email: 'john.doe@example.com',
-        address: '123 Main Street',
-        city: 'London',
-        state: 'London',
-        postal_code: 'SW1A 1AA',
-        country: 'GB',
-        phone: '441234567890'
-      },
-      three_ds: {
-        three_ds_required: true,
-        three_ds_version: '2.0'
-      }
-    };
-    apiClient.sendRequest('', 'POST', paymentData)
-      .then(responseData => {
-        if (responseData && responseData.url) {
-          const paymentIframe = document.getElementById('payment-iframe');
-          if (paymentIframe) {
-            paymentIframe.src = responseData.url;
-            paymentIframe.style.display = 'block';
-          } else {
-            console.error('Payment iframe not found');
-          }
-          paymentInitiated = true;
-        } else {
-          alert('Failed to initiate payment');
-        }
-      })
-      .catch(error => {
-        console.error('Payment initiation failed:', error);
-        alert('Error initiating payment. Please try again.');
-      });
-  } else {
-    console.log('Payment has already been initiated.');
-  }
-};
 
 document.addEventListener('DOMContentLoaded', () => {
-  const basket = [];
+  const paymentForm = document.getElementById('payment-form');
+  const paymentIframe = document.getElementById('payment-iframe');
 
-  document.querySelectorAll('.add-to-basket').forEach(button => {
-    button.addEventListener('click', function() {
-      const product = {
-        name: this.getAttribute('data-name'),
-        amount: this.getAttribute('data-amount')
-      };
-      basket.push(product);
-      updateBasketCount(basket);
-    });
+  document.getElementById('pay-with-card').addEventListener('click', async () => {
+    // Your existing payment data logic here
+    paymentForm.style.display = 'block';
+    // paymentIframe.src should be set based on the response of the card payment request
   });
 
-  const cartButton = document.getElementById('cart');
-  cartButton.addEventListener('click', () => {
-    if (basket.length > 0) {
-      displayPaymentForm();
-      initiatePayment(basket);
-    } else {
-      alert('Your basket is empty.');
+  document.getElementById('pay-with-sofort').addEventListener('click', async () => {
+    const sofortData = {
+      // Include all the SOFORT payment data required by your API
+    };
+
+    try {
+      const responseData = await apiClient.sendRequest('', 'POST', sofortData);
+      if (responseData && responseData.url) {
+        window.location.href = responseData.url; // Redirect to SOFORT payment page
+      } else {
+        console.error('Failed to initiate SOFORT payment');
+      }
+    } catch (error) {
+      console.error('Error initiating SOFORT payment:', error);
     }
   });
 });
