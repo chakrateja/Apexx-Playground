@@ -44,7 +44,6 @@ class ApiClient {
     const cartButton = document.getElementById('cart');
     cartButton.textContent = `Basket (${basket.length})`;
   };
-  
   const displayPaymentForm = () => {
     const paymentForm = document.getElementById('payment-form');
     paymentForm.style.display = 'block';
