@@ -1,162 +1,61 @@
-:root {
-  --primary-color: #005f73;
-  --secondary-color: #0a9396;
-  --background-color: #e9d8a6;
-  --text-color: #36313d;
-  --button-hover-color: #003d5b;
-}
-
 body {
-  background-color: var(--background-color);
-  color: var(--text-color);
-  font-family: 'Open Sans', sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-  margin: 0;
-  padding: 0;
-}
-
-nav ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-nav li {
-  display: inline;
-  margin-right: 20px;
-}
-
-nav a {
-  text-decoration: none;
-  color: var(--text-color);
-}
-
-.main-container, .cart-container, footer {
-  max-width: 1200px;
-  margin: auto;
-  padding: 20px;
-}
-
-.product, .product-details, #payment-form {
-  margin-bottom: 20px;
-  padding: 15px;
-  border-radius: 8px;
-  background: white;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-}
-
-button, .add-to-basket {
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-button:hover, .add-to-basket:hover {
-  background-color: var(--button-hover-color);
-}
-
-input, select, textarea {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
-
-input:focus, select:focus, textarea:focus {
-  border-color: var(--primary-color);
-  outline: none;
-}
-
-footer {
-  text-align: center;
-  background-color: var(--primary-color);
-  color: white;
-  padding: 10px;
-  margin-top: 20px;
-}
-
-@media (max-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
   }
-
-  .main-container, .product, .product-details, footer {
-    padding: 10px;
+  
+  .container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
-
-  nav li {
-    display: block;
-    margin: 5px 0;
+  
+  h2 {
+    text-align: center;
   }
-}
-/* Additional CSS for the payment iframe and selected products list */
-.iframe-section {
-    border-left: 1px solid #ccc;
-    padding-left: 20px;
-}
-
-#iframe-section {
-    width: 100%;
-    height: 600px; /* Adjust height as necessary */
-    border: none;
-    display: none; /* Initially hidden; will be shown when a product is added */
-}
-
-#selected-products-list {
-    margin-bottom: 20px;
-}
-
-/* Styles for the products section */
-.product-section {
+  
+  .product-list {
+    margin-top: 20px;
+  }
+  
+  .product {
     display: flex;
-    flex-direction: column;
-}
-
-.product {
-    margin-bottom: 10px;
-    padding: 
-10px;
-background-color: #f9f9f9;
-border-radius: 5px;
-box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.product img {
-width: 100px; /* Adjust as needed */
-height: auto;
-margin-right: 15px;
-}
-
-.product h3 {
-margin: 0;
-padding: 0;
-}
-
-.buy-button {
-background-color: var(--secondary-color);
-color: white;
-border: none;
-padding: 10px 20px;
-border-radius: 5px;
-cursor: pointer;
-font-size: 1em;
-}
-
-.buy-button:hover {
-background-color: var(--button-hover-color);
-}
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+  }
+  
+  .product-details {
+    flex: 1;
+  }
+  
+  .product-quantity {
+    flex-basis: 100px;
+    text-align: center;
+  }
+  
+  .subtotal {
+    margin-top: 20px;
+    text-align: right;
+  }
+  
+  .checkout-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .checkout-button:hover {
+    background-color: #0056b3;
+  }
