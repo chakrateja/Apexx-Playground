@@ -130,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (basket.length > 0) {
       displayPaymentForm();
       initiatePayment(basket);
+    }
     else {
       alert('Your basket is empty.');
     }
