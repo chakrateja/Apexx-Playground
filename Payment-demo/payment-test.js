@@ -174,11 +174,32 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  document.getElementById('cart').addEventListener('click', () => {
+  const cartButton = document.getElementById('cart');
+  cartButton.addEventListener('click', () => {
     if (basket.length > 0) {
-      // Optionally display payment options to the user
-      // For demonstration, directly initiating SOFORT payment
-      initiatePayment(basket, 'sofort');
+      document.getElementById('payment-options').style.display = 'block'; // Show payment options
+    } else {
+      alert('Your basket is empty.');
+    }
+  });
+
+  // Event listeners for selecting a payment method
+  document.getElementById('pay-with-card').addEventListener('click', () => {
+    // Example of what to do when card is selected; adjust according to your needs
+    initiatePayment(basket, 'card');
+    document.getElementById('payment-options').style.display = 'none'; // Hide payment options
+  });
+
+  document.getElementById('pay-with-sofort').addEventListener('click', () => {
+    initiatePayment(basket, 'sofort');
+    document.getElementById('payment-options').style.display = 'none'; // Hide payment options
+  });
+
+  // Hide the payment options when a payment method is selected and proceed with payment initiation
+  function displayPaymentForm(formId) {
+    // Additional logic for displaying specific forms could go here, if needed
+  }
+});
     } else {
       alert('Your basket is empty.');
     }
