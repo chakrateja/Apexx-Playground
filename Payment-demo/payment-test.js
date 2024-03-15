@@ -121,7 +121,6 @@ function initiatePayment(amount, productName, productIds) {
     .catch(error => {
       console.error('Error occurred while initiating payment:', error);
     });
-
 function checkoutButtonClicked() {
   initiateCheckout();
 }
