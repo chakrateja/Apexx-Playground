@@ -10,7 +10,7 @@ class ApiClient {
       method,
       headers: {
         'Content-Type': 'application/json',
-        'X-APIKEY': this.apiKey,
+        'X-APIKEY': this.apiKey
       },
     };
 
@@ -20,7 +20,8 @@ class ApiClient {
 
     try {
       const response = await fetch(url, options);
-
+      
+      // Check if the response is JSON
       const contentType = response.headers.get("content-type");
       if (contentType && contentType.indexOf("application/json") !== -1) {
         const responseData = await response.json();
@@ -29,6 +30,7 @@ class ApiClient {
         }
         return responseData;
       } else {
+        // Response is not JSON
         const responseText = await response.text();
         throw new Error(`API request failed with status ${response.status}: ${response.statusText}, Response not JSON: ${responseText}`);
       }
@@ -38,7 +40,11 @@ class ApiClient {
   }
 }
 
-const apiClient = new ApiClient('https://sandbox.apexx.global/atomic/v1/api/payment/hosted', 'c6490381A6ab0A4b18A9960Af3a9182c40ba');
+// The rest of your code remains the same...
+
+const apiKey = 'f742b7dcA75c6A406eAb1cbAf01be0047514';
+const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
+const apiClient = new ApiClient(baseUrl, apiKey);
 
 let paymentInitiated = false;
 
@@ -47,68 +53,20 @@ const updateBasketCount = (basket) => {
   cartButton.textContent = `Basket (${basket.length})`;
 };
 
-const displayPaymentForm = (formId) => {
-  const paymentForms = document.querySelectorAll('.payment-form');
-  paymentForms.forEach(form => form.style.display = 'none');
-  const selectedForm = document.getElementById(formId);
-  if (selectedForm) {
-    selectedForm.style.display = 'block';
+const displayPaymentForm = () => {
+  const paymentForm = document.getElementById('payment-form');
+  if (paymentForm) {
+    paymentForm.style.display = 'block';
+  } else {
+    console.error('Payment form not found');
   }
 };
 
-const initiatePayment = (basket, paymentMethod) => {
+const initiatePayment = (basket) => {
   if (!paymentInitiated) {
-    const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
-
-    let paymentData = {};
-
-    switch (paymentMethod) {
-      case 'sofort':
-        paymentData = {
-          organisation: "ff439f6eAc78dA4667Ab05aAc89f92e27f76",
-          capture_now: true,
-          customer_ip: "10.20.0.186",
-          recurring_type: "first",
-          amount: totalAmount.toString(),
-          currency: "EUR",
-          user_agent: "string",
-          locale: "en",
-          dynamic_descriptor: "Apexx SOFORT Test",
-          merchant_reference: "CT34540",
-          webhook_transaction_update: "https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358",
-          shopper_interaction: "ecommerce",
-          sofort: {
-            account_holder_name: "Test Name",
-            redirection_parameters: {
-              return_url: "https://sandbox.apexx.global/atomic/v1/api/return"
-            },
-          },
-          customer: {
-            first_name: "AP",
-            last_name: "Test",
-            email: "test@test.com",
-            phone: "01234567890",
-            date_of_birth: "1994-08-11",
-            address: {
-              country: "DE",
-            },
-          },
-          delivery_customer: {
-            first_name: "Ppro",
-            last_name: "Test",
-            address: {
-              address: "Add 1",
-              city: "City",
-              state: "CA",
-              postal_code: "90002",
-              country: "DE",
-            },
-          },
-        };
-        break;
-      case 'card':
-        paymentData = {
-        organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
+      const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
+      const paymentData = {
+        organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
         currency: 'GBP',
         amount: totalAmount, // Use the calculated total amount
         capture_now: true,
@@ -138,27 +96,30 @@ const initiatePayment = (basket, paymentMethod) => {
           three_ds_version: '2.0'
         }
       };
-        break;
-      // Other payment methods can be added here
+   apiClient.sendRequest('', 'POST', paymentData)
+        .then(responseData => {
+          if (responseData && responseData.url) {
+            // Load the payment URL into the iframe and display it
+            const paymentIframe = document.getElementById('payment-iframe');
+            if (paymentIframe) {
+              paymentIframe.src = responseData.url;
+              paymentIframe.style.display = 'block';
+            } else {
+              console.error('Payment iframe not found');
+            }
+            paymentInitiated = true;
+          } else {
+            alert('Failed to initiate payment');
+          }
+        })
+        .catch(error => {
+          console.error('Payment initiation failed:', error);
+          alert('Error initiating payment. Please try again.');
+        });
+    } else {
+      console.log('Payment has already been initiated.');
     }
-
-    apiClient.sendRequest('', 'POST', paymentData)
-      .then(responseData => {
-        if (responseData && responseData.url) {
-          // Handle successful payment initiation, such as displaying a success message or redirecting the user
-          paymentInitiated = true;
-        } else {
-          alert('Failed to initiate payment');
-        }
-      })
-      .catch(error => {
-        console.error('Payment initiation failed:', error);
-        alert('Error initiating payment. Please try again.');
-      });
-  } else {
-    console.log('Payment has already been initiated.');
-  }
-};
+  };
 
 document.addEventListener('DOMContentLoaded', () => {
   const basket = [];
@@ -167,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
     button.addEventListener('click', function() {
       const product = {
         name: this.getAttribute('data-name'),
-        amount: this.getAttribute('data-amount'),
+        amount: this.getAttribute('data-amount')
       };
       basket.push(product);
       updateBasketCount(basket);
@@ -177,29 +138,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const cartButton = document.getElementById('cart');
   cartButton.addEventListener('click', () => {
     if (basket.length > 0) {
-      document.getElementById('payment-options').style.display = 'block'; // Show payment options
-    } else {
-      alert('Your basket is empty.');
-    }
-  });
-
-  // Event listeners for selecting a payment method
-  document.getElementById('pay-with-card').addEventListener('click', () => {
-    // Example of what to do when card is selected; adjust according to your needs
-    initiatePayment(basket, 'card');
-    document.getElementById('payment-options').style.display = 'none'; // Hide payment options
-  });
-
-  document.getElementById('pay-with-sofort').addEventListener('click', () => {
-    initiatePayment(basket, 'sofort');
-    document.getElementById('payment-options').style.display = 'none'; // Hide payment options
-  });
-
-  // Hide the payment options when a payment method is selected and proceed with payment initiation
-  function displayPaymentForm(formId) {
-    // Additional logic for displaying specific forms could go here, if needed
-  }
-});
+      displayPaymentForm();
+      initiatePayment(basket);
     } else {
       alert('Your basket is empty.');
     }
