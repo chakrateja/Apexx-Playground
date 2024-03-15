@@ -3,26 +3,34 @@ class ApiClient {
     this.baseUrl = baseUrl;
     this.apiKey = apiKey;
   }
+
   async sendRequest(endpoint, method = 'POST', requestData = null) {
     const url = `${this.baseUrl}/${endpoint}`;
     const options = {
-      method: method,
+      method,
       headers: {
         'Content-Type': 'application/json',
         'X-APIKEY': this.apiKey
       },
-      body: requestData ? JSON.stringify(requestData) : null
     };
+
+    if (requestData) {
+      options.body = JSON.stringify(requestData);
+    }
+
     try {
       const response = await fetch(url, options);
-      const contentType = response.headers.get('content-type');
-      if (contentType && contentType.includes('application/json')) {
+      
+      // Check if the response is JSON
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.indexOf("application/json") !== -1) {
         const responseData = await response.json();
         if (!response.ok) {
           throw new Error(`API request failed with status ${response.status}: ${response.statusText}, Details: ${JSON.stringify(responseData)}`);
         }
         return responseData;
       } else {
+        // Response is not JSON
         const responseText = await response.text();
         throw new Error(`API request failed with status ${response.status}: ${response.statusText}, Response not JSON: ${responseText}`);
       }
