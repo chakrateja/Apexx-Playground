@@ -134,4 +134,4 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Your basket is empty.');
     }
 });
-});
+}
