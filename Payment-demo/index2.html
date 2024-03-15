@@ -26,43 +26,50 @@
           <h3>Complete Your Purchase</h3>
         </hgroup>
         <div class="product">
-          <img src="https://uploads-ssl.webflow.com/61af29be59d5d50e79b0c881/61af79f52edd42f9fbdf143d_Nike-Air-Max-270-Off-Noir-Habanero-Red-2-p-800.jpeg" alt="Product 1">
+          <img src="your-image-source-url" alt="Product 1">
           <div class="product-details">
             <h3>Product 1</h3>
             <p>Price: £50.00</p>
-            <!-- Add color and size options here -->
             <button class="add-to-basket" data-amount="5000" data-name="Product 1">Add to Basket</button>
           </div>
         </div>
-        <!-- Add more products as needed -->
-      </section>
-      <section>
-        <hgroup>
-          <h2>Select Payment Method</h2>
-        </hgroup>
-        <form id="payment-method-form">
-          <label>
-            <input type="radio" name="payment-method" value="card" checked> Credit/Debit Card
-          </label>
-          <label>
-            <input type="radio" name="payment-method" value="sofort"> SOFORT
-          </label>
-          <label>
-            <input type="radio" name="payment-method" value="ideal"> iDEAL
-          </label>
-          <!-- Add additional payment methods here -->
-          <button type="button" id="confirm-payment-method">Confirm Payment Method</button>
-        </form>
       </section>
     </div>
   </main>
 
   <div class="cart-container">
     <button id="cart">Basket (0)</button>
-  </div>
+    
+    <!-- Payment options modal/dialog -->
+    <div id="payment-options" style="display: none;">
+      <h2>Select Payment Method</h2>
+      <ul>
+        <li>
+          <button id="pay-with-card">Credit/Debit Card</button>
+        </li>
+        <li>
+          <button id="pay-with-sofort">SOFORT</button>
+        </li>
+        <li>
+          <button id="pay-with-ideal">iDEAL</button>
+        </li>
+      </ul>
+    </div>
+    
+    <!-- Credit/Debit card payment form, initially hidden -->
+    <div id="card-payment-form" style="display: none;">
+      <!-- Add your card payment form HTML here -->
+    </div>
 
-  <div id="payment-form" style="display: none;">
-    <iframe id="payment-iframe" src="about:blank" style="width:100%; height:600px; border:none;"></iframe>
+    <!-- SOFORT payment form, initially hidden -->
+    <div id="sofort-payment-form" style="display: none;">
+      <!-- Add your SOFORT payment form HTML here -->
+    </div>
+
+    <!-- iDEAL payment form, initially hidden -->
+    <div id="ideal-payment-form" style="display: none;">
+      <!-- Add your iDEAL payment form HTML here -->
+    </div>
   </div>
 
   <footer class="container">
