@@ -10,7 +10,7 @@ class ApiClient {
       method,
       headers: {
         'Content-Type': 'application/json',
-        'X-APIKEY': this.apiKey,
+        'X-APIKEY': this.apiKey
       },
     };
 
@@ -20,20 +20,29 @@ class ApiClient {
 
     try {
       const response = await fetch(url, options);
-      const responseData = await response.json();
-
-      if (!response.ok) {
-        throw new Error(`API request failed with status ${response.status}: ${response.statusText}`);
+      
+      // Check if the response is JSON
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.indexOf("application/json") !== -1) {
+        const responseData = await response.json();
+        if (!response.ok) {
+          throw new Error(`API request failed with status ${response.status}: ${response.statusText}, Details: ${JSON.stringify(responseData)}`);
+        }
+        return responseData;
+      } else {
+        // Response is not JSON
+        const responseText = await response.text();
+        throw new Error(`API request failed with status ${response.status}: ${response.statusText}, Response not JSON: ${responseText}`);
       }
-
-      return responseData;
     } catch (error) {
       throw new Error(`Error occurred while sending API request: ${error.message}`);
     }
   }
 }
 
-const apiKey = '473be873A0912A4eedAb26cA2edf67bb4faa';
+// The rest of your code remains the same...
+
+const apiKey = 'f742b7dcA75c6A406eAb1cbAf01be0047514';
 const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
 const apiClient = new ApiClient(baseUrl, apiKey);
 
@@ -111,6 +120,7 @@ const initiatePayment = (basket) => {
       console.log('Payment has already been initiated.');
     }
   };
+
 document.addEventListener('DOMContentLoaded', () => {
   const basket = [];
 
