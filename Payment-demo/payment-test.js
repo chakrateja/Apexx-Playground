@@ -7,21 +7,18 @@ class ApiClient {
   async sendRequest(endpoint, method = 'POST', requestData = null) {
     const url = `${this.baseUrl}/${endpoint}`;
     const options = {
-      method,
+      method: method,
       headers: {
         'Content-Type': 'application/json',
         'X-APIKEY': this.apiKey
       },
+      body: requestData ? JSON.stringify(requestData) : null
     };
-
-    if (requestData) {
-      options.body = JSON.stringify(requestData);
-    }
 
     try {
       const response = await fetch(url, options);
-      const contentType = response.headers.get("content-type");
-      if (contentType && contentType.includes("application/json")) {
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
         const responseData = await response.json();
         if (!response.ok) {
           throw new Error(`API request failed with status ${response.status}: ${response.statusText}, Details: ${JSON.stringify(responseData)}`);
@@ -37,6 +34,9 @@ class ApiClient {
   }
 }
 
+const apiKey = 'f742b7dcA75c6A406eAb1cbAf01be0047514';
+const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
+const apiClient = new ApiClient(baseUrl, apiKey);
 const apiClient = new ApiClient('https://sandbox.apexx.global/atomic/v1/api/payment/hosted', 'f742b7dcA75c6A406eAb1cbAf01be0047514');
 let paymentInitiated = false;
 let basket = [];
@@ -60,7 +60,7 @@ const initiateCardPayment = async (totalAmount) => {
   if (!paymentInitiated) {
     paymentInitiated = true;
     const paymentData = {
-      organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
+organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
         currency: 'GBP',
         amount: totalAmount, // Use the calculated total amount
         capture_now: true,
@@ -89,7 +89,7 @@ const initiateCardPayment = async (totalAmount) => {
           three_ds_required: true,
           three_ds_version: '2.0'
         }
-      };
+        };
 
     try {
       const responseData = await apiClient.sendRequest('', 'POST', paymentData);
@@ -113,48 +113,47 @@ const initiateCardPayment = async (totalAmount) => {
 
 const initiateSOFORTPayment = async (totalAmount) => {
   const paymentData = {
-{
     "organisation": "ff439f6eAc78dA4667Ab05aAc89f92e27f76",
-    "capture_now": "true",
+    "capture_now": true,
     "customer_ip": "10.20.0.186",
     "recurring_type": "first",
-    "amount": "1000",
+    "amount": totalAmount.toString(),
     "currency": "EUR",
     "user_agent": "string",
     "locale": "en",
     "dynamic_descriptor": "Apexx SOFORT Test",
     "merchant_reference": "CT34540",
-    "webhook_transaction_update": "	https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358",
+    "webhook_transaction_update": "https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358",
     "shopper_interaction": "ecommerce",
     "sofort": {
-            "account_holder_name": "Test Name",
-            "redirection_parameters": {
-                "return_url": "https://sandbox.apexx.global/atomic/v1/api/return"
-            } 
+      "account_holder_name": "Test Name",
+      "redirection_parameters": {
+        "return_url": "https://sandbox.apexx.global/atomic/v1/api/return"
+      } 
     },
     "customer": {
-        "first_name": "AP",
-        "last_name": "Test",
-        "email": "test@test.com",
-        "phone": "01234567890",
-        "date_of_birth": "1994-08-11",
-        "address": {
-           
-            "country": "DE"
-        }
+      "first_name": "AP",
+      "last_name": "Test",
+      "email": "test@test.com",
+      "phone": "01234567890",
+      "date_of_birth": "1994-08-11",
+      "address": {
+        "country": "DE"
+      }
     },
     "delivery_customer": {
-        "first_name": "Ppro",
-        "last_name": "Test",
-        "address": {
-            "address": "Add 1",
-            "city": "City",
-            "state": "CA",
-            "postal_code": "90002",
-            "country": "DE"
-        }
+      "first_name": "Ppro",
+      "last_name": "Test",
+      "address": {
+        "address": "Add 1",
+        "city": "City",
+        "state": "CA",
+        "postal_code": "90002",
+        "country": "DE"
+      }
     }
-}
+  };
+
   try {
     const responseData = await apiClient.sendRequest('', 'POST', paymentData);
     if (responseData && responseData.url) {
@@ -206,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
   cartButton.addEventListener('click', () => {
     if (basket.length > 0) {
       displayPaymentForm();
-      // You may want to call a function to initiate card payment here, or elsewhere
+      // Additional logic for payment form can be added here
     } else {
       alert('Your basket is empty.');
     }
