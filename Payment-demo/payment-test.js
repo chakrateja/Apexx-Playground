@@ -1,4 +1,3 @@
-
 class ApiClient {
   constructor(baseUrl, apiKey) {
     this.baseUrl = baseUrl;
@@ -11,7 +10,7 @@ class ApiClient {
       method,
       headers: {
         'Content-Type': 'application/json',
-        'X-APIKEY': this.apiKey
+        'X-APIKEY': this.apiKey,
       },
     };
 
@@ -39,9 +38,7 @@ class ApiClient {
   }
 }
 
-const apiKey = 'c6490381A6ab0A4b18A9960Af3a9182c40ba'; // Replace with your actual API key
-const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
-const apiClient = new ApiClient(baseUrl, apiKey);
+const apiClient = new ApiClient('https://sandbox.apexx.global/atomic/v1/api/payment/hosted', 'c6490381A6ab0A4b18A9960Af3a9182c40ba');
 
 let paymentInitiated = false;
 
@@ -65,62 +62,52 @@ const initiatePayment = (basket, paymentMethod) => {
 
     let paymentData = {};
 
-    if (paymentMethod === 'sofort') {
-      paymentData = {
-        organisation: "ff439f6eAc78dA4667Ab05aAc89f92e27f76",
-        capture_now: true,
-        customer_ip: "10.20.0.186",
-        recurring_type: "first",
-        amount: totalAmount,
-        currency: "EUR",
-        user_agent: "string",
-        locale: "en",
-        dynamic_descriptor: "Apexx SOFORT Test",
-        merchant_reference: "CT34540",
-        webhook_transaction_update: "https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358",
-        shopper_interaction: "ecommerce",
-        sofort: {
-          account_holder_name: "Test Name",
-          redirection_parameters: {
-            return_url: "https://sandbox.apexx.global/atomic/v1/api/return"
-          } 
-        },
-        customer: {
-          first_name: "AP",
-          last_name: "Test",
-          email: "test@test.com",
-          phone: "01234567890",
-          date_of_birth: "1994-08-11",
-          address: {
-            country: "DE"
-          }
-        },
-        delivery_customer: {
-          first_name: "Ppro",
-          last_name: "Test",
-          address: {
-            address: "Add 1",
-            city: "City",
-            state: "CA",
-            postal_code: "90002",
-            country: "DE"
-          }
-        }
-      };
-    }
-    
-    // Add similar conditions for 'card' and 'ideal' if needed
-    // ...
-
-    // Send the request with the constructed data
-    apiClient.sendRequest('', 'POST', paymentData)
-      .then(responseData => {
-        if (responseData && responseData.url) {
-          // Additional logic to handle the response for SOFORT
-          const initiatePayment = (basket) => {
-  if (!paymentInitiated) {
-      const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
-      const paymentData = {
+    switch (paymentMethod) {
+      case 'sofort':
+        paymentData = {
+          organisation: "ff439f6eAc78dA4667Ab05aAc89f92e27f76",
+          capture_now: true,
+          customer_ip: "10.20.0.186",
+          recurring_type: "first",
+          amount: totalAmount.toString(),
+          currency: "EUR",
+          user_agent: "string",
+          locale: "en",
+          dynamic_descriptor: "Apexx SOFORT Test",
+          merchant_reference: "CT34540",
+          webhook_transaction_update: "https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358",
+          shopper_interaction: "ecommerce",
+          sofort: {
+            account_holder_name: "Test Name",
+            redirection_parameters: {
+              return_url: "https://sandbox.apexx.global/atomic/v1/api/return"
+            },
+          },
+          customer: {
+            first_name: "AP",
+            last_name: "Test",
+            email: "test@test.com",
+            phone: "01234567890",
+            date_of_birth: "1994-08-11",
+            address: {
+              country: "DE",
+            },
+          },
+          delivery_customer: {
+            first_name: "Ppro",
+            last_name: "Test",
+            address: {
+              address: "Add 1",
+              city: "City",
+              state: "CA",
+              postal_code: "90002",
+              country: "DE",
+            },
+          },
+        };
+        break;
+      case 'card':
+        paymentData = {
         organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
         currency: 'GBP',
         amount: totalAmount, // Use the calculated total amount
@@ -151,31 +138,14 @@ const initiatePayment = (basket, paymentMethod) => {
           three_ds_version: '2.0'
         }
       };
-   apiClient.sendRequest('', 'POST', paymentData)
-        .then(responseData => {
-          if (responseData && responseData.url) {
-            // Load the payment URL into the iframe and display it
-            const paymentIframe = document.getElementById('payment-iframe');
-            if (paymentIframe) {
-              paymentIframe.src = responseData.url;
-              paymentIframe.style.display = 'block';
-            } else {
-              console.error('Payment iframe not found');
-            }
-            paymentInitiated = true;
-          } else {
-            alert('Failed to initiate payment');
-          }
-        })
-        .catch(error => {
-          console.error('Payment initiation failed:', error);
-          alert('Error initiating payment. Please try again.');
-        });
-    } else {
-      console.log('Payment has already been initiated.');
+        break;
+      // Other payment methods can be added here
     }
-  };
-          // ...
+
+    apiClient.sendRequest('', 'POST', paymentData)
+      .then(responseData => {
+        if (responseData && responseData.url) {
+          // Handle successful payment initiation, such as displaying a success message or redirecting the user
           paymentInitiated = true;
         } else {
           alert('Failed to initiate payment');
@@ -197,6 +167,20 @@ document.addEventListener('DOMContentLoaded', () => {
     button.addEventListener('click', function() {
       const product = {
         name: this.getAttribute('data-name'),
-        amount: this.getAttribute('data-amount')
+        amount: this.getAttribute('data-amount'),
       };
-      basket
+      basket.push(product);
+      updateBasketCount(basket);
+    });
+  });
+
+  document.getElementById('cart').addEventListener('click', () => {
+    if (basket.length > 0) {
+      // Optionally display payment options to the user
+      // For demonstration, directly initiating SOFORT payment
+      initiatePayment(basket, 'sofort');
+    } else {
+      alert('Your basket is empty.');
+    }
+  });
+});
