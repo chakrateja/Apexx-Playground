@@ -39,7 +39,6 @@ class ApiClient {
   const apiClient = new ApiClient(baseUrl, apiKey);
   let paymentInitiated = false;
   let basket = [];
-  
   const updateBasketCount = () => {
     const cartButton = document.getElementById('cart');
     cartButton.textContent = `Basket (${basket.length})`;
@@ -48,12 +47,10 @@ class ApiClient {
     const paymentForm = document.getElementById('payment-form');
     paymentForm.style.display = 'block';
   };
-  
   const hidePaymentForm = () => {
     const paymentForm = document.getElementById('payment-form');
     paymentForm.style.display = 'none';
   };
-  
   const initiateCardPayment = async (totalAmount) => {
     if (!paymentInitiated) {
       paymentInitiated = true;
