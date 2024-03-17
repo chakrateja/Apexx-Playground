@@ -34,8 +34,8 @@ async function initiatePayment() {
     capture_now: true,
     dynamic_descriptor: 'Demo Merchant Test Purchase',
     merchant_reference: `ref_${Date.now()}`,
-    return_url: 'https://yourdomain.com/payment-return', // Replace with your actual return URL
-    webhook_transaction_update: 'https://webhook.site/your-webhook-url', // Replace with your actual webhook URL
+    return_url: 'https://sandbox.apexx.global/atomic/v1/api/return', // Replace with your actual return URL
+    webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358', // Replace with your actual webhook URL
     transaction_type: 'first',
     duplicate_check: false,
     locale: 'en_GB',
