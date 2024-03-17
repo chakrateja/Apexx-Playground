@@ -1,3 +1,6 @@
+// Ensure this console log appears in your browser's console to confirm the script is loading.
+console.log("Payment script loaded");
+
 class ApiClient {
   constructor(baseUrl, apiKey) {
     this.baseUrl = baseUrl;
@@ -7,36 +10,39 @@ class ApiClient {
   async sendRequest(endpoint, method = 'POST', requestData = null) {
     const url = `${this.baseUrl}/${endpoint}`;
     const options = {
-      method,
+      method: method,
       headers: {
         'Content-Type': 'application/json',
-        'X-APIKEY': this.apiKey,
+        'X-APIKEY': this.apiKey
       },
-      body: requestData ? JSON.stringify(requestData) : null,
+      body: requestData ? JSON.stringify(requestData) : null
     };
 
     try {
       const response = await fetch(url, options);
       const contentType = response.headers.get("content-type");
       if (contentType && contentType.includes("application/json")) {
-        return await response.json();
+        const responseData = await response.json();
+        if (!response.ok) {
+          throw new Error(`API request failed with status ${response.status}: ${response.statusText}, Details: ${JSON.stringify(responseData)}`);
+        }
+        return responseData;
       } else {
-        throw new Error(`API request failed with status ${response.status}: ${response.statusText}, response not in JSON format.`);
+        throw new Error(`API request failed with status ${response.status}: ${response.statusText}, Response not JSON: ${responseText}`);
       }
     } catch (error) {
-      console.error(`Error occurred while sending API request: ${error}`);
+      console.error(`Error occurred while sending API request: ${error.message}`);
       throw error;
     }
   }
 }
 
-const cardApiKey = 'f742b7dcA75c6A406eAb1cbAf01be0047514';
-const cardBaseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
-const apiClient = new ApiClient(cardBaseUrl, cardApiKey);
+const apiKey = 'f742b7dcA75c6A406eAb1cbAf01be0047514';
+const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
+const apiClient = new ApiClient(baseUrl, apiKey);
 
-// SOFORT payment API client setup
 const sofortApiKey = 'c6490381A6ab0A4b18A9960Af3a9182c40ba';
-const sofortApiClient = new ApiClient(cardBaseUrl, sofortApiKey);
+const sofortApiClient = new ApiClient(baseUrl, sofortApiKey); // Assuming SOFORT uses the same base URL
 
 let paymentInitiated = false;
 let basket = [];
@@ -50,13 +56,6 @@ const displayPaymentForm = () => {
   const paymentForm = document.getElementById('payment-form');
   paymentForm.style.display = 'block';
 };
-
-const initiateCardPayment = async (totalAmount) => {
-  if (paymentInitiated) {
-    console.log('Payment has already been initiated.');
-    return;
-  }
-  
   paymentInitiated = true;
   
   const paymentData = {
