@@ -41,7 +41,6 @@ const cardApiClient = new ApiClient(cardBaseUrl, cardApiKey);
 
 // SOFORT payment API client
 const sofortApiKey = 'c6490381A6ab0A4b18A9960Af3a9182c40ba';
-//const sofortcardBaseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
 const sofortApiClient = new ApiClient(cardBaseUrl, sofortApiKey); // Assuming the base URL is the same
 
 let paymentInitiated = false;
