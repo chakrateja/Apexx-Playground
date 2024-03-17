@@ -23,8 +23,9 @@ class ApiClient {
     return await response.json();
   }
 }
-
-const apiClient = new ApiClient('https://sandbox.apexx.global/atomic/v1/api/payment/hosted', 'f742b7dcA75c6A406eAb1cbAf01be0047514');
+const apiKey = 'f742b7dcA75c6A406eAb1cbAf01be0047514';
+const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
+const apiClient = new ApiClient(baseUrl, apiKey);
 
 async function initiatePayment() {
   const paymentData = {
