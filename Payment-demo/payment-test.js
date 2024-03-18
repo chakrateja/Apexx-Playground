@@ -171,8 +171,8 @@ const initiateSofortPayment = (basket) => {
     });
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-  const basket = [];
+//document.addEventListener('DOMContentLoaded', () => {
+  //const basket = [];
 
   document.querySelectorAll('.add-to-basket').forEach(button => {
     button.addEventListener('click', function() {
@@ -184,8 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
       updateBasketCount(basket);
     });
   });
-
-  const payWithSofortButton = document.getElementById('pay-with-sofort');
+   const payWithSofortButton = document.getElementById('pay-with-sofort');
   if (payWithSofortButton) {
     payWithSofortButton.addEventListener('click', () => {
       if (basket.length > 0) {
@@ -197,8 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     console.error('Pay with SOFORT button not found');
   }
-
-  const payWithCardButton = document.getElementById('pay-with-card');
+ const payWithCardButton = document.getElementById('pay-with-card');
   if (payWithCardButton) {
     payWithCardButton.addEventListener('click', () => {
       if (basket.length > 0) {
