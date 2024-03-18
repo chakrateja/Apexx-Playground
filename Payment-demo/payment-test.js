@@ -160,7 +160,7 @@ const initiateSofortPayment = (basket) => {
     .then(responseData => {
       if (responseData && responseData.url) {
         // Redirect the customer to the SOFORT payment URL
-        window.location.href = responseData.url;
+        window.open(responseData.url, '_blank');
       } else {
         alert('Failed to initiate SOFORT payment');
       }
