@@ -266,18 +266,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  const payWithSofortButton = document.getElementById('pay-with-sofort');
-  if (payWithSofortButton) {
-    payWithSofortButton.addEventListener('click', () => {
-      if (basket.length > 0) {
-        initiateSofortPayment(basket);
-      } else {
-        alert('Please add items to your basket before using SOFORT.');
-      }
-    });
-  } else {
-    console.error('Pay with SOFORT button not found');
-  }
+  const payWithSofortButton = document.getElementById('pay-with-Sofort');
+if (payWithSofortButton) {
+  payWithSofortButton.addEventListener('click', () => {
+    if (basket.length > 0) {
+      initiateSofortPayment(basket);
+    } else {
+      alert('Please add items to your basket before using SOFORT.');
+    }
+  });
+} else {
+  console.error('Pay with SOFORT button not found');
+}
+
+const payWithKlarnaButton = document.getElementById('pay-with-Klarna');
+if (payWithKlarnaButton) {
+  payWithKlarnaButton.addEventListener('click', () => {
+    if (basket.length > 0) {
+      initiateKlarnaPayment(basket);
+    } else {
+      alert('Please add items to your basket before using Klarna.');
+    }
+  });
+} else {
+  console.error('Pay with Klarna button not found');
+}
 
   const payWithCardButton = document.getElementById('pay-with-card');
   if (payWithCardButton) {
@@ -292,20 +305,6 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     console.error('Pay with Card button not found');
   }
-
-  const payWithKlarnaButton = document.getElementById('pay-with-klarna');
-  if (payWithKlarnaButton) {
-    payWithKlarnaButton.addEventListener('click', () => {
-      if (basket.length > 0) {
-        initiateKlarnaPayment(basket); // Add this function call
-      } else {
-        alert('Please add items to your basket before using Klarna.');
-      }
-    });
-  } else {
-    console.error('Pay with Klarna button not found');
-  }
-
   const cartButton = document.getElementById('cart');
   cartButton.addEventListener('click', () => {
     if (basket.length > 0) {
