@@ -3,7 +3,6 @@ class ApiClient {
     this.baseUrl = baseUrl;
     this.apiKey = apiKey;
   }
-
   async sendRequest(endpoint, method = 'POST', requestData = null) {
     const url = `${this.baseUrl}/${endpoint}`;
     const options = {
@@ -39,20 +38,14 @@ class ApiClient {
     }
   }
 }
-
-// The rest of your code remains the same...
-
 const apiKey = 'f742b7dcA75c6A406eAb1cbAf01be0047514';
 const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
 const apiClient = new ApiClient(baseUrl, apiKey);
-
 let paymentInitiated = false;
-
 const updateBasketCount = (basket) => {
   const cartButton = document.getElementById('cart');
   cartButton.textContent = `Basket (${basket.length})`;
 };
-
 const displayPaymentForm = () => {
   const paymentForm = document.getElementById('payment-form');
   if (paymentForm) {
@@ -61,7 +54,6 @@ const displayPaymentForm = () => {
     console.error('Payment form not found');
   }
 };
-
 const initiatePayment = (basket) => {
   if (!paymentInitiated) {
       const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
