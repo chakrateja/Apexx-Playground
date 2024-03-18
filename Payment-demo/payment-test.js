@@ -197,9 +197,9 @@ const initiateKlarnaPayment = async (basket) => {
   ]
     },
     "redirect_urls": {
-      "success": "https://sandbox.apexx.global/atomic/v1/api/return?jon=1234",
-      "failed": "https://sandbox.apexx.global/atomic/v1/api/return",
-      "cancelled": "https://sandbox.apexx.global.com/atomic/v1/api/return"
+      "success":"https://sandbox.apexx.global/atomic/v1/api/return",
+      "failed":"https://sandbox.apexx.global/atomic/v1/api/return",
+      "cancelled":"https://sandbox.apexx.global.com/atomic/v1/api/return"
     },
     "items": basket.map(item => ({
         "product_id": item.product_id,
