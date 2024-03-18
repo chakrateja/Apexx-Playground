@@ -38,7 +38,7 @@ class ApiClient {
     }
   }
 }
-const apiKey = 'f742b7dcA75c6A406eAb1cbAf01be0047514';
+const apiKey = 'c6490381A6ab0A4b18A9960Af3a9182c40ba';
 const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
 const apiClient = new ApiClient(baseUrl, apiKey);
 let paymentInitiated = false;
@@ -58,7 +58,7 @@ const initiatePayment = (basket) => {
   if (!paymentInitiated) {
       const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
       const paymentData = {
-        organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
+        organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
         currency: 'GBP',
         amount: totalAmount, // Use the calculated total amount
         capture_now: true,
