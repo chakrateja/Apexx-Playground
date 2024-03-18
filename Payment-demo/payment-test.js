@@ -119,7 +119,7 @@ const initiateSofortPayment = (basket) => {
     capture_now: 'true',
     customer_ip: '10.20.0.186',
     recurring_type: 'first',
-    amount: '1000', // This should be dynamic based on the basket contents
+    amount: totalAmount.toString(), // This should be dynamic based on the basket contents
     currency: 'EUR',
     user_agent: 'string',
     locale: 'en',
