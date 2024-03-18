@@ -170,9 +170,8 @@ const initiateSofortPayment = (basket) => {
       alert('Error initiating SOFORT payment. Please try again.');
     });
 };
-
-//document.addEventListener('DOMContentLoaded', () => {
-  //const basket = [];
+document.addEventListener('DOMContentLoaded', () => {
+ const basket = [];
 
   document.querySelectorAll('.add-to-basket').forEach(button => {
     button.addEventListener('click', function() {
@@ -209,13 +208,13 @@ const initiateSofortPayment = (basket) => {
   } else {
     console.error('Pay with Card button not found');
   }
-  //const cartButton = document.getElementById('cart');
-  //cartButton.addEventListener('click', () => {
-    //if (basket.length > 0) {
-     // displayPaymentForm();
-      //initiatePayment(basket);
-   // } else {
-     // alert('Your basket is empty.');
-    //}
+  const cartButton = document.getElementById('cart');
+  cartButton.addEventListener('click', () => {
+    if (basket.length > 0) {
+     displayPaymentForm();
+      initiatePayment(basket);
+   } else {
+     alert('Your basket is empty.');
+    }
   });
 });
