@@ -24,18 +24,18 @@ class ApiClient {
   }
 }
 
-const apiClient = new ApiClient('https://sandbox.apexx.global/atomic/v1/api/payment/hosted', 'f742b7dcA75c6A406eAb1cbAf01be0047514');
+const apiClient = new ApiClient('https://sandbox.apexx.global/atomic/v1/api/payment/hosted', 'c6490381A6ab0A4b18A9960Af3a9182c40ba');
 
 async function initiatePayment() {
   const paymentData = {
-    organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
+    organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     currency: 'GBP',
     amount: 5000, // Example amount, replace with actual amount needed
     capture_now: true,
     dynamic_descriptor: 'Demo Merchant Test Purchase',
     merchant_reference: `ref_${Date.now()}`,
-    return_url: 'https://yourdomain.com/payment-return', // Replace with your actual return URL
-    webhook_transaction_update: 'https://webhook.site/your-webhook-url', // Replace with your actual webhook URL
+    return_url: 'https://sandbox.apexx.global/atomic/v1/api/return', // Replace with your actual return URL
+    webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358', // Replace with your actual webhook URL
     transaction_type: 'first',
     duplicate_check: false,
     locale: 'en_GB',
