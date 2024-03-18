@@ -15,103 +15,79 @@ class ApiClient {
 
     try {
       const response = await fetch(fullUrl, options);
-      const contentType = response.headers.get("content-type");
-      if (contentType && contentType.indexOf("application/json") !== -1) {
-        const responseData = await response.json();
-        if (!response.ok) {
-          throw new Error(`API request failed with status ${response.status}: ${response.statusText}, Details: ${JSON.stringify(responseData)}`);
-        }
-        return responseData;
-      } else {
+      if (!response.ok) {
         const responseText = await response.text();
-        throw new Error(`API request failed with status ${response.status}: ${response.statusText}, Response not JSON: ${responseText}`);
+        throw new Error(`API request failed with status ${response.status}: ${response.statusText}, Response: ${responseText}`);
       }
+      return await response.json();
     } catch (error) {
-      throw new Error(`Error occurred while sending API request: ${error.message}`);
+      console.error('Error occurred while sending API request:', error);
+      throw error;
     }
   }
 }
 
+// Separate base URLs for different payment methods if needed
+const hostedPaymentBaseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
+const bnplBaseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/bnpl';
 const apiKey = 'c6490381A6ab0A4b18A9960Af3a9182c40ba';
 const apiClient = new ApiClient(apiKey);
 
-let paymentInitiated = false;
-const basket = [];
+let basket = [];
 
-const updateBasketCount = () => {
+function updateBasketCount() {
   const cartButton = document.getElementById('cart');
   cartButton.textContent = `Basket (${basket.length})`;
-};
+}
 
-const displayPaymentForm = () => {
+function displayPaymentForm() {
   const paymentForm = document.getElementById('payment-form');
-  if (paymentForm) {
-    paymentForm.style.display = 'block';
-  } else {
-    console.error('Payment form not found');
-  }
-};
+  paymentForm.style.display = basket.length > 0 ? 'block' : 'none';
+}
 
-const initiatePayment = (basket) => {
-  if (!paymentInitiated) {
-    const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
-    const paymentData = {
-      organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
-      currency: 'GBP',
-      amount: totalAmount, // Use the calculated total amount
-      capture_now: true,
-      dynamic_descriptor: 'Demo Merchant Test Purchase',
-      merchant_reference: 'ref_' + Date.now(), // Dynamically generate a reference
-      return_url: 'https://sandbox.apexx.global/atomic/v1/api/return',
-      webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
-      transaction_type: 'first',
-      duplicate_check: false,
-      locale: 'en_GB',
-      card: {
-        create_token: true
-      },
-      billing_address: {
-        first_name: 'John', // Placeholder for real customer data
-        last_name: 'Doe', // Placeholder for real customer data
-        email: 'john.doe@example.com', // Placeholder for real customer data
-        address: '123 Main Street', // Placeholder for real customer data
-        city: 'London', // Placeholder for real customer data
-        state: 'London', // Placeholder for real customer data
-        postal_code: 'SW1A 1AA', // Placeholder for real customer data
-        country: 'GB', // Placeholder for real customer data
-        phone: '441234567890' // Placeholder for real customer data
-      },
-      three_ds: {
-        three_ds_required: true,
-        three_ds_version: '2.0'
-      }
-    };
- apiClient.sendRequest('', 'POST', paymentData)
-      .then(responseData => {
-        if (responseData && responseData.url) {
-          // Load the payment URL into the iframe and display it
-          const paymentIframe = document.getElementById('payment-iframe');
-          if (paymentIframe) {
-            paymentIframe.src = responseData.url;
-            paymentIframe.style.display = 'block';
-          } else {
-            console.error('Payment iframe not found');
-          }
-          paymentInitiated = true;
-        } else {
-          alert('Failed to initiate payment');
+async function initiatePayment(basket) {
+  const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
+  const paymentData = {
+    organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
+        currency: 'GBP',
+        amount: totalAmount, // Use the calculated total amount
+        capture_now: true,
+        dynamic_descriptor: 'Demo Merchant Test Purchase',
+        merchant_reference: 'ref_' + Date.now(), // Dynamically generate a reference
+        return_url: 'https://sandbox.apexx.global/atomic/v1/api/return',
+        webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
+        transaction_type: 'first',
+        duplicate_check: false,
+        locale: 'en_GB',
+        card: {
+          create_token: true
+        },
+        billing_address: {
+          first_name: 'John', // Placeholder for real customer data
+          last_name: 'Doe', // Placeholder for real customer data
+          email: 'john.doe@example.com', // Placeholder for real customer data
+          address: '123 Main Street', // Placeholder for real customer data
+          city: 'London', // Placeholder for real customer data
+          state: 'London', // Placeholder for real customer data
+          postal_code: 'SW1A 1AA', // Placeholder for real customer data
+          country: 'GB', // Placeholder for real customer data
+          phone: '441234567890' // Placeholder for real customer data
+        },
+        three_ds: {
+          three_ds_required: true,
+          three_ds_version: '2.0'
         }
-      })
-      .catch(error => {
-        console.error('Payment initiation failed:', error);
-        alert('Error initiating payment. Please try again.');
-      });
-  } else {
-    console.log('Payment has already been initiated.');
+      };
+  const fullUrl = `https://sandbox.apexx.global/atomic/v1/api/payment/hosted`; // Update this endpoint as necessary
+  try {
+    const responseData = await apiClient.sendRequest(fullUrl, 'POST', paymentData);
+    // Handle successful payment initiation here
+  } catch (error) {
+    alert('Payment initiation failed. Please try again.');
   }
-};
+}
 
-const initiateSofortPayment = (basket) => {
+async function initiateSofortPayment(basket) {
   const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
   const paymentData = {
     organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
@@ -154,25 +130,17 @@ const initiateSofortPayment = (basket) => {
       }
     }
   };
+  const fullUrl = `https://sandbox.apexx.global/atomic/v1/api/payment/hosted`; // Update this endpoint as necessary
+  try {
+    const responseData = await apiClient.sendRequest(fullUrl, 'POST', paymentData);
+    // Handle successful payment initiation here
+  } catch (error) {
+    alert('SOFORT payment initiation failed. Please try again.');
+  }
+}
 
-  apiClient.sendRequest('', 'POST', paymentData)
-    .then(responseData => {
-      if (responseData && responseData.url) {
-        // Redirect the customer to the SOFORT payment URL
-        window.open(responseData.url, '_blank');
-      } else {
-        alert('Failed to initiate SOFORT payment');
-      }
-    })
-    .catch(error => {
-      console.error('SOFORT payment initiation failed:', error);
-      alert('Error initiating SOFORT payment. Please try again.');
-    });
-};
-const initiateKlarnaPayment = async (basket) => {
-  const klarnaUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/bnpl';
-  const totalAmount = basket.reduce((total, item) => total + item.net_unit_price * item.quantity, 0);
-
+async function initiateKlarnaPayment(basket) {
+  const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
   const paymentData = {
     "organisation": "ff439f6eAc78dA4667Ab05aAc89f92e27f76",
     "currency": "GBP",
@@ -237,91 +205,49 @@ const initiateKlarnaPayment = async (basket) => {
     "delivery_address": {
         // Optional, specify if different from billing address
     }
-  };
-
+    };
+  const fullUrl = "https://sandbox.apexx.global/atomic/v1/api/payment/bnpl"; // Use BNPL base URL for Klarna
   try {
-    const responseData = await apiClient.sendRequest(klarnaUrl, 'POST', paymentData);
-    if (responseData && responseData.url) {
-      window.open(responseData.url, '_blank');
-    } else {
-      alert('Failed to initiate Klarna payment');
-    }
+    const responseData = await apiClient.sendRequest(fullUrl, 'POST', paymentData);
+    // Handle successful payment initiation here
   } catch (error) {
-    console.error('Klarna payment initiation failed:', error);
-    alert('Error initiating Klarna payment. Please try again.');
+    alert('Klarna payment initiation failed. Please try again.');
   }
-};
-
-// Revised portion of your script
+}
 
 document.addEventListener('DOMContentLoaded', () => {
-  // This ensures `basket` is accessible within this scope
-  const basket = [];
-
   document.querySelectorAll('.add-to-basket').forEach(button => {
     button.addEventListener('click', function() {
       const product = {
         name: this.getAttribute('data-name'),
-        amount: parseInt(this.getAttribute('data-amount'), 10) // Ensure amount is an integer
+        amount: this.getAttribute('data-amount')
       };
       basket.push(product);
-      updateBasketCount(); // Corrected call without unnecessary parameter
+      updateBasketCount();
     });
   });
 
-  // Correcting button IDs based on your HTML
-  const payWithSofortButton = document.getElementById('pay-with-Sofort');
-  if (payWithSofortButton) {
-    payWithSofortButton.addEventListener('click', () => {
-      if (basket.length > 0) {
-        initiateSofortPayment(basket);
-      } else {
-        alert('Please add items to your basket before using SOFORT.');
-      }
-    });
-  } else {
-    console.error('Pay with SOFORT button not found');
-  }
-
-  const payWithKlarnaButton = document.getElementById('pay-with-Klarna');
-  if (payWithKlarnaButton) {
-    payWithKlarnaButton.addEventListener('click', () => {
-      if (basket.length > 0) {
-        initiateKlarnaPayment(basket);
-      } else {
-        alert('Please add items to your basket before using Klarna.');
-      }
-    });
-  } else {
-    console.error('Pay with Klarna button not found');
-  }
-
-  const payWithCardButton = document.getElementById('pay-with-card');
-  if (payWithCardButton) {
-    payWithCardButton.addEventListener('click', () => {
-      if (basket.length > 0) {
-        displayPaymentForm();
-        initiatePayment(basket);
-      } else {
-        alert('Please add items to your basket before payment.');
-      }
-    });
-  } else {
-    console.error('Pay with Card button not found');
-  }
-
-  const cartButton = document.getElementById('cart');
-  cartButton.addEventListener('click', () => {
+  document.getElementById('pay-with-card').addEventListener('click', () => {
     if (basket.length > 0) {
-      displayPaymentForm();
       initiatePayment(basket);
     } else {
-      alert('Your basket is empty.');
+      alert('Please add items to your basket.');
+    }
+  });
+
+  document.getElementById('pay-with-sofort').addEventListener('click', () => {
+    if (basket.length > 0) {
+      initiateSofortPayment(basket);
+    } else {
+      alert('Please add items to your basket.');
+    }
+  });
+
+  document.getElementById('pay-with-klarna').addEventListener('click', () => {
+    if (basket.length > 0) {
+      initiateKlarnaPayment(basket);
+    } else {
+      alert('Please add items to your basket.');
     }
   });
 });
-
-function updateBasketCount() {
-  const cartButton = document.getElementById('cart');
-  cartButton.textContent = `Basket (${basket.length})`; // Use global `basket`
-}
