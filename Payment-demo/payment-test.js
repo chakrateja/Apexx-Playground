@@ -24,11 +24,11 @@ class ApiClient {
   }
 }
 
-const apiClient = new ApiClient('https://sandbox.apexx.global/atomic/v1/api/payment/hosted', 'c6490381A6ab0A4b18A9960Af3a9182c40ba');
+  const apiClient = new ApiClient('https://sandbox.apexx.global/atomic/v1/api/payment/hosted', 'f742b7dcA75c6A406eAb1cbAf01be0047514');
 
 async function initiatePayment() {
   const paymentData = {
-    organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
+    organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
     currency: 'GBP',
     amount: 5000, // Example amount, replace with actual amount needed
     capture_now: true,
