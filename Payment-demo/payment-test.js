@@ -252,45 +252,49 @@ const initiateKlarnaPayment = async (basket) => {
   }
 };
 
+// Revised portion of your script
+
 document.addEventListener('DOMContentLoaded', () => {
+  // This ensures `basket` is accessible within this scope
   const basket = [];
 
   document.querySelectorAll('.add-to-basket').forEach(button => {
     button.addEventListener('click', function() {
       const product = {
         name: this.getAttribute('data-name'),
-        amount: this.getAttribute('data-amount')
+        amount: parseInt(this.getAttribute('data-amount'), 10) // Ensure amount is an integer
       };
       basket.push(product);
-      updateBasketCount(basket);
+      updateBasketCount(); // Corrected call without unnecessary parameter
     });
   });
 
+  // Correcting button IDs based on your HTML
   const payWithSofortButton = document.getElementById('pay-with-Sofort');
-if (payWithSofortButton) {
-  payWithSofortButton.addEventListener('click', () => {
-    if (basket.length > 0) {
-      initiateSofortPayment(basket);
-    } else {
-      alert('Please add items to your basket before using SOFORT.');
-    }
-  });
-} else {
-  console.error('Pay with SOFORT button not found');
-}
+  if (payWithSofortButton) {
+    payWithSofortButton.addEventListener('click', () => {
+      if (basket.length > 0) {
+        initiateSofortPayment(basket);
+      } else {
+        alert('Please add items to your basket before using SOFORT.');
+      }
+    });
+  } else {
+    console.error('Pay with SOFORT button not found');
+  }
 
-const payWithKlarnaButton = document.getElementById('pay-with-Klarna');
-if (payWithKlarnaButton) {
-  payWithKlarnaButton.addEventListener('click', () => {
-    if (basket.length > 0) {
-      initiateKlarnaPayment(basket);
-    } else {
-      alert('Please add items to your basket before using Klarna.');
-    }
-  });
-} else {
-  console.error('Pay with Klarna button not found');
-}
+  const payWithKlarnaButton = document.getElementById('pay-with-Klarna');
+  if (payWithKlarnaButton) {
+    payWithKlarnaButton.addEventListener('click', () => {
+      if (basket.length > 0) {
+        initiateKlarnaPayment(basket);
+      } else {
+        alert('Please add items to your basket before using Klarna.');
+      }
+    });
+  } else {
+    console.error('Pay with Klarna button not found');
+  }
 
   const payWithCardButton = document.getElementById('pay-with-card');
   if (payWithCardButton) {
@@ -305,6 +309,7 @@ if (payWithKlarnaButton) {
   } else {
     console.error('Pay with Card button not found');
   }
+
   const cartButton = document.getElementById('cart');
   cartButton.addEventListener('click', () => {
     if (basket.length > 0) {
@@ -315,3 +320,8 @@ if (payWithKlarnaButton) {
     }
   });
 });
+
+function updateBasketCount() {
+  const cartButton = document.getElementById('cart');
+  cartButton.textContent = `Basket (${basket.length})`; // Use global `basket`
+}
