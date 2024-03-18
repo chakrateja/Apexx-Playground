@@ -126,7 +126,19 @@ document.addEventListener('DOMContentLoaded', () => {
       updateBasketCount(basket);
     });
   });
-
+ const payWithCardButton = document.getElementById('pay-with-card');
+  if (payWithCardButton) {
+    payWithCardButton.addEventListener('click', () => {
+      if (basket.length > 0) {
+        displayPaymentForm();
+        initiatePayment(basket);
+      } else {
+        alert('Please add items to your basket before payment.');
+      }
+    });
+  } else {
+    console.error('Pay with Card button not found');
+  }
   const cartButton = document.getElementById('cart');
   cartButton.addEventListener('click', () => {
     if (basket.length > 0) {
