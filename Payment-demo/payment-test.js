@@ -68,7 +68,7 @@ async function initiatePayment(paymentType) {
   const totalAmount = basket.reduce((total, item) => total + item.amount, 0);
 
   let paymentData = {
-    organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
+    organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     currency: 'GBP',
     amount: totalAmount,
     capture_now: true,
