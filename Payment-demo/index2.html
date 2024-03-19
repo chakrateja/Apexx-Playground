@@ -3,121 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Apexx Integration Demo</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+  <title>Product Checkout Page</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f4f4;
-      color: #333;
-      line-height: 1.6;
+    .payment-button {
+      transition: background-color 0.3s ease;
     }
-    .header-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-    }
-    .header-links {
-      display: flex;
-      gap: 20px;
-    }
-    .header-title {
-      text-align: center;
-      width: 100%;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 20px;
-    }
-    .container {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      padding-top: 20px;
-    }
-    .product {
-      display: flex;
-      justify-content: space-between;
-    }
-    .product img {
-      border-radius: 8px;
-      margin-right: 20px;
-    }
-    .product-details {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .payment-logo {
-      height: 25px;
-      margin-right: 10px;
-    }
-    .cart-container {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-    }
-    .add-to-basket {
-      background: #4CAF50; /* Green */
-      color: white;
-      padding: 10px 24px;
-      margin: 5px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition-duration: 0.4s;
-    }
-    .add-to-basket:hover {
-      background-color: #45a049;
-    }
-    /* Payment method specific styles */
-    #pay-with-card,
-    #pay-with-sofort,
-    #pay-with-bancontact {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px;
-      margin: 5px 0;
-      border-radius: 4px;
-      cursor: pointer;
-      transition-duration: 0.4s;
-    }
-    #pay-with-card {
-      background: #008CBA; /* Blue */
-      color: white;
-    }
-    #pay-with-sofort {
-      background: #e68a00; /* Orange */
-      color: white;
-    }
-    #pay-with-bancontact {
-      background: #4CAF50; /* Green */
-      color: white;
-    }
-    #pay-with-card:hover,
-    #pay-with-sofort:hover,
-    #pay-with-bancontact:hover {
-      opacity: 0.8;
+    .payment-button:hover {
+      background-color: rgba(0, 0, 0, 0.1);
     }
   </style>
 </head>
-<body>
-  <!-- Header with links and central title -->
-  <div class="header-container">
-    <div class="header-links">
+<body class="bg-gray-100">
+
+  <!-- Header with navigation and title -->
+  <header class="p-5 bg-white shadow-md flex justify-between items-center">
+    <nav class="flex gap-4">
       <a href="https://sandboxportalv2.apexx.global/">Portal</a>
       <a href="https://sandbox.apexx.global/atomic/redoc/api/doc#operation/hostedPayUsingPOST">API Reference</a>
       <a href="https://www.postman.com/flight-cosmonaut-99887655/workspace/apexx-workspace/overview">Postman</a>
+      </nav>
+    <h1 class="text-xl font-semibold">Apexx Payment Flow Demo</h1>
+    <div class="relative">
+      <button id="cart" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Basket (1)
+      </button>
     </div>
-    <div class="header-title">Apexx Payment flow demo</div>
-  </div>
-  
-  <!-- Add Basket at the top right-hand corner -->
-  <div class="cart-container">
-    <button id="cart">Basket (0)</button>
-  </div>
+  </header>
   <main class="container">
     <div class="product">
       <img src="https://uploads-ssl.webflow.com/61af29be59d5d50e79b0c881/61af79f52edd42f9fbdf143d_Nike-Air-Max-270-Off-Noir-Habanero-Red-2-p-800.jpeg" alt="Product 1">
