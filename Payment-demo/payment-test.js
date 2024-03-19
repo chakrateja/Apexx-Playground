@@ -350,4 +350,4 @@ console.error('Pay with ideal button not found');
     paymentForm.style.display = 'none';
     paymentOptions.style.display = basket.length > 0 ? 'block' : 'none';
   });
-
+});
