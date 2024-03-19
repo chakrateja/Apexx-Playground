@@ -31,7 +31,7 @@ class ApiClient {
 const hostedPaymentBaseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
 const bnplBaseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/bnpl';
 const apiKey = 'c6490381A6ab0A4b18A9960Af3a9182c40ba';
-const apiClient = new ApiClient(apiKey);
+const apiClient = new ApiClient(hostedPaymentBaseUrl,bnplBaseUrl,apiKey);
 
 let basket = [];
 
