@@ -3,51 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product Checkout Page</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    .payment-button {
-      transition: background-color 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 16px;
-      border: none;
-      color: white;
-      font-weight: 600;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    .payment-button img {
-      height: 24px;
-      width: auto;
-    }
-    .payment-button:hover {
-      background-color: rgba(0, 0, 0, 0.1);
-    }
-    .product img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-    }
-    .add-to-basket {
-      background: #4CAF50; /* Green */
-      color: white;
-      padding: 8px 16px;
-      margin-top: 8px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition-duration: 0.4s;
-    }
-    .add-to-basket:hover {
-      background-color: #45a049;
-    }
-  </style>
+  <title>Apexx Integration Demo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
 </head>
-<body class="bg-gray-100">
-
-  <!-- Header with navigation and title -->
+<body>
   <header class="p-5 bg-white shadow-md flex justify-between items-center">
     <nav class="flex gap-4">
       <a href="https://sandboxportalv2.apexx.global/">Portal</a>
@@ -61,37 +20,40 @@
       </button>
     </div>
   </header>
-
-  <!-- Main Content -->
-  <main class="container mx-auto mt-10 p-5 bg-white rounded-lg shadow-lg flex flex-wrap justify-between">
-    <!-- Product Image and Details -->
-    <div class="product w-full md:w-1/2 p-5">
-      <img src="https://via.placeholder.com/400x300" alt="Product 1" class="mb-4">
-      <h3 class="text-xl font-bold">Product 1</h3>
-      <p class="text-lg">Price: £50.00</p>
-      <button class="add-to-basket">Add to Basket</button>
+  <main class="container">
+    <div class="grid">
+      <section>
+        <h2>Featured Product</h2>
+        <h3>Complete Your Purchase</h3>
+        <div class="product">
+          <img src="https://uploads-ssl.webflow.com/61af29be59d5d50e79b0c881/61af79f52edd42f9fbdf143d_Nike-Air-Max-270-Off-Noir-Habanero-Red-2-p-800.jpeg" alt="Product 1">
+          <div class="product-details">
+            <h3>Product 1</h3>
+            <p>Price: £50.00</p>
+            <button class="add-to-basket" data-amount="5000" data-name="Product 1">Add to Basket</button>
+            <button id="pay-with-card" style="margin-left:10px;">Pay with Card</button>
+            <button id="pay-with-sofort" style="margin-left:10px;">Pay with SOFORT</button>
+            <button id="pay-with-bancontact" class="bg-blue-500 text-white py-2 px-4 rounded">Pay with BANCONTACT</button>
+            <button id="pay-with-ideal" class="bg-blue-500 text-white py-2 px-4 rounded">Pay with IDEAL</button>
+          </div>
+        </div>
+      </section>
     </div>
-
-    <!-- Payment options with logos -->
-    <div class="w-full md:w-1/2 p-5 flex flex-col items-center">
-      <button class="payment-button bg-blue-500" id="pay-with-card">
-        <img src="https://via.placeholder.com/32x20?text=V" alt="Visa Logo"> Pay with Card
-      </button>
-      <button class="payment-button bg-orange-500" id="pay-with-sofort">
-        <img src="https://via.placeholder.com/32x20?text=S" alt="SOFORT Logo"> Pay with SOFORT
-      </button>
-      <button class="payment-button bg-green-500" id="pay-with-bancontact">
-        <img src="https://via.placeholder.com/32x20?text=B" alt="Bancontact Logo"> Pay with BANCONTACT
-      </button>
-      <button class="payment-button bg-blue-600" id="pay-with-ideal">
-        <img src="https://via.placeholder.com/32x20?text=I" alt="iDEAL Logo"> Pay with iDEAL
-      </button>
-    </div>
-    <div id="payment-form" style="display: none;">
-    <iframe id="payment-iframe" src="about:blank" style="width:100%; height:600px; border:none;"></iframe>
-  </div>
   </main>
 
+  <div class="cart-container">
+    <button id="cart">Basket (0)</button>
+  </div>
+
+  <div id="payment-form" style="display: none;">
+    <iframe id="payment-iframe" src="about:blank" style="width:100%; height:600px; border:none;"></iframe>
+  </div>
+
+  <footer class="container">
+    <small>
+      <a href="#">Terms of Service</a> • <a href="#">Privacy Policy</a>
+    </small>
+  </footer>
   <script src="payment-test.js"></script>
 </body>
 </html>
