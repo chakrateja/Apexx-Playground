@@ -12,7 +12,25 @@
       color: #333;
       line-height: 1.6;
     }
-    . .container {
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+    }
+    .header-links {
+      display: flex;
+      gap: 20px;
+    }
+    .header-title {
+      text-align: center;
+      width: 100%;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 20px;
+    }
+    .container {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
@@ -86,10 +104,22 @@
   </style>
 </head>
 <body>
+  <!-- Header with links and central title -->
+  <div class="header-container">
+    <div class="header-links">
+      <a href="https://sandboxportalv2.apexx.global/">Portal</a>
+      <a href="https://sandbox.apexx.global/atomic/redoc/api/doc#operation/hostedPayUsingPOST">API Reference</a>
+      <a href="https://www.postman.com/flight-cosmonaut-99887655/workspace/apexx-workspace/overview">Postman</a>
+    </div>
+    <div class="header-title">Apexx Payment flow demo</div>
+  </div>
+  
   <!-- Add Basket at the top right-hand corner -->
   <div class="cart-container">
     <button id="cart">Basket (0)</button>
   </div>
+  
+  <main class="container">
   
   <main class="container">
     <div class="product">
