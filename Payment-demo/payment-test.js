@@ -171,8 +171,7 @@ const initiateSofortPayment = (basket) => {
     });
 };
 const initiateBancontactPayment = (basket) => {
- 
-const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
+ const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
 const paymentData = {
 organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     capture_now: 'true',
@@ -182,8 +181,8 @@ organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     currency: 'EUR',
     user_agent: 'string',
     locale: 'en',
-    dynamic_descriptor: 'Apexx SOFORT Test',
-    merchant_reference: 'CT34540', // Dynamically generate a reference
+    dynamic_descriptor: 'Apexx bancontact Test',
+    merchant_reference: 'CT345gg40', // Dynamically generate a reference
     webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
     shopper_interaction: 'ecommerce',
     bancontact: {
