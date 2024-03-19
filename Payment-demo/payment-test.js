@@ -144,68 +144,104 @@ async function initiateKlarnaPayment(basket) {
   const paymentData = {
     "organisation": "ff439f6eAc78dA4667Ab05aAc89f92e27f76",
     "currency": "GBP",
-    "amount": totalAmount,
-    "net_amount": totalAmount,
+    "amount": "1700",
+    "net_amount": "1700",
     "capture_now": "true",
     "dynamic_descriptor": "Apexx Test",
-    "merchant_reference": "ref_" + Date.now(),
+    "merchant_reference" : "{{$randomPassword}}",
     "locale": "EN",
-    "customer_ip": "127.0.0.1",
-    "user_agent": navigator.userAgent,
+    "customer_ip": "127.5.5.1",
+    "user_agent": "string",
     "webhook_transaction_update": "https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358",
     "shopper_interaction": "ecommerce",
     "bnpl": {
         "payment_method": "klarna",
-        "payment_type": "", // Specify payment type if necessary
-        "payment_type_data":[
-         {
-          "key_name": "string",
-          "value": "string"
-      }
-  ]
+        "payment_type": "",
+        "payment_type_data": [
+            {
+                "key_name": "string",
+                "value": "string"
+            }
+        ]
     },
     "redirect_urls": {
-      "success":"https://sandbox.apexx.global/atomic/v1/api/return",
-      "failed":"https://sandbox.apexx.global/atomic/v1/api/return",
-      "cancelled":"https://sandbox.apexx.global.com/atomic/v1/api/return"
+        "success": "https://sandbox.apexx.global/atomic/v1/api/return?jon=1234",
+        "failed": "https://sandbox.apexx.global/atomic/v1/api/return",
+        "cancelled": "https://sandbox.apexx.global.com/atomic/v1/api/return"
     },
-    "items": basket.map(item => ({
-        "product_id": item.product_id,
-        "group_id": item.group_id || "default", // Provide a default or specific value
-        "item_description": item.item_description,
-        "net_unit_price": item.net_unit_price,
-        "gross_unit_price": item.gross_unit_price || item.net_unit_price, // Assuming no VAT for simplicity
-        "quantity": item.quantity,
-        "vat_percent": item.vat_percent || 0,
-        "vat_amount": item.vat_amount || 0,
-        "discount": item.discount || 0,
-        "product_image_url": item.product_image_url,
-        "product_url": item.product_url,
-        "additional_information": item.additional_information || "N/A",
-        "delivery": item.delivery || "email"
-    })),
+    "items": [
+        {
+            "product_id": "12345",
+            "group_id": "stuff",
+            "item_description": "a thing",
+            "net_unit_price": 1600,
+            "gross_unit_price": 1600,
+            "quantity": 1,
+            "vat_percent": 0,
+            "vat_amount": 0,
+            "discount": 0,
+            "product_image_url": "https://www.string.com",
+            "product_url": "https://www.string.com",
+            "additional_information": "string",
+            "delivery": "email"
+
+        },
+                {
+            "product_id": "54321",
+            "group_id": "other stuff",
+            "item_description": "another thing",
+            "net_unit_price": 100,
+            "gross_unit_price": 100,
+            "quantity": 1,
+            "vat_percent": 0,
+            "vat_amount": 0,
+            "discount": 0,
+            "product_image_url": "https://www.string.com",
+            "product_url": "https://www.string.com",
+            "additional_information": "string",
+            "delivery":"delivery"
+        }
+    ],
     "customer": {
-        // Replace with actual customer data or fetch dynamically
-        "email": "customer@example.com",
-        "phone": "07777012345",
-        "date_of_birth": "1990-01-01",
-        // Additional customer fields as needed
+        "customer_identification_number": "string",
+        "identification_type": "SSN",
+        "email": "jong4@mailinator.com",
+        "phone": "07777012356",
+        "salutation": "Mr",
+        "type": "company",
+        "date_of_birth": "2020-02-02",
+        "customer_number": "string",
+        "gender": "male",
+        "employment_type": "fulltime",
+        "residential_status": "homeowner"
     },
     "billing_address": {
-        // Replace with actual billing address data or fetch dynamically
-        "first_name": "Jane",
-        "last_name": "Doe",
-        "email": "jane.doe@example.com",
-        "address": "123 Main St",
-        "city": "London",
-        "postal_code": "SW1A 1AA",
+        "first_name": "Hello",
+        "last_name": "Anderson",
+        "email": "abc",
+        "address": "string",
+        "city": "Birmingham",
+        "state": "West Mids",
+        "postal_code": "B5 1ST",
         "country": "GB",
-        "phone": "07777012345"
+        "phone": "07777123555"
     },
     "delivery_address": {
-        // Optional, specify if different from billing address
+        "first_name": "Tester",
+        "last_name": "McTestface",
+        "phone": "07777132462",
+        "salutation": "Mr",
+        "type": "company",
+        "care_of": "string",
+        "address": "38 Piccadilly",
+        "address2": "string",
+        "city": "Bradford",
+        "state": "West Yorkshire",
+        "postal_code": "BD1 3LY",
+        "country": "GB",
+        "method": "delivery"
     }
-    };
+}
   const fullUrl = "https://sandbox.apexx.global/atomic/v1/api/payment/bnpl"; // Use BNPL base URL for Klarna
   try {
     const responseData = await apiClient.sendRequest(fullUrl, 'POST', paymentData);
