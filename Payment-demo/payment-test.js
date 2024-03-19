@@ -96,6 +96,7 @@ async function initiatePayment(paymentType) {
 
   // Adjust the paymentData based on the paymentType if necessary for SOFORT or Klarna
   if (paymentType === 'sofort') {
+    organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     paymentData.currency = 'EUR'; // SOFORT uses EUR
     paymentData.sofort = {
         account_holder_name: 'Test Name',
@@ -125,6 +126,7 @@ async function initiatePayment(paymentType) {
         }
     };
 } else if (paymentType === 'klarna') {
+    organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     paymentData.currency = "GBP";
     paymentData.amount = totalAmount;
     paymentData.net_amount = totalAmount;
