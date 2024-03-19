@@ -201,22 +201,24 @@ A",
         phone: "07777012345"
     },
     delivery_address: {
-         first_name: 'Klarna',
-         last_name: 'Test',
-         address: 'Add 1',
-      type:'company'
-        method:'delivery'
-         city: 'City',
-         state: 'Yorkshire',
-         postal_code: 'BD1 3LY',
-         country: 'GB'
+        first_name: 'Klarna',
+        last_name: 'Test',
+        address: 'Add 1',
+        city: 'City',
+        state: 'Yorkshire',
+        postal_code: 'BD1 3LY',
+        country: 'GB',
+        type: 'company', // Adjusted: Added missing comma and corrected structure
+        method: 'delivery' // Adjusted: Added missing comma
     }
   };
 
   try {
     const responseData = await apiClient.sendRequest(bnplBaseUrl, 'POST', paymentData);
     // Handle successful Klarna payment initiation here
+    console.log('Klarna payment initiated successfully', responseData);
   } catch (error) {
+    console.error('Klarna payment initiation failed:', error);
     alert('Klarna payment initiation failed. Please try again.');
   }
 }
