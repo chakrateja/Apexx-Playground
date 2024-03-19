@@ -181,7 +181,7 @@ async function initiateKlarnaPayment(basket) {
         discount: item.discount || 0,
         product_image_url: item.product_image_url,
         product_url: item.product_url,
-        additional_information: item.additional_information || "NA",
+        //additional_information: item.additional_information || "NA",
         delivery: item.delivery || "email"
     })),
     customer: {
