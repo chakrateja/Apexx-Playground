@@ -171,10 +171,6 @@ const initiateSofortPayment = (basket) => {
     });
 };
 const initiateBancontactPayment = (basket) => {
- const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
-const paymentData = {
-const initiateBancontactPayment = (basket) => {
- 
 const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
 const paymentData = {
 "organisation": "ff439f6eAc78dA4667Ab05aAc89f92e27f76",
