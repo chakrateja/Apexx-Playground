@@ -1,5 +1,5 @@
 class ApiClient {
-  constructor(apiKey) {
+  constructor(hostedPaymentBaseUrl,bnplBaseUrl,apiKey) {
     this.apiKey = apiKey;
   }
 
