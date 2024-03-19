@@ -229,7 +229,7 @@ console.error('Bancontact payment initiation failed:', error);
 alert('Error initiating Bancontact payment. Please try again.');
 });
 };
-const initiateBancontactPayment = (basket) => {
+const initiateidealPayment = (basket) => {
  
 const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
 const paymentData = {
