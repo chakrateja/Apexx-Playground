@@ -229,6 +229,65 @@ console.error('Bancontact payment initiation failed:', error);
 alert('Error initiating Bancontact payment. Please try again.');
 });
 };
+const initiateBancontactPayment = (basket) => {
+ 
+const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
+const paymentData = {
+organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
+    capture_now: 'true',
+    customer_ip: '10.20.0.186',
+    recurring_type: 'first',
+    amount: totalAmount.toString(), // This should be dynamic based on the basket contents
+    currency: 'EUR',
+    user_agent: 'string',
+    locale: 'en',
+    dynamic_descriptor: 'Apexx ideal Test',
+    merchant_reference: 'CT34540', // Dynamically generate a reference
+    webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
+    shopper_interaction: 'ecommerce',
+    ideal: {
+      account_holder_name: 'Test Name',
+      redirection_parameters: {
+        return_url: 'https://sandbox.apexx.global/atomic/v1/api/return'
+      } 
+    },
+    customer: {
+      first_name: 'AP',
+      last_name: 'Test',
+      email: 'test@test.com',
+      phone: '01234567890',
+      date_of_birth: '1994-08-11',
+      address: {
+        country: 'DE'
+      }
+    },
+    delivery_customer: {
+      first_name: 'Ppro',
+      last_name: 'Test',
+      address: {
+        address: 'Add 1',
+        city: 'City',
+        state: 'CA',
+        postal_code: '90002',
+        country: 'DE'
+      }
+    }
+  };
+
+apiClient.sendRequest('', 'POST', paymentData)
+.then(responseData => {
+if (responseData && responseData.url) {
+// Redirect the customer to the Bancontact payment URL
+window.location.href = responseData.url;
+} else {
+alert('Failed to initiate ideal payment');
+}
+})
+.catch(error => {
+console.error('ideal payment initiation failed:', error);
+alert('Error initiating ideal payment. Please try again.');
+});
+};
 document.addEventListener('DOMContentLoaded', () => {
  const basket = [];
 
@@ -253,6 +312,18 @@ alert('Please add items to your basket before using Bancontact.');
 });
 } else {
 console.error('Pay with Bancontact button not found');
+}
+    const payWithidealButton = document.getElementById('pay-with-ideal');
+if (payWithidealButton) {
+payWithidealButton.addEventListener('click', () => {
+if (basket.length > 0) {
+initiateidealPayment(basket);
+} else {
+alert('Please add items to your basket before using ideal.');
+}
+});
+} else {
+console.error('Pay with ideal button not found');
 }
    const payWithSofortButton = document.getElementById('pay-with-sofort');
   if (payWithSofortButton) {
