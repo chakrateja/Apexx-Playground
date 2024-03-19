@@ -213,12 +213,11 @@ organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
       }
     }
   };
-
 apiClient.sendRequest('', 'POST', paymentData)
 .then(responseData => {
 if (responseData && responseData.url) {
 // Redirect the customer to the Bancontact payment URL
-window.open(responseData.url, '_blank');
+window.location.href = responseData.url;
 } else {
 alert('Failed to initiate Bancontact payment');
 }
@@ -228,8 +227,8 @@ console.error('Bancontact payment initiation failed:', error);
 alert('Error initiating Bancontact payment. Please try again.');
 });
 };
+
 const initiateidealPayment = (basket) => {
- 
 const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
 const paymentData = {
 organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
@@ -300,7 +299,7 @@ document.addEventListener('DOMContentLoaded', () => {
       updateBasketCount(basket);
     });
   });
-  const payWithBancontactButton = document.getElementById('pay-with-bancontact');
+ const payWithBancontactButton = document.getElementById('pay-with-bancontact');
 if (payWithBancontactButton) {
 payWithBancontactButton.addEventListener('click', () => {
 if (basket.length > 0) {
