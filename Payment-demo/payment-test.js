@@ -3,7 +3,6 @@ class ApiClient {
     this.baseUrl = baseUrl;
     this.apiKey = apiKey;
   }
-
   async sendRequest(endpoint, method = 'POST', requestData = null) {
     const url = `${this.baseUrl}/${endpoint}`;
     const options = {
@@ -20,6 +19,8 @@ class ApiClient {
 
     try {
       const response = await fetch(url, options);
+      
+      // Check if the response is JSON
       const contentType = response.headers.get("content-type");
       if (contentType && contentType.indexOf("application/json") !== -1) {
         const responseData = await response.json();
@@ -28,6 +29,7 @@ class ApiClient {
         }
         return responseData;
       } else {
+        // Response is not JSON
         const responseText = await response.text();
         throw new Error(`API request failed with status ${response.status}: ${response.statusText}, Response not JSON: ${responseText}`);
       }
@@ -46,7 +48,11 @@ const updateBasketCount = (basket) => {
 };
 const displayPaymentForm = () => {
   const paymentForm = document.getElementById('payment-form');
-  paymentForm.style.display = 'block';
+  if (paymentForm) {
+    paymentForm.style.display = 'block';
+  } else {
+    console.error('Payment form not found');
+  }
 };
 const initiatePayment = (basket) => {
   if (!paymentInitiated) {
@@ -282,9 +288,7 @@ alert('Error initiating ideal payment. Please try again.');
 };
 document.addEventListener('DOMContentLoaded', () => {
  const basket = [];
-const paymentOptions = document.getElementById('payment-options');
-  paymentOptions.style.display = 'none';
-  
+
   document.querySelectorAll('.add-to-basket').forEach(button => {
     button.addEventListener('click', function() {
       const product = {
@@ -346,8 +350,11 @@ console.error('Pay with ideal button not found');
   }
   const cartButton = document.getElementById('cart');
   cartButton.addEventListener('click', () => {
-    const paymentForm = document.getElementById('payment-form');
-    paymentForm.style.display = 'none';
-    paymentOptions.style.display = basket.length > 0 ? 'block' : 'none';
+    if (basket.length > 0) {
+     displayPaymentForm();
+      initiatePayment(basket);
+   } else {
+     alert('Your basket is empty.');
+    }
   });
 });
