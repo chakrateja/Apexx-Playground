@@ -47,7 +47,7 @@ function displayPaymentForm() {
 async function initiatePayment(basket) {
   const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
   const paymentData = {
-    organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
+    organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     currency: 'GBP',
     amount: totalAmount,
     capture_now: true,
@@ -144,8 +144,8 @@ async function initiateKlarnaPayment(basket) {
   const paymentData = {
     organisation: "ff439f6eAc78dA4667Ab05aAc89f92e27f76",
     currency: "GBP",
-    amount: totalAmount,
-    net_amount: totalAmount,
+    amount: 1700,
+    net_amount: 1700,
     capture_now: "true",
     dynamic_descriptor: "Apexx Test",
     merchant_reference: "ref_" + Date.now(),
