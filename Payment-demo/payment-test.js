@@ -124,7 +124,7 @@ const initiateSofortPayment = (basket) => {
     user_agent: 'string',
     locale: 'en',
     dynamic_descriptor: 'Apexx SOFORT Test',
-    merchant_reference: 'CT34540', // Dynamically generate a reference
+    merchant_reference: 'CT3455640', // Dynamically generate a reference
     webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
     shopper_interaction: 'ecommerce',
     sofort: {
@@ -198,7 +198,7 @@ organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
       phone: '01234567890',
       date_of_birth: '1994-08-11',
       address: {
-        country: 'DE'
+        country: 'BE'
       }
     },
     delivery_customer: {
@@ -209,7 +209,7 @@ organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
         city: 'City',
         state: 'CA',
         postal_code: '90002',
-        country: 'DE'
+        country: 'BE'
       }
     }
   };
