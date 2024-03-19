@@ -48,7 +48,7 @@ function displayPaymentForm() {
 async function initiatePayment(basket) {
   const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
   const paymentData = {
-    organisation: '4d1a4e9dAaff5A4b7aAa200A21d072d2e4ca',
+    organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
         currency: 'GBP',
         amount: totalAmount, // Use the calculated total amount
         capture_now: true,
