@@ -16,9 +16,11 @@
       padding: 20px;
     }
     .product img {
-      max-width: 100%;
+      max-width: 50%; /* Adjusted size */
       display: block;
       margin-bottom: 20px;
+      margin-left: auto; /* Added for centering the image */
+      margin-right: auto; /* Added for centering the image */
     }
     .product-details h3 {
       margin: 5px 0;
@@ -61,13 +63,21 @@
     footer a {
       color: #1abc9c;
     }
+    nav a {
+      margin-right: 4px; /* Reduced gap between nav items */
+      text-decoration: none; /* Removes underline */
+      color: #333; /* Match body text color */
+    }
+    nav a:hover {
+      color: #005f73; /* Adds a hover effect */
+    }
   </style>
 </head>
 <body>
    <header>
     <nav class="flex gap-1">
-      <a href="https://sandboxportalv2.apexx.global/">Portal</a>
-      <a href="https://sandbox.apexx.global/atomic/redoc/api/doc#operation/hostedPayUsingPOST">API Reference</a>
+      <a href="https://sandboxportalv2.apexx.global/" style="margin-right: 10px;">Portal</a>
+      <a href="https://sandbox.apexx.global/atomic/redoc/api/doc#operation/hostedPayUsingPOST" style="margin-right: 10px;">API Reference</a>
       <a href="https://www.postman.com/flight-cosmonaut-99887655/workspace/apexx-workspace/overview">Postman</a>
     </nav>
   </header>
@@ -94,11 +104,6 @@
 <div id="payment-form" style="display: none;">
     <iframe id="payment-iframe" src="about:blank" style="width:100%; height:600px; border:none;"></iframe>
   </div>
-  <footer>
-    <small>
-      <a href="#">Terms of Service</a> • <a href="#">Privacy Policy</a>
-    </small>
-  </footer>
   <script src="payment-test.js"></script>
 </body>
 </html>
