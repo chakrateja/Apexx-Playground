@@ -25,6 +25,7 @@
       text-align: center;
     }
     .product-details h1 {
+      color: #1a202c; /* Darker text color */
       margin: 5px 0;
       font-size: 2.5em;
     }
@@ -36,8 +37,8 @@
       background: #005f73;
       color: #fff;
       border: none;
-      padding: 10px 15px;
-      margin-right: 10px;
+      padding: 8px 12px; /* Smaller buttons */
+      margin: 5px; /* Spacing between buttons */
       cursor: pointer;
       border-radius: 5px;
       transition: background 0.3s ease;
@@ -68,14 +69,13 @@
     }
     nav {
       display: flex;
-      justify-content: flex-start;
-      gap: 30px;
-      padding: 30px;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
     }
     nav a {
       text-decoration: none;
       color: #333;
-      background: #f4f4f4;
       padding: 5px;
       border-radius: 5px;
       transition: color 0.3s ease;
@@ -83,9 +83,17 @@
     nav a:hover {
       color: #005f73;
     }
+    .title {
+      text-align: center;
+      font-weight: bold;
+      color: #1a202c; /* Darker text color */
+      font-size: 1.75em;
+      margin-top: -20px; /* Adjust as needed */
+    }
   </style>
 </head>
 <body>
+  <div class="title">APEXX PAYMENT DEMO</div>
   <header>
     <nav>
       <a href="https://sandboxportalv2.apexx.global/">Portal</a>
@@ -96,9 +104,7 @@
   <main class="container">
     <section class="product">
       <div class="product-details">
-        <h1>APEXX PAYMENT DEMO</h1>
         <img src="https://files.oaiusercontent.com/file-rn6lsWNB3j21WauclQychlMz?se=2024-03-19T18%3A00%3A19Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3Db07dcf6c-8e58-4de3-bf66-b1a1d007a182.webp&sig=fXS%2BL06sD3HYccj8z35nkwngNqu4iDUNmqFpK3aLLI0%3D" alt="Product Image">
-        <!-- Product actions -->
         <p>Price: £50.00</p>
         <button class="add-to-basket" data-amount="5000" data-name="Product 1">Add to Basket</button>
         <button id="pay-with-card">Pay with Card</button>
@@ -110,7 +116,7 @@
   </main>
 
   <div class="cart-container">
-    <button id="cart">Basket (1)</button>
+    <button id="cart">Basket (1)</button
   </div>
   <div id="payment-form" style="display: none;">
     <iframe id="payment-iframe" src="about:blank" style="width:100%; height:600px; border:none;"></iframe>
