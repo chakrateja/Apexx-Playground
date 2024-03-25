@@ -74,16 +74,16 @@ ul li {
         <p>Price: £100.00</p>
         <button class="add-to-basket" data-amount="5000" data-name="Product 1">Add to Basket</button>
         <form id="payment-options-form">
-    <input type="radio" id="card" name="SOFORT" value="card">
-    <label for="card">Pay with Card</label><br>
-    <input type="radio" id="sofort" name="iDEAL" value="sofort">
-    <label for="sofort">Pay with SOFORT</label><br>
-    <input type="radio" id="bancontact" name="BANCONTACT" value="bancontact">
-    <label for="bancontact">Pay with BANCONTACT</label><br>
-    <input type="radio" id="ideal" name="CARD" value="ideal">
-    <label for="ideal">Pay with IDEAL</label><br>
-    <button type="button" id="confirm-payment">Confirm Payment</button>
-  </form>
+  <input type="radio" id="pay-with-card" name="payment-method" value="card">
+  <label for="pay-with-card">Pay with Card</label><br>
+  <input type="radio" id="pay-with-sofort" name="payment-method" value="sofort">
+  <label for="pay-with-sofort">Pay with SOFORT</label><br>
+  <input type="radio" id="pay-with-bancontact" name="payment-method" value="bancontact">
+  <label for="pay-with-bancontact">Pay with BANCONTACT</label><br>
+  <input type="radio" id="pay-with-ideal" name="payment-method" value="ideal">
+  <label for="pay-with-ideal">Pay with IDEAL</label><br>
+  <button type="button" id="confirm-payment">Confirm Payment</button>
+</form>
         </section>
     <div id="payment-completed-message" style="display: none;">
   <p>Payment Completed Successfully!</p>
