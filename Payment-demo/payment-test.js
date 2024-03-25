@@ -56,19 +56,6 @@ const displayPaymentCompletedMessage = () => {
   const messageDiv = document.getElementById('payment-completed-message');
   messageDiv.style.display = 'block';
 };
-const initiatePayment = async (paymentData) => {
-  try {
-    const responseData = await apiClient.sendRequest('payment_endpoint', 'POST', paymentData); // Adjust 'payment_endpoint' as necessary
-    if (responseData && responseData.url) {
-      window.open(responseData.url, '_blank');
-      displayPaymentCompletedMessage();
-    } else {
-      alert('Failed to initiate payment');
-    }
-  } catch (error) {
-    alert(`Error initiating payment: ${error.message}`);
-  }
-};
 
 const initiatePayment = (basket) => {
   if (!paymentInitiated) {
@@ -128,9 +115,9 @@ const initiatePayment = (basket) => {
       console.log('Payment has already been initiated.');
     }
   };
-const initiateSofortPayment = (basket) => {
-  const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
-  const paymentData = {
+ switch (method) {
+    case 'sofort':
+      paymentData.sofort = {
     organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     capture_now: 'true',
     customer_ip: '10.20.0.186',
@@ -186,9 +173,9 @@ const initiateSofortPayment = (basket) => {
       alert('Error initiating SOFORT payment. Please try again.');
     });
 };
-const initiateBancontactPayment = (basket) => {
-const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
-const paymentData = {
+break;
+    case 'bancontact':
+      paymentData.bancontact = {
 organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     capture_now: 'true',
     customer_ip: '10.20.0.186',
@@ -244,9 +231,8 @@ alert('Error initiating Bancontact payment. Please try again.');
 });
 };
 
-const initiateidealPayment = (basket) => {
-const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
-const paymentData = {
+case 'ideal':
+      paymentData.ideal = { /* iDEAL specific data */ };
 organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     capture_now: 'true',
     customer_ip: '10.20.0.186',
@@ -302,50 +288,44 @@ console.error('ideal payment initiation failed:', error);
 alert('Error initiating ideal payment. Please try again.');
 });
 };
-const displayPaymentCompletedMessage = () => {
-  const messageDiv = document.getElementById('payment-completed-message');
-  messageDiv.style.display = 'block';
+try {
+    const responseData = await apiClient.sendRequest('payments', 'POST', paymentData);
+    if (responseData && responseData.url) {
+      window.location.href = responseData.url; // Assuming redirection to payment URL
+    } else {
+      alert("Failed to initiate payment.");
+    }
+  } catch (error) {
+    alert(`Error initiating payment: ${error.message}`);
+  }
 };
+
 document.addEventListener('DOMContentLoaded', () => {
-  // Event listeners for the 'Add to Basket' buttons
   document.querySelectorAll('.add-to-basket').forEach(button => {
     button.addEventListener('click', function() {
-      const product = {
+      const item = {
         name: this.getAttribute('data-name'),
-        amount: this.getAttribute('data-amount')
+        amount: parseInt(this.getAttribute('data-amount'), 10),
       };
-      basket.push(product);
-      updateBasketCount(basket);
-    });
-  });
-  
-  document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.add-to-basket').forEach(button => {
-    button.addEventListener('click', function() {
-      basket.push({
-        name: this.getAttribute('data-name'),
-        amount: this.getAttribute('data-amount'),
-      });
+      basket.push(item);
       updateBasketCount();
     });
   });
 
   document.getElementById('confirm-payment').addEventListener('click', () => {
     const selectedMethod = document.querySelector('input[name="payment-method"]:checked')?.value;
-    if (selectedMethod && basket.length > 0) {
-      const paymentData = constructPaymentData(selectedMethod);
-      initiatePayment(paymentData);
+    if (selectedMethod) {
+      initiatePayment(selectedMethod);
     } else {
-      alert('Please select a payment method and add items to your basket.');
+      alert("Please select a payment method.");
     }
   });
 
   document.getElementById('cart').addEventListener('click', () => {
     if (basket.length > 0) {
       displayPaymentForm();
-      // Optionally, show basket details or proceed directly to a checkout page
     } else {
-      alert('Your basket is empty.');
+      alert("Your basket is empty.");
     }
   });
 });
