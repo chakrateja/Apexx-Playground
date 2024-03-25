@@ -13,26 +13,18 @@ class ApiClient {
         'X-APIKEY': this.apiKey,
       },
     };
-
-    if (requestData) {
-      options.body = JSON.stringify(requestData);
-    }
+     body: requestData ? JSON.stringify(requestData) : null,
+    };
 
     try {
       const response = await fetch(url, options);
-      const contentType = response.headers.get("content-type");
-      if (contentType && contentType.indexOf("application/json") !== -1) {
-        const responseData = await response.json();
-        if (!response.ok) {
-          throw new Error(`API request failed with status ${response.status}: ${response.statusText}, Details: ${JSON.stringify(responseData)}`);
-        }
-        return responseData;
-      } else {
-        const responseText = await response.text();
-        throw new Error(`API request failed with status ${response.status}: ${response.statusText}, Response not JSON: ${responseText}`);
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}: ${response.statusText}`);
       }
+      return await response.json();
     } catch (error) {
-      throw new Error(`Error occurred while sending API request: ${error.message}`);
+      console.error(`Error occurred while sending API request: ${error}`);
+      throw error;
     }
   }
 }
@@ -41,7 +33,7 @@ const apiKey = 'c6490381A6ab0A4b18A9960Af3a9182c40ba';
 const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
 const apiClient = new ApiClient(baseUrl, apiKey);
 
-let paymentInitiated = false;
+let basket = [];
 
 const updateBasketCount = (basket) => {
   const cartButton = document.getElementById('cart');
@@ -56,6 +48,11 @@ const displayPaymentCompletedMessage = () => {
   const messageDiv = document.getElementById('payment-completed-message');
   messageDiv.style.display = 'block';
 };
+async function initiatePayment(method) {
+  if (basket.length === 0) {
+    alert("Your basket is empty.");
+    return;
+  }
 
 const initiatePayment = (basket) => {
   if (!paymentInitiated) {
