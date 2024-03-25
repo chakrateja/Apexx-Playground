@@ -1,65 +1,49 @@
-/* styles.css */
 body {
-  font-family: Arial, sans-serif;
-}
-
-header {
-  background-color: #333;
-  color: white;
-  padding: 10px 15px;
-}
-
-nav h1 {
-  margin: 0;
-}
-
-.cart-container {
-  text-align: right;
-}
-
-.product-container {
-  display: flex;
-  justify-content: center;
-  padding: 20px;
+    font-family: Arial, sans-serif;
 }
 
 .product {
-  margin: 15px;
+    display: flex;
+    align-items: center;
+    padding: 20px;
 }
 
-.product img {
-  max-width: 30%; /* Adjust the percentage as needed or set a fixed pixel width */
-  height: auto;
-  display: block;
+.product-image {
+    width: 100px;
+    margin-right: 20px;
 }
 
-.product-details {
-  text-align: center;
+.product-details h2, .product-details .price {
+    margin: 0;
+    padding: 0;
 }
 
-button {
-  background-color: #008cba;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
+.basket, .basket-overview {
+    position: fixed;
+    right: 20px;
+    top: 20px;
 }
 
-button:hover {
-  background-color: #005f73;
+.basket-overview {
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    display: none;
 }
 
-footer {
-  background-color: #333;
-  color: white;
-  text-align: center;
-  padding: 10px 15px;
-  position: relative;
-  bottom: 0;
-  width: 100%;
+.basket-overview.hidden {
+    display: none;
+}
+
+.basket-overview.visible {
+    display: block;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    margin: 10px 0;
 }
