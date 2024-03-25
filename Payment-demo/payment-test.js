@@ -3,58 +3,57 @@ class ApiClient {
     this.baseUrl = baseUrl;
     this.apiKey = apiKey;
   }
-
   async sendRequest(endpoint, method = 'POST', requestData = null) {
     const url = `${this.baseUrl}/${endpoint}`;
     const options = {
-      method: method,
+      method,
       headers: {
         'Content-Type': 'application/json',
-        'X-API-KEY': this.apiKey, // Ensure header name matches what the API expects
+        'X-APIKEY': this.apiKey
       },
-      body: requestData ? JSON.stringify(requestData) : null,
     };
+
+    if (requestData) {
+      options.body = JSON.stringify(requestData);
+    }
 
     try {
       const response = await fetch(url, options);
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`API request failed with status ${response.status}: ${response.statusText}, Details: ${errorText}`);
+      
+      // Check if the response is JSON
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.indexOf("application/json") !== -1) {
+        const responseData = await response.json();
+        if (!response.ok) {
+          throw new Error(`API request failed with status ${response.status}: ${response.statusText}, Details: ${JSON.stringify(responseData)}`);
+        }
+        return responseData;
+      } else {
+        // Response is not JSON
+        const responseText = await response.text();
+        throw new Error(`API request failed with status ${response.status}: ${response.statusText}, Response not JSON: ${responseText}`);
       }
-      return await response.json();
     } catch (error) {
-      console.error(`Error occurred while sending API request: ${error}`);
-      throw error;
+      throw new Error(`Error occurred while sending API request: ${error.message}`);
     }
   }
 }
-
 const apiKey = 'c6490381A6ab0A4b18A9960Af3a9182c40ba';
 const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
 const apiClient = new ApiClient(baseUrl, apiKey);
-let basket = [];
-
-function updateBasketCount() {
+let paymentInitiated = false;
+const updateBasketCount = (basket) => {
   const cartButton = document.getElementById('cart');
   cartButton.textContent = `Basket (${basket.length})`;
-}
-
-function displayPaymentForm() {
+};
+const displayPaymentForm = () => {
   const paymentForm = document.getElementById('payment-form');
-  paymentForm.style.display = 'block';
-}
-
-function displayPaymentCompletedMessage() {
-  const messageDiv = document.getElementById('payment-completed-message');
-  messageDiv.style.display = 'block';
-}
-
-async function initiatePayment(method) {
-  if (basket.length === 0) {
-    alert("Your basket is empty.");
-    return;
+  if (paymentForm) {
+    paymentForm.style.display = 'block';
+  } else {
+    console.error('Payment form not found');
   }
-
+};
 const initiatePayment = (basket) => {
   if (!paymentInitiated) {
       const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
@@ -113,9 +112,9 @@ const initiatePayment = (basket) => {
       console.log('Payment has already been initiated.');
     }
   };
- switch (method) {
-    case 'sofort':
-      paymentData.sofort = {
+const initiateSofortPayment = (basket) => {
+  const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
+  const paymentData = {
     organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     capture_now: 'true',
     customer_ip: '10.20.0.186',
@@ -171,9 +170,9 @@ const initiatePayment = (basket) => {
       alert('Error initiating SOFORT payment. Please try again.');
     });
 };
-break;
-    case 'bancontact':
-      paymentData.bancontact = {
+const initiateBancontactPayment = (basket) => {
+const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
+const paymentData = {
 organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     capture_now: 'true',
     customer_ip: '10.20.0.186',
@@ -229,8 +228,9 @@ alert('Error initiating Bancontact payment. Please try again.');
 });
 };
 
-case 'ideal':
-      paymentData.ideal = { /* iDEAL specific data */ };
+const initiateidealPayment = (basket) => {
+const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
+const paymentData = {
 organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     capture_now: 'true',
     customer_ip: '10.20.0.186',
@@ -286,44 +286,75 @@ console.error('ideal payment initiation failed:', error);
 alert('Error initiating ideal payment. Please try again.');
 });
 };
-try {
-    const responseData = await apiClient.sendRequest('payments', 'POST', paymentData);
-    if (responseData && responseData.url) {
-      window.location.href = responseData.url; // Assuming redirection to payment URL
-    } else {
-      alert("Failed to initiate payment.");
-    }
-  } catch (error) {
-    alert(`Error initiating payment: ${error.message}`);
-  }
-};
-
 document.addEventListener('DOMContentLoaded', () => {
+ const basket = [];
+
   document.querySelectorAll('.add-to-basket').forEach(button => {
     button.addEventListener('click', function() {
-      const item = {
+      const product = {
         name: this.getAttribute('data-name'),
-        amount: parseInt(this.getAttribute('data-amount'), 10),
+        amount: this.getAttribute('data-amount')
       };
-      basket.push(item);
-      updateBasketCount();
+      basket.push(product);
+      updateBasketCount(basket);
     });
   });
-
-  document.getElementById('confirm-payment').addEventListener('click', () => {
-    const selectedMethod = document.querySelector('input[name="payment-method"]:checked')?.value;
-    if (selectedMethod) {
-      initiatePayment(selectedMethod);
-    } else {
-      alert("Please select a payment method.");
-    }
-  });
-
-  document.getElementById('cart').addEventListener('click', () => {
+ const payWithBancontactButton = document.getElementById('pay-with-bancontact');
+if (payWithBancontactButton) {
+payWithBancontactButton.addEventListener('click', () => {
+if (basket.length > 0) {
+initiateBancontactPayment(basket);
+} else {
+alert('Please add items to your basket before using Bancontact.');
+}
+});
+} else {
+console.error('Pay with bancontact button not found');
+}
+    const payWithidealButton = document.getElementById('pay-with-ideal');
+if (payWithidealButton) {
+payWithidealButton.addEventListener('click', () => {
+if (basket.length > 0) {
+initiateidealPayment(basket);
+} else {
+alert('Please add items to your basket before using ideal.');
+}
+});
+} else {
+console.error('Pay with ideal button not found');
+}
+   const payWithSofortButton = document.getElementById('pay-with-sofort');
+  if (payWithSofortButton) {
+    payWithSofortButton.addEventListener('click', () => {
+      if (basket.length > 0) {
+        initiateSofortPayment(basket);
+      } else {
+        alert('Please add items to your basket before using SOFORT.');
+      }
+    });
+  } else {
+    console.error('Pay with SOFORT button not found');
+  }
+ const payWithCardButton = document.getElementById('pay-with-card');
+  if (payWithCardButton) {
+    payWithCardButton.addEventListener('click', () => {
+      if (basket.length > 0) {
+        displayPaymentForm();
+        initiatePayment(basket);
+      } else {
+        alert('Please add items to your basket before payment.');
+      }
+    });
+  } else {
+    console.error('Pay with Card button not found');
+  }
+  const cartButton = document.getElementById('cart');
+  cartButton.addEventListener('click', () => {
     if (basket.length > 0) {
-      displayPaymentForm();
-    } else {
-      alert("Your basket is empty.");
+     displayPaymentForm();
+      initiatePayment(basket);
+   } else {
+     alert('Your basket is empty.');
     }
   });
 });
