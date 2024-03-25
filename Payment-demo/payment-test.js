@@ -331,15 +331,13 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Please select a payment method and add items to your basket.');
     }
   });
-
-   const cartButton = document.getElementById('cart');
+ const cartButton = document.getElementById('cart');
   cartButton.addEventListener('click', () => {
-    cartButton.addEventListener('click', () => {
     if (basket.length > 0) {
-     displayPaymentForm();
-      initiatePayment(basket);
-   } else {
-     alert('Your basket is empty.');
+      displayPaymentForm();
+      // Here you might want to do something else, like opening the basket overview or proceeding to checkout
+    } else {
+      alert('Your basket is empty.');
     }
   });
 });
