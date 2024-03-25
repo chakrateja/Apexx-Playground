@@ -6,90 +6,56 @@
   <title>Apexx Payment Demo</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
   <style>
+    /* Include your CSS here, merged with the new elements for simplicity */
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f4f4;
-      color: #333;
-      line-height: 1.6;
-    }
-    .container {
-      padding: 20px;
-    }
-    .product img {
-      max-width: 50%;
-      height: auto;
-      display: block;
-      margin: 0 auto 20px;
-    }
-    .product-details {
-      text-align: center;
-    }
-    .product-details h1 {
-      color: #1a202c; /* Darker text color */
-      margin: 5px 0;
-      font-size: 2.5em;
-    }
-    .product-details p {
-      font-size: 1.2em;
-      margin-bottom: 10px;
-    }
-    .product-details button {
-      background: #005f73;
-      color: #fff;
-      border: none;
-      padding: 8px 12px; /* Smaller buttons */
-      margin: 5px; /* Spacing between buttons */
-      cursor: pointer;
-      border-radius: 5px;
-      transition: background 0.3s ease;
-    }
-    .product-details button:hover {
-      background: #0a9396;
-    }
-    .cart-container {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-    }
-    #cart {
-      background: #94d2bd;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #2c3e50;
-      color: #fff;
-    }
-    footer a {
-      color: #1abc9c;
-    }
-    nav {
-      display: flex;
-      justify-content: flex-start;
-      gap: 20px;
-      padding: 20px;
-    }
-    nav a {
-      text-decoration: none;
-      color: #333;
-      padding: 5px;
-      border-radius: 5px;
-      transition: color 0.3s ease;
-    }
-    nav a:hover {
-      color: #005f73;
-    }
-    .title {
-      text-align: center;
-      font-weight: bold;
-      color: #1a202c; /* Darker text color */
-      font-size: 1.75em;
-      margin-top: -10px; /* Adjust as needed */
-    }
+    font-family: Arial, sans-serif;
+}
+
+.product {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+
+.product-image {
+    width: 100px;
+    margin-right: 20px;
+}
+
+.product-details h2, .product-details .price {
+    margin: 0;
+    padding: 0;
+}
+
+.basket, .basket-overview {
+    position: fixed;
+    right: 20px;
+    top: 20px;
+}
+
+.basket-overview {
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    display: none;
+}
+
+.basket-overview.hidden {
+    display: none;
+}
+
+.basket-overview.visible {
+    display: block;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    margin: 10px 0;
+}
   </style>
 </head>
 <body>
@@ -104,7 +70,7 @@
   <main class="container">
     <section class="product">
       <div class="product-details">
-        <img src="https://files.oaiusercontent.com/file-rn6lsWNB3j21WauclQychlMz?se=2024-03-19T18%3A00%3A19Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3Db07dcf6c-8e58-4de3-bf66-b1a1d007a182.webp&sig=fXS%2BL06sD3HYccj8z35nkwngNqu4iDUNmqFpK3aLLI0%3D" alt="Product Image">
+        <img src="https://files.oaiusercontent.com/file-rn6lsWNB3j21WauclQychlMz?se=2024-03-19T18%3A00%3A19Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3Db07dcf6c-8e58-4de3-bf66-b1a1d007a182.webp" alt="Product Image">
         <p>Price: £100.00</p>
         <button class="add-to-basket" data-amount="5000" data-name="Product 1">Add to Basket</button>
         <button id="pay-with-card">Pay with Card</button>
@@ -116,7 +82,7 @@
   </main>
 
   <div class="cart-container">
-    <button id="cart">Basket (1)</button
+    <button id="cart">Basket (1)</button>
   </div>
   <div id="payment-form" style="display: none;">
     <iframe id="payment-iframe" src="about:blank" style="width:100%; height:600px; border:none;"></iframe>
