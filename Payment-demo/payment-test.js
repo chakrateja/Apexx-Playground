@@ -56,6 +56,19 @@ const displayPaymentCompletedMessage = () => {
   const messageDiv = document.getElementById('payment-completed-message');
   messageDiv.style.display = 'block';
 };
+const initiatePayment = async (paymentData) => {
+  try {
+    const responseData = await apiClient.sendRequest('payment_endpoint', 'POST', paymentData); // Adjust 'payment_endpoint' as necessary
+    if (responseData && responseData.url) {
+      window.open(responseData.url, '_blank');
+      displayPaymentCompletedMessage();
+    } else {
+      alert('Failed to initiate payment');
+    }
+  } catch (error) {
+    alert(`Error initiating payment: ${error.message}`);
+  }
+};
 
 const initiatePayment = (basket) => {
   if (!paymentInitiated) {
@@ -306,36 +319,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
   
-  document.getElementById('confirm-payment').addEventListener('click', function() {
-    const selectedMethod = document.querySelector('input[name="payment-method"]:checked');
-    if (selectedMethod) {
-      switch (selectedMethod.value) {
-        case 'card':
-          displayPaymentForm();
-          initiatePayment(basket);
-          break;
-        case 'sofort':
-          initiateSofortPayment(basket);
-          break;
-        case 'bancontact':
-          initiateBancontactPayment(basket);
-          break;
-        case 'ideal':
-          initiateidealPayment(basket);
-          break;
-        default:
-          alert('Please select a payment method.');
-          break;
-      }
+  document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.add-to-basket').forEach(button => {
+    button.addEventListener('click', function() {
+      basket.push({
+        name: this.getAttribute('data-name'),
+        amount: this.getAttribute('data-amount'),
+      });
+      updateBasketCount();
+    });
+  });
+
+  document.getElementById('confirm-payment').addEventListener('click', () => {
+    const selectedMethod = document.querySelector('input[name="payment-method"]:checked')?.value;
+    if (selectedMethod && basket.length > 0) {
+      const paymentData = constructPaymentData(selectedMethod);
+      initiatePayment(paymentData);
     } else {
       alert('Please select a payment method and add items to your basket.');
     }
   });
- const cartButton = document.getElementById('cart');
-  cartButton.addEventListener('click', () => {
+
+  document.getElementById('cart').addEventListener('click', () => {
     if (basket.length > 0) {
       displayPaymentForm();
-      // Here you might want to do something else, like opening the basket overview or proceeding to checkout
+      // Optionally, show basket details or proceed directly to a checkout page
     } else {
       alert('Your basket is empty.');
     }
