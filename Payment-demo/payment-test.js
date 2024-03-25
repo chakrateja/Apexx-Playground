@@ -3,13 +3,14 @@ class ApiClient {
     this.baseUrl = baseUrl;
     this.apiKey = apiKey;
   }
+
   async sendRequest(endpoint, method = 'POST', requestData = null) {
     const url = `${this.baseUrl}/${endpoint}`;
     const options = {
       method,
       headers: {
         'Content-Type': 'application/json',
-        'X-APIKEY': this.apiKey
+        'X-APIKEY': this.apiKey,
       },
     };
 
@@ -19,8 +20,6 @@ class ApiClient {
 
     try {
       const response = await fetch(url, options);
-      
-      // Check if the response is JSON
       const contentType = response.headers.get("content-type");
       if (contentType && contentType.indexOf("application/json") !== -1) {
         const responseData = await response.json();
@@ -29,7 +28,6 @@ class ApiClient {
         }
         return responseData;
       } else {
-        // Response is not JSON
         const responseText = await response.text();
         throw new Error(`API request failed with status ${response.status}: ${response.statusText}, Response not JSON: ${responseText}`);
       }
@@ -38,22 +36,23 @@ class ApiClient {
     }
   }
 }
+
 const apiKey = 'c6490381A6ab0A4b18A9960Af3a9182c40ba';
 const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
 const apiClient = new ApiClient(baseUrl, apiKey);
+
 let paymentInitiated = false;
+
 const updateBasketCount = (basket) => {
   const cartButton = document.getElementById('cart');
   cartButton.textContent = `Basket (${basket.length})`;
 };
+
 const displayPaymentForm = () => {
   const paymentForm = document.getElementById('payment-form');
-  if (paymentForm) {
-    paymentForm.style.display = 'block';
-  } else {
-    console.error('Payment form not found');
-  }
+  paymentForm.style.display = 'block';
 };
+
 const initiatePayment = (basket) => {
   if (!paymentInitiated) {
       const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
