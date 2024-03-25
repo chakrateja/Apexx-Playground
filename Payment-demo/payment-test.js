@@ -285,9 +285,12 @@ console.error('ideal payment initiation failed:', error);
 alert('Error initiating ideal payment. Please try again.');
 });
 };
+const displayPaymentCompletedMessage = () => {
+  const messageDiv = document.getElementById('payment-completed-message');
+  messageDiv.style.display = 'block';
+};
 document.addEventListener('DOMContentLoaded', () => {
- const basket = [];
-
+  // Event listeners for the 'Add to Basket' buttons
   document.querySelectorAll('.add-to-basket').forEach(button => {
     button.addEventListener('click', function() {
       const product = {
@@ -298,57 +301,35 @@ document.addEventListener('DOMContentLoaded', () => {
       updateBasketCount(basket);
     });
   });
- const payWithBancontactButton = document.getElementById('pay-with-bancontact');
-if (payWithBancontactButton) {
-payWithBancontactButton.addEventListener('click', () => {
-if (basket.length > 0) {
-initiateBancontactPayment(basket);
-} else {
-alert('Please add items to your basket before using Bancontact.');
-}
-});
-} else {
-console.error('Pay with bancontact button not found');
-}
-    const payWithidealButton = document.getElementById('pay-with-ideal');
-if (payWithidealButton) {
-payWithidealButton.addEventListener('click', () => {
-if (basket.length > 0) {
-initiateidealPayment(basket);
-} else {
-alert('Please add items to your basket before using ideal.');
-}
-});
-} else {
-console.error('Pay with ideal button not found');
-}
-   const payWithSofortButton = document.getElementById('pay-with-sofort');
-  if (payWithSofortButton) {
-    payWithSofortButton.addEventListener('click', () => {
-      if (basket.length > 0) {
-        initiateSofortPayment(basket);
-      } else {
-        alert('Please add items to your basket before using SOFORT.');
+  document.getElementById('confirm-payment').addEventListener('click', function() {
+    const selectedMethod = document.querySelector('input[name="payment-method"]:checked');
+    if (selectedMethod) {
+      switch (selectedMethod.value) {
+        case 'card':
+          displayPaymentForm();
+          initiatePayment(basket);
+          break;
+        case 'sofort':
+          initiateSofortPayment(basket);
+          break;
+        case 'bancontact':
+          initiateBancontactPayment(basket);
+          break;
+        case 'ideal':
+          initiateidealPayment(basket);
+          break;
+        default:
+          alert('Please select a payment method.');
+          break;
       }
-    });
-  } else {
-    console.error('Pay with SOFORT button not found');
-  }
- const payWithCardButton = document.getElementById('pay-with-card');
-  if (payWithCardButton) {
-    payWithCardButton.addEventListener('click', () => {
-      if (basket.length > 0) {
-        displayPaymentForm();
-        initiatePayment(basket);
-      } else {
-        alert('Please add items to your basket before payment.');
-      }
-    });
-  } else {
-    console.error('Pay with Card button not found');
-  }
-  const cartButton = document.getElementById('cart');
+    } else {
+      alert('Please select a payment method and add items to your basket.');
+    }
+  });
+
+   const cartButton = document.getElementById('cart');
   cartButton.addEventListener('click', () => {
+    cartButton.addEventListener('click', () => {
     if (basket.length > 0) {
      displayPaymentForm();
       initiatePayment(basket);
