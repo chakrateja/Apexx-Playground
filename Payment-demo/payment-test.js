@@ -52,6 +52,10 @@ const displayPaymentForm = () => {
   const paymentForm = document.getElementById('payment-form');
   paymentForm.style.display = 'block';
 };
+const displayPaymentCompletedMessage = () => {
+  const messageDiv = document.getElementById('payment-completed-message');
+  messageDiv.style.display = 'block';
+};
 
 const initiatePayment = (basket) => {
   if (!paymentInitiated) {
@@ -301,6 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
       updateBasketCount(basket);
     });
   });
+  
   document.getElementById('confirm-payment').addEventListener('click', function() {
     const selectedMethod = document.querySelector('input[name="payment-method"]:checked');
     if (selectedMethod) {
