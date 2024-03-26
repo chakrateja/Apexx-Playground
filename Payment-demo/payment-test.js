@@ -56,7 +56,7 @@ const displayPaymentForm = () => {
     console.error('Payment form not found');
   }
 };
-const initiatePayment = (basket) => {
+const initiateCardPayment = (basket) => {
   if (!paymentInitiated) {
       const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
       const paymentData = {
@@ -327,7 +327,15 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Your basket is empty.');
     }
   });
-document.getElementById('confirm-payment').addEventListener('click', () => {
+  document.getElementById('cart').addEventListener('click', function() {
+  document.querySelector('.products').classList.remove('active');
+  document.getElementById('payment-options-page').classList.add('active');
+});
+
+document.getElementById('back-to-products').addEventListener('click', function() {
+  document.getElementById('payment-options-page').classList.remove('active');
+  document.querySelector('.products').classList.add('active');
+});document.getElementById('confirm-payment').addEventListener('click', () => {
   const selectedMethod = document.querySelector('input[name="payment-method"]:checked').value;
   switch(selectedMethod) {
     case 'card':
