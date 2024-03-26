@@ -414,12 +414,11 @@ const displayPaymentSuccess = (responseData) => {
   mainContainer.appendChild(successMessage);
   
   // Listen for the back button click
-  document.getElementById('back-to-shop').addEventListener('click', () => {
+  document.getElementById('back-to-products').addEventListener('click', () => {
     successMessage.remove();
     document.querySelector('.products').style.display = 'flex'; // Show the products again
     basket = []; // Reset the basket
     updateBasketCount();
   });
 };
-  // Initialization for payment buttons (SOFORT, Bancontact, iDEAL) omitted for brevity
 });
