@@ -320,14 +320,6 @@ const displayPaymentOptions = () => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('cart').addEventListener('click', () => {
-    if (basket.length > 0) {
-      displayPaymentOptions();
-    } else {
-      alert('Your basket is empty.');
-    }
-  });
-document.addEventListener('DOMContentLoaded', () => {
   const cartButton = document.getElementById('cart');
   const backButton = document.getElementById('back-to-products');
   const productsSection = document.querySelector('.products'); // Make sure this matches your products div
