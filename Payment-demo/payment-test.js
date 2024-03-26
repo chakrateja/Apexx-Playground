@@ -299,14 +299,7 @@ document.querySelectorAll('.add-to-basket').forEach(button => {
       updateBasketCount();
     });
   });
-const showPaymentOptions = () => {
-  const paymentOptionsForm = document.getElementById('payment-options-form');
-  if (paymentOptionsForm) {
-    paymentOptionsForm.style.display = 'block'; // Show the form
-    const paymentIframe = document.getElementById('payment-iframe');
-    if (paymentIframe) paymentIframe.style.display = 'none'; // Hide the iframe initially
-  }
-};
+
   // Event listeners for payment method buttons
   document.getElementById('pay-with-sofort').addEventListener('click', () => initiateSofortPayment(basket));
   document.getElementById('pay-with-bancontact').addEventListener('click', () => initiateBancontactPayment(basket));
