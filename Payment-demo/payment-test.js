@@ -320,24 +320,27 @@ const displayPaymentOptions = () => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  const cartButton = document.getElementById('cart');
-  const backButton = document.getElementById('back-to-products');
-  const productsSection = document.querySelector('.products'); // Make sure this matches your products div
-  const paymentOptionsSection = document.getElementById('payment-options-page'); // Matches your payment options div
+    const basketButton = document.getElementById('cart');
+    const backButton = document.getElementById('back-to-products'); // Ensure this button exists in your HTML
+    const productsSection = document.querySelector('.products'); // The section containing your products
+    const paymentOptionsSection = document.getElementById('payment-page'); // Ensure this is the ID of your payment options section
 
-  cartButton.addEventListener('click', () => {
-    if (basket.length > 0) {
-      productsSection.style.display = 'none'; // Hide products
-      paymentOptionsSection.style.display = 'block'; // Show payment options
-    } else {
-      alert('Your basket is empty.');
+    // Hide the payment options section initially
+    if (paymentOptionsSection) {
+        paymentOptionsSection.style.display = 'none';
     }
-  });
 
-  backButton.addEventListener('click', () => {
-    paymentOptionsSection.style.display = 'none'; // Hide payment options
-    productsSection.style.display = 'flex'; // Show products again
-  });
+    // Toggle to payment options view
+    basketButton.addEventListener('click', () => {
+        if (basket.length > 0) {
+            productsSection.style.display = 'none';
+            if (paymentOptionsSection) {
+                paymentOptionsSection.style.display = 'block';
+            }
+        } else {
+            alert('Your basket is empty.');
+        }
+    });
 
     // Back to products view
     if (backButton) {
@@ -347,7 +350,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             productsSection.style.display = 'flex'; // Or 'block', depending on your layout
         });
-    }document.getElementById('confirm-payment').addEventListener('click', () => {
+    }
+document.getElementById('confirm-payment').addEventListener('click', () => {
   const selectedMethod = document.querySelector('input[name="payment-method"]:checked').value;
   switch(selectedMethod) {
     case 'card':
