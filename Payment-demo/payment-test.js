@@ -315,7 +315,67 @@ const displayPaymentOptions = () => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  // DOMContentLoaded logic remains unchanged...
+  const basket = [];
+
+  document.querySelectorAll('.add-to-basket').forEach(button => {
+    button.addEventListener('click', function() {
+      const product = {
+        name: this.getAttribute('data-name'),
+        amount: this.getAttribute('data-amount')
+      };
+      basket.push(product);
+      updateBasketCount(basket);
+    });
+  });
+ const payWithBancontactButton = document.getElementById('pay-with-bancontact');
+if (payWithBancontactButton) {
+payWithBancontactButton.addEventListener('click', () => {
+if (basket.length > 0) {
+initiateBancontactPayment(basket);
+} else {
+alert('Please add items to your basket before using Bancontact.');
+}
+});
+} else {
+console.error('Pay with bancontact button not found');
+}
+    const payWithidealButton = document.getElementById('pay-with-ideal');
+if (payWithidealButton) {
+payWithidealButton.addEventListener('click', () => {
+if (basket.length > 0) {
+initiateidealPayment(basket);
+} else {
+alert('Please add items to your basket before using ideal.');
+}
+});
+} else {
+console.error('Pay with ideal button not found');
+}
+   const payWithSofortButton = document.getElementById('pay-with-sofort');
+  if (payWithSofortButton) {
+    payWithSofortButton.addEventListener('click', () => {
+      if (basket.length > 0) {
+        initiateSofortPayment(basket);
+      } else {
+        alert('Please add items to your basket before using SOFORT.');
+      }
+    });
+  } else {
+    console.error('Pay with SOFORT button not found');
+  }
+ const payWithCardButton = document.getElementById('pay-with-card');
+  if (payWithCardButton) {
+    payWithCardButton.addEventListener('click', () => {
+      if (basket.length > 0) {
+        displayPaymentForm();
+        initiatePayment(basket);
+      } else {
+        alert('Please add items to your basket before payment.');
+      }
+    });
+  } else {
+    console.error('Pay with Card button not found');
+  }
 
   document.querySelectorAll('.add-to-basket').forEach(button => {
     button.addEventListener('click', function() {
