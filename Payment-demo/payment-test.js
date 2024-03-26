@@ -323,9 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const basketButton = document.getElementById('cart');
     const backButton = document.getElementById('back-to-products'); // Ensure this button exists in your HTML
     const productsSection = document.querySelector('.products'); // The section containing your products
-    const paymentOptionsSection = document.getElementById('payment-page'); // Ensure this is the ID of your payment options section
-
-    // Hide the payment options section initially
+    const paymentOptionsSection = document.getElementById('payment-options-page'); // Ensure this is the ID of your payment options section
     if (paymentOptionsSection) {
         paymentOptionsSection.style.display = 'none';
     }
