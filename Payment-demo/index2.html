@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,81 +7,61 @@
   <title>Apexx Payment Demo</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
   <style>
-    /* Include your CSS here, merged with the new elements for simplicity */
     body {
     font-family: Arial, sans-serif;
 }
 
-.product {
+.title {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 24px;
+}
+
+nav {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+nav a {
+  margin: 0 10px;
+}
+
+.products {
     display: flex;
-    align-items: center;
-    padding: 20px;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.product {
+    flex-basis: 30%;
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: center;
 }
 
 .product-image {
     width: 100px;
-    margin-right: 20px;
+    height: 100px;
+    object-fit: cover;
+    margin-bottom: 10px;
 }
 
-.product-details h2, .product-details .price {
-    margin: 0;
-    padding: 0;
+.cart-container {
+  position: fixed;
+  right: 20px;
+  top: 20px;
 }
 
-.basket, .basket-overview {
-    position: fixed;
-    right: 20px;
-    top: 20px;
+#cart {
+  background: url('https://cdn-icons-png.flaticon.com/512/263/263142.png') no-repeat left center;
+  background-size: 24px 24px;
+  padding-left: 30px;
+  border: none;
+  cursor: pointer;
 }
 
-.basket-overview {
-    background-color: #f1f1f1;
-    padding: 10px;
-    border-radius: 5px;
-    display: none;
-}
-
-.basket-overview.hidden {
-    display: none;
-}
-
-.basket-overview.visible {
-    display: block;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-ul li {
-    margin: 10px 0;
-}
-    .main-content {
-  display: flex;
-  justify-content: space-between;
-}
-
-.payment-methods {
-  margin-top: 20px;
-}
-
-#payment-form iframe {
-  width: 100%;
-  height: 600px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-
-/* Additional styles for back button and success message */
-.back-button, .payment-success {
-  display: none; /* Initially hidden */
-  margin-top: 20px;
-}
-
-.payment-success {
-  color: green;
-  font-weight: bold;
+#payment-options-form {
+  display: none;
 }
   </style>
 </head>
@@ -94,35 +75,41 @@ ul li {
     </nav>
   </header>
   <main class="container">
+    <div class="products">
     <section class="product">
-      <div class="product-details">
-        <img src="https://files.oaiusercontent.com/file-rn6lsWNB3j21WauclQychlMz?se=2024-03-19T18%3A00%3A19Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3Db07dcf6c-8e58-4de3-bf66-b1a1d007a182.webp&sig=fXS%2BL06sD3HYccj8z35nkwngNqu4iDUNmqFpK3aLLI0%3D" alt="Product Image">
-        <p>Price: £100.00</p>
-        <button class="add-to-basket" data-amount="5000" data-name="Product 1">Add to Basket</button>
-        <form id="payment-options-form">
-  <input type="radio" id="pay-with-card" name="payment-method" value="card">
-  <label for="pay-with-card">Pay with Card</label><br>
-  <input type="radio" id="pay-with-sofort" name="payment-method" value="sofort">
-  <label for="pay-with-sofort">Pay with SOFORT</label><br>
-  <input type="radio" id="pay-with-bancontact" name="payment-method" value="bancontact">
-  <label for="pay-with-bancontact">Pay with BANCONTACT</label><br>
-  <input type="radio" id="pay-with-ideal" name="payment-method" value="ideal">
-  <label for="pay-with-ideal">Pay with IDEAL</label><br>
-  <button type="button" id="confirm-payment">Confirm Payment</button>
-</form>
-        </section>
-    <div id="payment-completed-message" style="display: none;">
-  <p>Payment Completed Successfully!</p>
-      </div>
-    <button class="back-button">Back to the previous page</button>
-<div class="payment-success">Payment Successful!</div>
+      <img src="https://images.unsplash.com/photo-1601597111158-2fceff292cdc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80" alt="Product 1" class="product-image">
+      <h2>Product 1</h2>
+      <p>Price: £100.00</p>
+      <button class="add-to-basket" data-amount="10000" data-name="Product 1">Add to Basket</button>
+    </section>
+    <section class="product">
+      <img src="https://images.unsplash.com/photo-1553456558-aff63285bdd1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80" alt="Product 2" class="product-image">
+      <h2>Product 2</h2>
+      <p>Price: £200.00</p>
+      <button class="add-to-basket" data-amount="20000" data-name="Product 2">Add to Basket</button>
+    </section>
+    <section class="product">
+      <img src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80" alt="Product 3" class="product-image">
+      <h2>Product 3</h2>
+      <p>Price: £300.00</p>
+      <button class="add-to-basket" data-amount="30000" data-name="Product 3">Add to Basket</button>
+    </section>
+    </div>
+    <div id="payment-options-form">
+      <h2>Choose Payment Method</h2>
+      <input type="radio" id="pay-with-card" name="payment-method" value="card">
+      <label for="pay-with-card">Pay with Card</label><br>
+      <input type="radio" id="pay-with-sofort" name="payment-method" value="sofort">
+      <label for="pay-with-sofort">Pay with SOFORT</label><br>
+      <input type="radio" id="pay-with-bancontact" name="payment-method" value="bancontact">
+      <label for="pay-with-bancontact">Pay with BANCONTACT</label><br>
+      <input type="radio" id="pay-with-ideal" name="payment-method" value="ideal">
+      <label for="pay-with-ideal">Pay with IDEAL</label><br>
+      <button type="button" id="confirm-payment">Confirm Payment</button>
+    </div>
   </main>
-
   <div class="cart-container">
-    <button id="cart">Basket (1)</button>
-  </div>
-  <div id="payment-form" style="display: none;">
-    <iframe id="payment-iframe" src="about:blank" style="width:100%; height:600px; border:none;"></iframe>
+    <button id="cart">Basket (0)</button>
   </div>
   <script src="payment-test.js"></script>
 </body>
