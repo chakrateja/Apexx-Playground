@@ -376,7 +376,7 @@ document.getElementById('confirm-payment').addEventListener('click', () => {
       console.error('No payment method selected');
   }
 });
-  document.querySelectorAll('.add-to-basket').forEach(button => {
+ document.querySelectorAll('.add-to-basket').forEach(button => {
     button.addEventListener('click', function() {
       const product = {
         name: this.getAttribute('data-name'),
@@ -386,6 +386,13 @@ document.getElementById('confirm-payment').addEventListener('click', () => {
       updateBasketCount();
     });
   });
+
+  // Update the display of the basket count
+  function updateBasketCount() {
+    const cartButton = document.getElementById('cart');
+    cartButton.textContent = `Basket (${basket.length})`;
+  }
+});
 const displayPaymentSuccess = (responseData) => {
   // Hide the payment form and options
   const paymentForm = document.getElementById('payment-form');
