@@ -694,7 +694,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (paymentOptionsSection) {
         paymentOptionsSection.style.display = 'none';
     }
-
+ document.querySelectorAll('.add-to-basket').forEach(button => {
+    button.addEventListener('click', function() {
+      const product = {
+        name: this.getAttribute('data-name'),
+        amount: this.getAttribute('data-amount')
+      };
+      basket.push(product);
+      updateBasketCount();
+    });
+  });
     // Toggle to payment options view
     basketButton.addEventListener('click', () => {
         if (basket.length > 0) {
@@ -777,16 +786,4 @@ const displayPaymentSuccess = (responseData) => {
 };
   // Initialization for payment buttons (SOFORT, Bancontact, iDEAL) omitted for brevity
 });
-  document.querySelectorAll('.add-to-basket').forEach(button => {
-    button.addEventListener('click', function() {
-      const product = {
-        name: this.getAttribute('data-name'),
-        amount: this.getAttribute('data-amount')
-      };
-      basket.push(product);
-      updateBasketCount();
-    });
-  });
-
-  // Initialization for payment buttons (SOFORT, Bancontact, iDEAL) omitted for brevity
-});
+  
