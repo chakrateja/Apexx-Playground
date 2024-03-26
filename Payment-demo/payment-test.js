@@ -331,8 +331,18 @@ const displayPaymentSuccess = (responseData) => {
   `;
   
   // Append the success message to the main container
-  const mainContainer = document.querySelector('.container');
+  const mainContainer = document.querySelector('main.container');
   mainContainer.appendChild(successMessage);
+  
+  // Listen for the back button click
+  document.getElementById('back-to-shop').addEventListener('click', () => {
+    successMessage.remove();
+    document.querySelector('.products').style.display = 'flex'; // Show the products again
+    basket = []; // Reset the basket
+    updateBasketCount();
+  });
+};
+
   
 
 document.addEventListener('DOMContentLoaded', () => {
