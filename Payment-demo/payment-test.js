@@ -419,4 +419,4 @@ const displayPaymentSuccess = (responseData) => {
     basket = []; // Reset the basket
     updateBasketCount();
   });
-};
+});
