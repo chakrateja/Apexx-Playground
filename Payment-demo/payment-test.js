@@ -327,7 +327,26 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Your basket is empty.');
     }
   });
-
+document.getElementById('confirm-payment').addEventListener('click', () => {
+  const selectedMethod = document.querySelector('input[name="payment-method"]:checked').value;
+  switch(selectedMethod) {
+    case 'card':
+      // Assume initiateCardPayment is a function like your others
+      initiateCardPayment(basket); 
+      break;
+    case 'sofort':
+      initiateSofortPayment(basket);
+      break;
+    case 'bancontact':
+      initiateBancontactPayment(basket);
+      break;
+    case 'ideal':
+      initiateidealPayment(basket);
+      break;
+    default:
+      console.error('No payment method selected');
+  }
+});
   document.querySelectorAll('.add-to-basket').forEach(button => {
     button.addEventListener('click', function() {
       const product = {
