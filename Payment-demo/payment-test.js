@@ -406,8 +406,7 @@ const displayPaymentSuccess = (responseData) => {
   successMessage.innerHTML = `
     <h2>Payment Successful!</h2>
     <p>Transaction ID: ${responseData.id}</p>
-    <button id="back-to-shop">Back to Products Page</button>
-  `;
+    <button id="back-to-shop">Back to Products Page</button>;
   
   // Append the success message to the main container
   const mainContainer = document.querySelector('main.container');
@@ -420,5 +419,5 @@ const displayPaymentSuccess = (responseData) => {
     basket = []; // Reset the basket
     updateBasketCount();
   });
-};
+
 });
