@@ -314,38 +314,7 @@ const displayPaymentOptions = () => {
     };
     paymentOptions.appendChild(button);
   });
-  {
-const displayPaymentSuccess = (responseData) => {
-  // Hide the payment form and options
-  const paymentForm = document.getElementById('payment-form');
-  const paymentOptions = document.getElementById('payment-options-page');
-  if (paymentForm) paymentForm.style.display = 'none';
-  if (paymentOptions) paymentOptions.style.display = 'none';
-  
-  // Display the success message
-  const successMessage = document.createElement('div');
-  successMessage.id = 'payment-success';
-  successMessage.innerHTML = `
-    <h2>Payment Successful!</h2>
-    <p>Transaction ID: ${responseData.id}</p>
-    <button id="back-to-shop">Back to Products Page</button>
-  `;
-  
-  // Append the success message to the main container
-  const mainContainer = document.querySelector('main.container');
-  mainContainer.appendChild(successMessage);
-  
-  // Listen for the back button click
-  document.getElementById('back-to-shop').addEventListener('click', () => {
-    successMessage.remove();
-    document.querySelector('.products').style.display = 'flex'; // Show the products again
-    basket = []; // Reset the basket
-    updateBasketCount();
-  });
-};
-  }
 
-  
 
 document.addEventListener('DOMContentLoaded', () => {
     const basketButton = document.getElementById('cart');
@@ -377,6 +346,34 @@ document.addEventListener('DOMContentLoaded', () => {
             productsSection.style.display = 'flex'; // Or 'block', depending on your layout
         });
     }
+  const displayPaymentSuccess = (responseData) => {
+  // Hide the payment form and options
+  const paymentForm = document.getElementById('payment-form');
+  const paymentOptions = document.getElementById('payment-options-page');
+  if (paymentForm) paymentForm.style.display = 'none';
+  if (paymentOptions) paymentOptions.style.display = 'none';
+  
+  // Display the success message
+  const successMessage = document.createElement('div');
+  successMessage.id = 'payment-success';
+  successMessage.innerHTML = `
+    <h2>Payment Successful!</h2>
+    <p>Transaction ID: ${responseData.id}</p>
+    <button id="back-to-shop">Back to Products Page</button>
+  `;
+  
+  // Append the success message to the main container
+  const mainContainer = document.querySelector('main.container');
+  mainContainer.appendChild(successMessage);
+  
+  // Listen for the back button click
+  document.getElementById('back-to-shop').addEventListener('click', () => {
+    successMessage.remove();
+    document.querySelector('.products').style.display = 'flex'; // Show the products again
+    basket = []; // Reset the basket
+    updateBasketCount();
+  });
+};
 document.getElementById('confirm-payment').addEventListener('click', () => {
   const selectedMethod = document.querySelector('input[name="payment-method"]:checked').value;
   switch(selectedMethod) {
