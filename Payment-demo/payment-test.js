@@ -327,15 +327,38 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Your basket is empty.');
     }
   });
-  document.getElementById('cart').addEventListener('click', function() {
-  document.querySelector('.products').classList.remove('active');
-  document.getElementById('payment-options-page').classList.add('active');
-});
+ document.addEventListener('DOMContentLoaded', () => {
+    const basketButton = document.getElementById('cart');
+    const backButton = document.getElementById('back-to-products'); // Ensure this button exists in your HTML
+    const productsSection = document.querySelector('.products'); // The section containing your products
+    const paymentOptionsSection = document.getElementById('payment-page'); // Ensure this is the ID of your payment options section
 
-document.getElementById('back-to-products').addEventListener('click', function() {
-  document.getElementById('payment-options-page').classList.remove('active');
-  document.querySelector('.products').classList.add('active');
-});document.getElementById('confirm-payment').addEventListener('click', () => {
+    // Hide the payment options section initially
+    if (paymentOptionsSection) {
+        paymentOptionsSection.style.display = 'none';
+    }
+
+    // Toggle to payment options view
+    basketButton.addEventListener('click', () => {
+        if (basket.length > 0) {
+            productsSection.style.display = 'none';
+            if (paymentOptionsSection) {
+                paymentOptionsSection.style.display = 'block';
+            }
+        } else {
+            alert('Your basket is empty.');
+        }
+    });
+
+    // Back to products view
+    if (backButton) {
+        backButton.addEventListener('click', () => {
+            if (paymentOptionsSection) {
+                paymentOptionsSection.style.display = 'none';
+            }
+            productsSection.style.display = 'flex'; // Or 'block', depending on your layout
+        });
+    }document.getElementById('confirm-payment').addEventListener('click', () => {
   const selectedMethod = document.querySelector('input[name="payment-method"]:checked').value;
   switch(selectedMethod) {
     case 'card':
