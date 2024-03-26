@@ -42,8 +42,7 @@ const apiKey = 'c6490381A6ab0A4b18A9960Af3a9182c40ba';
 const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
 const apiClient = new ApiClient(baseUrl, apiKey);
 let paymentInitiated = false;
-document.addEventListener('DOMContentLoaded', () => {
-  const basket = [];
+let basket = [];
 
   const updateBasketCount = () => {
     const cartButton = document.getElementById('cart');
@@ -163,8 +162,7 @@ const initiateSofortPayment = (basket) => {
     .then(responseData => {
       if (responseData && responseData.url) {
         // Redirect the customer to the SOFORT payment URL
-        window.location.href = paymentInitiationUrl; 
-      } else {
+window.location.href = responseData.url;      } else {
         alert('Failed to initiate SOFORT payment');
       }
     })
@@ -289,28 +287,53 @@ console.error('ideal payment initiation failed:', error);
 alert('Error initiating ideal payment. Please try again.');
 });
 };
-document.querySelectorAll('.add-to-basket').forEach(button => {
+const displayPaymentOptions = () => {
+  const paymentMethods = ['SOFORT', 'Bancontact', 'iDEAL'];
+  const paymentOptions = document.createElement('div');
+
+  paymentMethods.forEach(method => {
+    const button = document.createElement('button');
+    button.textContent = `Pay with ${method}`;
+    button.onclick = () => {
+      switch (method) {
+        case 'SOFORT':
+          initiateSofortPayment(basket);
+          break;
+        case 'Bancontact':
+          initiateBancontactPayment(basket);
+          break;
+        case 'iDEAL':
+          initiateidealPayment(basket);
+          break;
+      }
+      paymentOptions.style.display = 'none'; // Hide options after selection
+    };
+    paymentOptions.appendChild(button);
+  });
+
+  document.body.appendChild(paymentOptions);
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  // DOMContentLoaded logic remains unchanged...
+
+  document.querySelectorAll('.add-to-basket').forEach(button => {
     button.addEventListener('click', function() {
       const product = {
         name: this.getAttribute('data-name'),
-        amount: parseInt(this.getAttribute('data-amount'), 10)
+        amount: parseInt(this.getAttribute('data-amount'), 10) // Ensure amount is parsed as integer
       };
       basket.push(product);
       updateBasketCount();
     });
   });
 
-  // Event listeners for payment method buttons
-  document.getElementById('pay-with-sofort').addEventListener('click', () => initiateSofortPayment(basket));
-  document.getElementById('pay-with-bancontact').addEventListener('click', () => initiateBancontactPayment(basket));
-  document.getElementById('pay-with-ideal').addEventListener('click', () => initiateidealPayment(basket));
-
   document.getElementById('cart').addEventListener('click', () => {
     if (basket.length > 0) {
-      // Show payment options or directly call a payment initiation function
-      console.log('Display payment options or initiate payment directly');
+      displayPaymentOptions();
     } else {
       alert('Your basket is empty.');
     }
   });
 });
+});                          
