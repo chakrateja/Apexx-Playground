@@ -314,6 +314,7 @@ const displayPaymentOptions = () => {
     };
     paymentOptions.appendChild(button);
   });
+  {
 const displayPaymentSuccess = (responseData) => {
   // Hide the payment form and options
   const paymentForm = document.getElementById('payment-form');
@@ -342,6 +343,7 @@ const displayPaymentSuccess = (responseData) => {
     updateBasketCount();
   });
 };
+  }
 
   
 
