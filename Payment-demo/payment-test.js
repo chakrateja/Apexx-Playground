@@ -56,7 +56,7 @@ const displayPaymentForm = () => {
     console.error('Payment form not found');
   }
 };
-const initiateCardPayment = (basket) => {
+const initiatePayment = (basket) => {
   if (!paymentInitiated) {
       const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
       const paymentData = {
@@ -354,7 +354,7 @@ document.getElementById('confirm-payment').addEventListener('click', () => {
   switch(selectedMethod) {
     case 'card':
       // Assume initiateCardPayment is a function like your others
-      initiateCardPayment(basket); 
+      initiatePayment(basket); 
       break;
     case 'sofort':
       initiateSofortPayment(basket);
