@@ -75,8 +75,8 @@ nav a {
     </nav>
   </header>
   <main class="container">
-    <div class="products">
-    <section class="product">
+<div class="products active">    
+  <section class="product">
       <img src="https://images.unsplash.com/photo-1601597111158-2fceff292cdc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80" alt="Product 1" class="product-image">
       <h2>Product 1</h2>
       <p>Price: £100.00</p>
@@ -95,7 +95,7 @@ nav a {
       <button class="add-to-basket" data-amount="30000" data-name="Product 3">Add to Basket</button>
     </section>
     </div>
-    <div id="payment-options-form">
+    <div class="payment-methods" id="payment-options-page">
       <h2>Choose Payment Method</h2>
       <input type="radio" id="pay-with-card" name="payment-method" value="card">
       <label for="pay-with-card">Pay with Card</label><br>
@@ -106,6 +106,7 @@ nav a {
       <input type="radio" id="pay-with-ideal" name="payment-method" value="ideal">
       <label for="pay-with-ideal">Pay with IDEAL</label><br>
       <button type="button" id="confirm-payment">Confirm Payment</button>
+      <button type="button" id="back-to-products">Back to Products</button>
     </div>
   </main>
   <div class="cart-container">
