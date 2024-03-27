@@ -296,6 +296,8 @@ const displayPaymentOptions = () => {
     button.textContent = `Pay with ${method}`;
     button.onclick = () => {
       switch (method) {
+         case 'CARD':
+          initiatePayment(basket); 
         case 'SOFORT':
           initiateSofortPayment(basket);
           break;
