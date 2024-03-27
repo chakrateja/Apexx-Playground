@@ -382,5 +382,3 @@ document.getElementById('confirm-payment').addEventListener('click', () => {
     updateBasketCount();
   });
 });
-  // Initialization for payment buttons (SOFORT, Bancontact, iDEAL) omitted for brevity
-});
