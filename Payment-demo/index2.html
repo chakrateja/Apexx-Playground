@@ -9,7 +9,43 @@
     body {
     font-family: Arial, sans-serif;
 }
+.product-image {
+    width: 100%; /* Adjust if necessary to maintain aspect ratio */
+    height: auto;
+}
 
+/* Button Enhancements */
+button {
+    background-color: #00449e; /* Example color - use your brand color */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #00337d; /* Darken button on hover for interaction feedback */
+}
+
+/* Continue Shopping Button Styling */
+#continue-shopping {
+    display: block; /* Adjust as needed for your layout */
+    margin: 20px auto; /* Centers the button with some space */
+}
+
+/* Checkout Button Styling */
+#checkout {
+    background-color: #4CAF50; /* A 'go' color to encourage checkout */
+}
+
+/* Layout Enhancements with Flexbox or Grid */
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
 .title {
   text-align: center;
   margin: 20px 0;
@@ -87,6 +123,11 @@ nav a {
       <h2>Product 3</h2>
       <p>Price: £300.00</p>
       <button class="add-to-basket" data-amount="30000" data-name="Product 3">Add to Basket</button>
+      <!-- Continue Shopping Button (Place within the main container) -->
+<button id="continue-shopping" aria-label="Continue shopping">Continue Shopping</button>
+
+<!-- Checkout Button (Place within the cart container) -->
+<button id="checkout" aria-label="Proceed to checkout">Checkout</button>
     </section>
     </div>
     <div class="payment-methods" id="payment-options-page">
