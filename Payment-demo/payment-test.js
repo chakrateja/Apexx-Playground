@@ -339,6 +339,13 @@ document.addEventListener('DOMContentLoaded', () => {
   if (returnButton) {
     returnButton.addEventListener('click', returnToProducts);
   }
+  const returnButton = document.getElementById('return-to-products-btn');
+  if (returnButton) {
+    returnButton.addEventListener('click', () => {
+      // Redirect back to the products page
+      window.location.href = 'yourProductPage.html'; // Replace with the actual path to your products page
+    });
+  }
     const basketButton = document.getElementById('cart');
     const backButton = document.getElementById('back-to-products'); // Ensure this button exists in your HTML
     const productsSection = document.querySelector('.products'); // The section containing your products
