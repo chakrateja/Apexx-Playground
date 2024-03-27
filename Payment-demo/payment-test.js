@@ -72,7 +72,7 @@ const initiatePayment = (basket) => {
         duplicate_check: false,
         locale: 'en_GB',
         card: {
-          create_token: true
+          create_token: false
         },
         billing_address: {
           first_name: 'John', // Placeholder for real customer data
@@ -320,19 +320,6 @@ const displayPaymentOptions = () => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-   function returnToProducts() {
-    // Logic to return to the products
-    // If your product section is on the same page you might just need to hide and show sections
-    const productsSection = document.querySelector('.products');
-    const paymentForm = document.getElementById('payment-form');
-    if (productsSection && paymentForm) {
-      paymentForm.style.display = 'none';
-      productsSection.style.display = 'flex'; // Adjust this depending on your page's structure
-    } else {
-      // Otherwise, if it is on another page, you will redirect to that page
-      window.location.href = 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html'; // Replace with your actual product page URL
-    });
-  }
     const basketButton = document.getElementById('cart');
     const backButton = document.getElementById('back-to-products'); // Ensure this button exists in your HTML
     const productsSection = document.querySelector('.products'); // The section containing your products
