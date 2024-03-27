@@ -320,6 +320,25 @@ const displayPaymentOptions = () => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+   function returnToProducts() {
+    // Logic to return to the products
+    // If your product section is on the same page you might just need to hide and show sections
+    const productsSection = document.querySelector('.products');
+    const paymentForm = document.getElementById('payment-form');
+    if (productsSection && paymentForm) {
+      paymentForm.style.display = 'none';
+      productsSection.style.display = 'flex'; // Adjust this depending on your page's structure
+    } else {
+      // Otherwise, if it is on another page, you will redirect to that page
+      window.location.href = 'yourProductPage.html'; // Replace with your actual product page URL
+    }
+  }
+
+  // Event listener setup for the "Return to Products" button
+  const returnButton = document.getElementById('return-to-products-btn'); // Ensure this button is added to your HTML
+  if (returnButton) {
+    returnButton.addEventListener('click', returnToProducts);
+  }
     const basketButton = document.getElementById('cart');
     const backButton = document.getElementById('back-to-products'); // Ensure this button exists in your HTML
     const productsSection = document.querySelector('.products'); // The section containing your products
