@@ -48,7 +48,6 @@ let basket = [];
     const cartButton = document.getElementById('cart');
     cartButton.textContent = `Basket (${basket.length})`;
   };
-
 const displayPaymentForm = () => {
   const paymentForm = document.getElementById('payment-form');
   if (paymentForm) {
@@ -57,13 +56,6 @@ const displayPaymentForm = () => {
     console.error('Payment form not found');
   }
 };
-const displayPaymentSuccess = () => {
-  const paymentSuccessMessage = document.getElementById('payment-success-message');
-  if (paymentSuccessMessage) {
-    paymentSuccessMessage.style.display = 'block'; // Show the payment success message
-  }
-};
-
 const initiatePayment = (basket) => {
   if (!paymentInitiated) {
       const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
@@ -99,14 +91,21 @@ const initiatePayment = (basket) => {
         }
       };
    apiClient.sendRequest('', 'POST', paymentData)
-    .then(responseData => {
-      if (responseData && responseData.url) {
-        window.location.href = responseData.url; // Or handling iframe src
-        displayPaymentSuccess();
-      } else {
-        alert('Failed to initiate payment');
-      }
-    })
+        .then(responseData => {
+          if (responseData && responseData.url) {
+            // Load the payment URL into the iframe and display it
+            const paymentIframe = document.getElementById('payment-iframe');
+            if (paymentIframe) {
+              paymentIframe.src = responseData.url;
+              paymentIframe.style.display = 'block';
+            } else {
+              console.error('Payment iframe not found');
+            }
+            paymentInitiated = true;
+          } else {
+            alert('Failed to initiate payment');
+          }
+        })
         .catch(error => {
           console.error('Payment initiation failed:', error);
           alert('Error initiating payment. Please try again.');
@@ -158,13 +157,13 @@ const initiateSofortPayment = (basket) => {
       }
     }
   };
-apiClient.sendRequest('', 'POST', paymentData)
+
+  apiClient.sendRequest('', 'POST', paymentData)
     .then(responseData => {
       if (responseData && responseData.url) {
-        window.location.href = responseData.url; // Or handling iframe src
-        displayPaymentSuccess();
-      } else {
-        alert('Failed to initiate payment');
+        // Redirect the customer to the SOFORT payment URL
+window.location.href = responseData.url;      } else {
+        alert('Failed to initiate SOFORT payment');
       }
     })
     .catch(error => {
@@ -216,14 +215,14 @@ organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     }
   };
 apiClient.sendRequest('', 'POST', paymentData)
-    .then(responseData => {
-      if (responseData && responseData.url) {
-        window.location.href = responseData.url; // Or handling iframe src
-        displayPaymentSuccess();
-      } else {
-        alert('Failed to initiate payment');
-      }
-    })
+.then(responseData => {
+if (responseData && responseData.url) {
+// Redirect the customer to the Bancontact payment URL
+window.open(responseData.url, '_blank');
+} else {
+alert('Failed to initiate bancontact payment');
+}
+})
 .catch(error => {
 console.error('Bancontact payment initiation failed:', error);
 alert('Error initiating Bancontact payment. Please try again.');
@@ -273,60 +272,62 @@ organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
       }
     }
   };
+
 apiClient.sendRequest('', 'POST', paymentData)
-    .then(responseData => {
-      if (responseData && responseData.url) {
-        window.location.href = responseData.url; // Or handling iframe src
-        displayPaymentSuccess();
-      } else {
-        alert('Failed to initiate payment');
-      }
-    })
+.then(responseData => {
+if (responseData && responseData.url) {
+// Redirect the customer to the Bancontact payment URL
+window.open(responseData.url, '_blank');
+} else {
+alert('Failed to initiate ideal payment');
+}
+})
 .catch(error => {
 console.error('ideal payment initiation failed:', error);
 alert('Error initiating ideal payment. Please try again.');
 });
 };
 const displayPaymentOptions = () => {
- const paymentMethodsDiv = document.getElementById('payment-options-page');
-  const paymentButtons = {
-    'card': initiatePayment,
-    'sofort': initiatePayment,
-    'bancontact': initiatePayment,
-    'ideal': initiatePayment
-  };
-
-  // Iterate over the payment methods and set up buttons
-  Object.entries(paymentButtons).forEach(([methodName, methodFunction]) => {
-    const buttonId = `pay-with-${methodName}`;
-    const button = paymentMethodsDiv.querySelector(`#${buttonId}`);
-    if (button) {
-      button.addEventListener('click', () => {
-        methodFunction(basket, methodName);
-      });
-    }
+  const paymentMethods = ['SOFORT', 'Bancontact', 'iDEAL']; // Add more methods as needed
+  const paymentOptions = document.createElement('div');
+  paymentOptions.setAttribute('id', 'payment-options');
+  paymentMethods.forEach(method => {
+    const button = document.createElement('button');
+    button.textContent = `Pay with ${method}`;
+    button.onclick = () => {
+      switch (method) {
+        case 'SOFORT':
+          initiateSofortPayment(basket);
+          break;
+        case 'Bancontact':
+          initiateBancontactPayment(basket);
+          break;
+        case 'iDEAL':
+          initiateidealPayment(basket);
+          break;
+      }
+      paymentOptions.style.display = 'none'; // Hide options after selection
+    };
+    paymentOptions.appendChild(button);
   });
+
+  const existingOptions = document.getElementById('payment-options');
+  if (existingOptions) {
+    document.body.replaceChild(paymentOptions, existingOptions);
+  } else {
+    document.body.appendChild(paymentOptions);
+  }
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('return-to-products-btn').addEventListener('click', () => {
-    document.getElementById('payment-success-message').style.display = 'none';
-    document.querySelector('.products').style.display = 'flex';
-    basket = [];
-    updateBasketCount();
-  });
-// Event listener for the Return to Products button
-const setupReturnToProductsButton = () => {
-  const returnButton = document.getElementById('return-to-products-btn');
-  if (returnButton) {
-    returnButton.addEventListener('click', () => {
-      document.getElementById('payment-success-message').style.display = 'none';
-      document.querySelector('.products').style.display = 'flex';
-      basket = []; // Clear the basket
-      updateBasketCount();
-    });
-  }
-};
+    const basketButton = document.getElementById('cart');
+    const backButton = document.getElementById('back-to-products'); // Ensure this button exists in your HTML
+    const productsSection = document.querySelector('.products'); // The section containing your products
+    const paymentOptionsSection = document.getElementById('payment-options-page'); // Ensure this is the ID of your payment options section
+    if (paymentOptionsSection) {
+        paymentOptionsSection.style.display = 'none';
+    }
+
     // Toggle to payment options view
     basketButton.addEventListener('click', () => {
         if (basket.length > 0) {
@@ -368,17 +369,16 @@ document.getElementById('confirm-payment').addEventListener('click', () => {
       console.error('No payment method selected');
   }
 });
-  document.getElementById('return-to-products-btn').addEventListener('click', () => {
-    const paymentSuccessMessage = document.getElementById('payment-success-message');
-    if (paymentSuccessMessage) {
-      paymentSuccessMessage.style.display = 'none'; // Hide the payment success message
-    }
-    const productsSection = document.querySelector('.products');
-    if (productsSection) {
-      productsSection.style.display = 'flex'; // Show the products section
-    }
-    // Reset the basket if necessary
-    basket = [];
-    updateBasketCount();
+  document.querySelectorAll('.add-to-basket').forEach(button => {
+    button.addEventListener('click', function() {
+      const product = {
+        name: this.getAttribute('data-name'),
+        amount: this.getAttribute('data-amount')
+      };
+      basket.push(product);
+      updateBasketCount();
+    });
   });
+
+  // Initialization for payment buttons (SOFORT, Bancontact, iDEAL) omitted for brevity
 });
