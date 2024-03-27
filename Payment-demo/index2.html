@@ -9,11 +9,6 @@
     body {
     font-family: Arial, sans-serif;
 }
-.product-image {
-    width: 100%; /* Adjust if necessary to maintain aspect ratio */
-    height: auto;
-}
-
 /* Button Enhancements */
 button {
     background-color: #00449e; /* Example color - use your brand color */
@@ -23,7 +18,7 @@ button {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-    .payment-success-message {
+  .payment-success-message {
   display: none; /* Add this to initially hide the payment success message */
 }
 
@@ -43,68 +38,133 @@ button:hover {
 }
 
 /* Layout Enhancements with Flexbox or Grid */
-.products {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 20px;
-}
 .title {
   text-align: center;
   margin: 20px 0;
   font-size: 24px;
 }
 
-nav {
-  text-align: center;
-  margin-bottom: 10px;
+header {
+  background-color: #FFF;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
 }
 
 nav a {
-  margin: 0 5px;
-}
-.product-image {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    margin-bottom: 10px;
-}
-    .product {
-    border: 1px solid #ddd; /* subtle border */
-    padding: 16px;
-    border-radius: 8px; /* rounded corners */
-    background-color: #fff; /* white background */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* soft shadow */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    height: 350px; /* uniform height */
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #333;
+  display: inline-block;
 }
 
+nav a:hover {
+  background-color: #f4f4f4;
+}
+.product {
+  border: 1px solid #eee;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.product:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.product img {
+  width: 100%;
+  display: block;
+}
+
+.product h2 {
+  padding: 0.5em;
+  background: #f7f7f7;
+  margin: 0;
+}
+
+.product p {
+  padding: 0 0.5em;
+}
+
+.add-to-basket {
+  width: 100%;
+  padding: 1em;
+  border: none;
+  background: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
 .cart-container {
   position: fixed;
   right: 20px;
   top: 20px;
-}
-.payment-methods {
-  display: none; /* This will hide the payment options by default */
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* Remove the 'active' class if not used */
-.products {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
 #cart {
-  background: url('https://cdn-icons-png.flaticon.com/512/263/263142.png') no-repeat left center;
+  background: url('basket-icon.png') no-repeat center center;
   background-size: 24px 24px;
-  padding-left: 30px;
+  width: 24px;
+  height: 24px;
   border: none;
+}
+.payment-methods {
+  border: 1px solid #eee;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 4px;
+}
+
+.payment-methods input[type="radio"] {
+  display: none;
+}
+
+.payment-methods label {
+  display: block;
+  background: #f7f7f7;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
   cursor: pointer;
 }
 
+.payment-methods label:hover,
+.payment-methods input[type="radio"]:checked + label {
+  background: #e9e9e9;
+}
+
+#confirm-payment {
+  display: block;
+  width: 100%;
+  padding: 1em;
+  background: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#confirm-payment:hover {
+  background: #0b7dda;
+}
+    footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Remove the 'active' class if not used */
 #payment-options-form {
   display: none;
 }
