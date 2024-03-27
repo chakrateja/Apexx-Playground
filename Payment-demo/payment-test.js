@@ -331,7 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       // Otherwise, if it is on another page, you will redirect to that page
       window.location.href = 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html'; // Replace with your actual product page URL
-    }
+    });
   }
     const basketButton = document.getElementById('cart');
     const backButton = document.getElementById('back-to-products'); // Ensure this button exists in your HTML
