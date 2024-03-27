@@ -333,19 +333,6 @@ document.addEventListener('DOMContentLoaded', () => {
       window.location.href = 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html'; // Replace with your actual product page URL
     }
   }
-
-  // Event listener setup for the "Return to Products" button
-  const returnButton = document.getElementById('return-to-products-btn'); // Ensure this button is added to your HTML
-  if (returnButton) {
-    returnButton.addEventListener('click', returnToProducts);
-  }
-  const returnButton = document.getElementById('return-to-products-btn');
-  if (returnButton) {
-    returnButton.addEventListener('click', () => {
-      // Redirect back to the products page
-      window.location.href = 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html.html'; // Replace with the actual path to your products page
-    });
-  }
     const basketButton = document.getElementById('cart');
     const backButton = document.getElementById('back-to-products'); // Ensure this button exists in your HTML
     const productsSection = document.querySelector('.products'); // The section containing your products
