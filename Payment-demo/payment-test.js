@@ -72,7 +72,7 @@ const initiatePayment = (basket) => {
         duplicate_check: false,
         locale: 'en_GB',
         card: {
-          create_token: false
+          create_token: true
         },
         billing_address: {
           first_name: 'John', // Placeholder for real customer data
