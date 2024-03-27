@@ -6,16 +6,59 @@
   <title>Apexx Payment Demo</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
   <style>
-    body {
-    font-family: Arial, sans-serif;
+   {
+  font-family: Arial, sans-serif;
+  background-color: #f2f4f8; /* Fall-back color */
+  background-image: url('your-image-url.jpg'); /* Replace 'your-image-url.jpg' with your actual image URL */
+  background-size: cover;
+  background-attachment: fixed;
+  margin: 0; /* Added to remove default browser margins */
+  padding: 0; /* Added to remove default browser paddings */
 }
-    {
-      font-family: Arial, sans-serif;
-      background-color: #f2f4f8; /* Fall-back color */
-      background-image: url('phttps://files.oaiusercontent.com/file-BRDixFLNazBCeGOVIDzcQ5vb?se=2024-03-27T22%3A00%3A10Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3D4516bdf0-3dba-46bc-92e2-97b71bb0e70d.webp&sig=jQzR5kC3E5H8uObMth3FaaM77RygEB/8WVcQBVxMElA%3D.jpg'); /* The URL should be the path to your image */
-      background-size: cover;
-      background-attachment: fixed;
-    }
+
+.product-image {
+  width: 100%; /* Adjust if necessary to maintain aspect ratio */
+  height: auto;
+}
+
+/* Button Enhancements */
+button {
+  background-color: #00449e; /* Example color - use your brand color */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #00337d; /* Darken button on hover for interaction feedback */
+}
+
+/* Continue Shopping Button Styling */
+#continue-shopping {
+  display: block; /* Adjust as needed for your layout */
+  margin: 20px auto; /* Centers the button with some space */
+}
+
+/* Checkout Button Styling */
+#checkout {
+  background-color: #4CAF50; /* A 'go' color to encourage checkout */
+}
+
+/* Layout Enhancements with Flexbox or Grid */
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.title {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 24px;
+}
 .product-image {
     width: 100%; /* Adjust if necessary to maintain aspect ratio */
     height: auto;
