@@ -6,44 +6,27 @@
   <title>Apexx Payment Demo</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
   <style>
-    body {
-    font-family: Arial, sans-serif;
+   body {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5; /* Adding a light background color for contrast */
 }
+
 /* Button Enhancements */
 button {
-    background-color: #00449e; /* Example color - use your brand color */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-  .payment-success-message {
-  display: none; /* Add this to initially hide the payment success message */
+  background-color: #00449e;
+  color: white;
+  border: none;
+  padding: 8px 12px; /* Reduced padding */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 0.9rem; /* Reduced font size */
 }
 
 button:hover {
-    background-color: #00337d; /* Darken button on hover for interaction feedback */
+  background-color: #00337d;
 }
 
-/* Continue Shopping Button Styling */
-#continue-shopping {
-    display: block; /* Adjust as needed for your layout */
-    margin: 20px auto; /* Centers the button with some space */
-}
-
-/* Checkout Button Styling */
-#checkout {
-    background-color: #4CAF50; /* A 'go' color to encourage checkout */
-}
-
-/* Layout Enhancements with Flexbox or Grid */
-.title {
-  text-align: center;
-  margin: 20px 0;
-  font-size: 24px;
-}
-
+/* Header and Navigation */
 header {
   background-color: #FFF;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -58,17 +41,26 @@ nav a {
   text-decoration: none;
   color: #333;
   display: inline-block;
+  font-size: 0.9rem; /* Reduced font size */
 }
 
 nav a:hover {
   background-color: #f4f4f4;
 }
+
+.title {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 1.5rem; /* Reduced font size */
+}
+
+/* Product Card */
 .product {
   border: 1px solid #eee;
   border-radius: 4px;
-  overflow: hidden;
   background: #fff;
   transition: box-shadow 0.3s ease-in-out;
+  margin: 10px; /* Reduced margin */
 }
 
 .product:hover {
@@ -76,94 +68,72 @@ nav a:hover {
 }
 
 .product img {
-  width: 50%;
+  width: 100%; /* Adjusted to be full width within the card */
   display: block;
 }
 
 .product h2 {
-  padding: 0.5em;
   background: #f7f7f7;
   margin: 0;
+  padding: 0.5rem; /* Reduced padding */
+  font-size: 1.1rem; /* Reduced font size */
 }
 
 .product p {
-  padding: 0 0.5em;
+  padding: 0.5rem; /* Reduced padding */
+  font-size: 0.9rem; /* Reduced font size */
 }
 
 .add-to-basket {
   width: 100%;
-  padding: 1em;
+  padding: 0.8rem; /* Reduced padding */
   border: none;
   background: #4CAF50;
   color: white;
   cursor: pointer;
+  font-size: 0.9rem; /* Reduced font size */
 }
+
 .cart-container {
   position: fixed;
-  right: 20px;
-  top: 20px;
+  right: 10px; /* Adjusted positioning */
+  top: 10px;
   background-color: #fff;
-  padding: 10px;
+  padding: 5px; /* Reduced padding */
   border-radius: 50%;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 #cart {
   background: url('basket-icon.png') no-repeat center center;
-  background-size: 24px 24px;
-  width: 24px;
-  height: 24px;
+  background-size: 20px 20px; /* Reduced icon size */
+  width: 20px;
+  height: 20px;
   border: none;
 }
+
 .payment-methods {
   border: 1px solid #eee;
-  padding: 20px;
-  margin-top: 20px;
+  padding: 15px; /* Reduced padding */
+  margin-top: 15px; /* Reduced margin */
   border-radius: 4px;
-}
-
-.payment-methods input[type="radio"] {
-  display: none;
+  background: #fff;
 }
 
 .payment-methods label {
-  display: block;
-  background: #f7f7f7;
-  padding: 10px;
-  border-radius: 4px;
-  margin-bottom: 10px;
-  cursor: pointer;
-}
-
-.payment-methods label:hover,
-.payment-methods input[type="radio"]:checked + label {
-  background: #e9e9e9;
+  padding: 0.5rem; /* Reduced padding */
+  font-size: 0.9rem; /* Reduced font size */
 }
 
 #confirm-payment {
-  display: block;
-  width: 100%;
-  padding: 1em;
-  background: #2196F3;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  padding: 0.8rem; /* Reduced padding */
+  font-size: 0.9rem; /* Reduced font size */
 }
 
-#confirm-payment:hover {
-  background: #0b7dda;
+footer {
+  font-size: 0.8rem; /* Reduced font size */
+  padding: 15px 0; /* Reduced padding */
 }
-    footer {
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  padding: 20px 0;
-  position: relative;
-  bottom: 0;
-  width: 100%;
-}
-
 /* Remove the 'active' class if not used */
 #payment-options-form {
   display: none;
