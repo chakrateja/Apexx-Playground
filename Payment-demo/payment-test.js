@@ -330,7 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
       productsSection.style.display = 'flex'; // Adjust this depending on your page's structure
     } else {
       // Otherwise, if it is on another page, you will redirect to that page
-      window.location.href = 'yourProductPage.html'; // Replace with your actual product page URL
+      window.location.href = 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html'; // Replace with your actual product page URL
     }
   }
 
@@ -343,7 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (returnButton) {
     returnButton.addEventListener('click', () => {
       // Redirect back to the products page
-      window.location.href = 'yourProductPage.html'; // Replace with the actual path to your products page
+      window.location.href = 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html.html'; // Replace with the actual path to your products page
     });
   }
     const basketButton = document.getElementById('cart');
