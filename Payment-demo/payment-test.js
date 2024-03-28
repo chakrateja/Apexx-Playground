@@ -218,7 +218,7 @@ apiClient.sendRequest('', 'POST', paymentData)
 .then(responseData => {
 if (responseData && responseData.url) {
 // Redirect the customer to the Bancontact payment URL
-window.open(responseData.url, '_blank');
+window.location.href = responseData.url;
 } else {
 alert('Failed to initiate bancontact payment');
 }
@@ -277,7 +277,7 @@ apiClient.sendRequest('', 'POST', paymentData)
 .then(responseData => {
 if (responseData && responseData.url) {
 // Redirect the customer to the Bancontact payment URL
-window.open(responseData.url, '_blank');
+window.location.href = responseData.url;
 } else {
 alert('Failed to initiate ideal payment');
 }
