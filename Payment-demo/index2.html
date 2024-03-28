@@ -19,6 +19,13 @@
       margin: 0; /* Removes default browser margins */
       padding: 0; /* Removes default browser paddings */
     }
+    <h1>Payment Successful</h1>
+    <p>Thank you for your order. You will be redirected back to the products page shortly.</p>
+    <script>
+        setTimeout(() => {
+            window.location.href = '/products-page'; // Replace '/products-page' with the actual path to your products page.
+        }, 5000); // Redirects after 5 seconds
+    </script>
 .payment-methods h2 {
     color: #004085; /* Dark blue color for the heading */
 }
