@@ -38,6 +38,21 @@ class ApiClient {
     }
   }
 }
+function handlePaymentResponse() {
+  // Display a payment successful message
+  alert('Payment successful! Thank you for your order.');
+
+  // Redirect back to the products page
+  const productsSection = document.querySelector('.products');
+  if (productsSection) {
+    productsSection.style.display = 'flex'; // Or 'block', depending on your layout
+  }
+
+  // Reset any necessary state or data
+  basket = [];
+  updateBasketCount();
+  // Reset any other relevant state
+}
 const apiKey = 'c6490381A6ab0A4b18A9960Af3a9182c40ba';
 const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
 const apiClient = new ApiClient(baseUrl, apiKey);
@@ -132,7 +147,7 @@ const initiateSofortPayment = (basket) => {
     sofort: {
       account_holder_name: 'Test Name',
       redirection_parameters: {
-        return_url: 'https://sandbox.apexx.global/atomic/v1/api/return'
+        return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html'
       } 
     },
     customer: {
