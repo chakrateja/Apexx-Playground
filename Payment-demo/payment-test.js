@@ -132,7 +132,7 @@ const initiateSofortPayment = (basket) => {
     sofort: {
       account_holder_name: 'Test Name',
       redirection_parameters: {
-        return_url: 'https://sandbox.apexx.global/atomic/v1/api/return'
+        return_url: 'https://pm-apexx.github.io/payment-completion'
       } 
     },
     customer: {
