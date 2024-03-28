@@ -4,9 +4,22 @@
   <title>Payment Response</title>
   <script>
     function handlePaymentResponse() {
-      // Your handlePaymentResponse function code here
-    }
+  // Display a payment successful message
+  alert('Payment successful! Thank you for your order.');
 
+  // Redirect back to the products page
+  const productsSection = document.querySelector('.products');
+  if (productsSection) {
+    productsSection.style.display = 'flex'; // Or 'block', depending on your layout
+  }
+
+  // Reset the basket and update the basket count
+  basket = [];
+  updateBasketCount();
+
+  // Reset any other necessary state or data
+  // ...
+}
     window.onload = handlePaymentResponse;
   </script>
 </head>
