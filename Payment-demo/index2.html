@@ -6,107 +6,56 @@
   <title>Apexx Payment Demo</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
   <style>
-   {
-  font-family: Arial, sans-serif;
-  background-color: #f2f4f8; /* Fall-back color */
-  background-image: url('https://img.freepik.com/premium-photo/abstract-background-design-images-wallpaper-ai-generated_643360-248392.jpg?size=626&ext=jpg&ga=GA1.1.553209589.1711584000&semt=ais'); /* Replace 'your-image-url.jpg' with your actual image URL */
-  background-size: cover;
-  background-attachment: fixed;
-  margin: 0; /* Added to remove default browser margins */
-  padding: 0; /* Added to remove default browser paddings */
-}
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f4f8; /* Fall-back color */
+      background-image: url('https://files.slack.com/files-pri/TLBUVK8UF-F06KMMT1J8M/apexx-wide-white-logo__4_.png'); /* Replace with your actual image URL */
+      background-size: cover;
+      background-attachment: fixed;
+      margin: 0; /* Removes default browser margins */
+      padding: 0; /* Removes default browser paddings */
+    }
 
-.product-image {
-  width: 100%; /* Adjust if necessary to maintain aspect ratio */
-  height: auto;
-}
+    .title {
+      text-align: center;
+      margin: 20px 0;
+      font-size: 24px;
+    }
 
-/* Button Enhancements */
-button {
-  background-color: #00449e; /* Example color - use your brand color */
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
 
-button:hover {
-  background-color: #00337d; /* Darken button on hover for interaction feedback */
-}
+    .product-image {
+      width: 100%; /* Adjust as necessary to maintain aspect ratio */
+      height: auto;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
 
-/* Continue Shopping Button Styling */
-#continue-shopping {
-  display: block; /* Adjust as needed for your layout */
-  margin: 20px auto; /* Centers the button with some space */
-}
+    button {
+      background-color: #00449e; /* Example color - use your brand color */
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
 
-/* Checkout Button Styling */
-#checkout {
-  background-color: #4CAF50; /* A 'go' color to encourage checkout */
-}
+    button:hover {
+      background-color: #00337d; /* Darken button on hover for interaction feedback */
+    }
 
-/* Layout Enhancements with Flexbox or Grid */
-.products {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-  padding: 20px;
-}
-
-.title {
-  text-align: center;
-  margin: 20px 0;
-  font-size: 24px;
-}
-.product-image {
-    width: 100%; /* Adjust if necessary to maintain aspect ratio */
-    height: auto;
-}
-
-/* Button Enhancements */
-button {
-    background-color: #00449e; /* Example color - use your brand color */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #00337d; /* Darken button on hover for interaction feedback */
-}
-
-/* Continue Shopping Button Styling */
-#continue-shopping {
-    display: block; /* Adjust as needed for your layout */
-    margin: 20px auto; /* Centers the button with some space */
-}
-
-/* Checkout Button Styling */
-#checkout {
-    background-color: #4CAF50; /* A 'go' color to encourage checkout */
-}
-
-/* Layout Enhancements with Flexbox or Grid */
-.products {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 20px;
-}
-.title {
-  text-align: center;
-  margin: 20px 0;
-  font-size: 24px;
-}
-nav {
+    nav {
       display: flex;
       justify-content: flex-start;
       gap: 20px;
       padding: 20px;
     }
+
     nav a {
       text-decoration: none;
       color: #999;
@@ -114,42 +63,34 @@ nav {
       border-radius: 5px;
       transition: color 0.3s ease;
     }
+
     nav a:hover {
       color: #005f73;
     }
-.product-image {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    margin-bottom: 10px;
-}
 
-.cart-container {
-  position: fixed;
-  right: 20px;
-  top: 20px;
-}
-.payment-methods {
-  display: none; /* This will hide the payment options by default */
-}
+    .cart-container {
+      position: fixed;
+      right: 20px;
+      top: 20px;
+    }
 
-/* Remove the 'active' class if not used */
-.products {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-#cart {
-  background: url('https://cdn-icons-png.flaticon.com/512/263/263142.png') no-repeat left center;
-  background-size: 24px 24px;
-  padding-left: 30px;
-  border: none;
-  cursor: pointer;
-}
+    #cart {
+      background: url('https://cdn-icons-png.flaticon.com/512/263/263142.png') no-repeat left center;
+      background-size: 24px 24px;
+      padding-left: 30px;
+      border: none;
+      cursor: pointer;
+    }
 
-#payment-options-form {
-  display: none;
-}
+    .payment-methods {
+      display: none; /* Hides payment options by default */
+    }
+
+    #payment-options-form {
+      display: none;
+    }
+
+    /* Additional styles can be added here */
   </style>
 </head>
 <body>
@@ -162,26 +103,30 @@ nav {
     </nav>
   </header>
   <main class="container">
-<div class="products active">    
-  <section class="product">
-      <img src="https://images.unsplash.com/photo-1601597111158-2fceff292cdc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80" alt="Product 1" class="product-image">
-      <h2>Product 1</h2>
-      <p>Price: £100.00</p>
-      <button class="add-to-basket" data-amount="10000" data-name="Product 1">Add to Basket</button>
-    </section>
-    <section class="product">
-      <img src="https://images.unsplash.com/photo-1553456558-aff63285bdd1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80" alt="Product 2" class="product-image">
-      <h2>Product 2</h2>
-      <p>Price: £200.00</p>
-      <button class="add-to-basket" data-amount="20000" data-name="Product 2">Add to Basket</button>
-    </section>
-    <section class="product">
-      <img src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80" alt="Product 3" class="product-image">
-      <h2>Product 3</h2>
-      <p>Price: £300.00</p>
-      <button class="add-to-basket" data-amount="30000" data-name="Product 3">Add to Basket</button>
-      <!-- Continue Shopping Button (Place within the main container) -->
-    </section>
+    <div class="products active">    
+      <!-- Product 1 -->
+      <section class="product">
+        <img src="https://images.unsplash.com/photo-1601597111158-2fceff292cdc" alt="Product 1" class="product-image">
+        <h2>Product 1</h2>
+        <p>Price: £100.00</p>
+        <button class="add-to-basket" data-amount="10000" data-name="Product 1">Add to Basket</button>
+      </section>
+
+      <!-- Product 2 -->
+      <section class="product">
+        <img src="https://images.unsplash.com/photo-1553456558-aff63285bdd1" alt="Product 2" class="product-image">
+        <h2>Product 2</h2>
+        <p>Price: £200.00</p>
+        <button class="add-to-basket" data-amount="20000" data-name="Product 2">Add to Basket</button>
+      </section>
+
+      <!-- Product 3 -->
+      <section class="product">
+        <img src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42" alt="Product 3" class="product-image">
+        <h2>Product 3</h2>
+        <p>Price: £300.00</p>
+        <button class="add-to-basket" data-amount="30000" data-name="Product 3">Add to Basket</button>
+      </section>
     </div>
     <div class="payment-methods" id="payment-options-page">
       <h2>Choose Payment Method</h2>
