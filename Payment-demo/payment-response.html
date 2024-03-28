@@ -2,28 +2,40 @@
 <html>
 <head>
   <title>Payment Response</title>
-  <script>
-    function handlePaymentResponse() {
-  // Display a payment successful message
-  alert('Payment successful! Thank you for your order.');
-
-  // Redirect back to the products page
-  const productsSection = document.querySelector('.products');
-  if (productsSection) {
-    productsSection.style.display = 'flex'; // Or 'block', depending on your layout
-  }
-
-  // Reset the basket and update the basket count
-  basket = [];
-  updateBasketCount();
-
-  // Reset any other necessary state or data
-  // ...
-}
-    window.onload = handlePaymentResponse;
-  </script>
+  <style>
+    /* Add some basic styles */
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 50px;
+    }
+  </style>
 </head>
 <body>
-  <!-- You can add any additional content or styling here if needed -->
+  <h1>Payment Response</h1>
+  <div id="payment-message"></div>
+
+  <script>
+    function handlePaymentResponse() {
+      // Display a payment successful message
+      const paymentMessage = document.getElementById('payment-message');
+      paymentMessage.innerHTML = 'Payment successful! Thank you for your order.';
+
+      // Redirect back to the products page
+      const productsSection = document.querySelector('.products');
+      if (productsSection) {
+        productsSection.style.display = 'flex';
+      }
+
+      // Reset the basket and update the basket count
+      basket = [];
+      updateBasketCount();
+
+      // Reset any other necessary state or data
+      // ...
+    }
+
+    window.onload = handlePaymentResponse;
+  </script>
 </body>
 </html>
