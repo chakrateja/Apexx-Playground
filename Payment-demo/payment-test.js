@@ -132,7 +132,7 @@ const initiateSofortPayment = (basket) => {
     sofort: {
       account_holder_name: 'Test Name',
       redirection_parameters: {
-        return_url: 'https://pm-apexx.github.io/payment-completion'
+        return_url: 'https://sandbox.apexx.global/atomic/v1/api/return'
       } 
     },
     customer: {
@@ -218,7 +218,7 @@ apiClient.sendRequest('', 'POST', paymentData)
 .then(responseData => {
 if (responseData && responseData.url) {
 // Redirect the customer to the Bancontact payment URL
-window.location.href = responseData.url;
+window.open(responseData.url, '_blank');
 } else {
 alert('Failed to initiate bancontact payment');
 }
@@ -277,7 +277,7 @@ apiClient.sendRequest('', 'POST', paymentData)
 .then(responseData => {
 if (responseData && responseData.url) {
 // Redirect the customer to the Bancontact payment URL
-window.location.href = responseData.url;
+window.open(responseData.url, '_blank');
 } else {
 alert('Failed to initiate ideal payment');
 }
@@ -294,23 +294,20 @@ const displayPaymentOptions = () => {
   paymentMethods.forEach(method => {
     const button = document.createElement('button');
     button.textContent = `Pay with ${method}`;
-   button.onclick = () => {
-  switch (method) {
-    case 'CARD':
-      initiatePayment(basket);
-      break; // Add break statement here
-    case 'SOFORT':
-      initiateSofortPayment(basket);
-      break;
-    case 'Bancontact':
-      initiateBancontactPayment(basket);
-      break;
-    case 'iDEAL':
-      initiateidealPayment(basket);
-      break;
-  }
-  paymentOptions.style.display = 'none'; // Hide options after selection
-};
+    button.onclick = () => {
+      switch (method) {
+        case 'SOFORT':
+          initiateSofortPayment(basket);
+          break;
+        case 'Bancontact':
+          initiateBancontactPayment(basket);
+          break;
+        case 'iDEAL':
+          initiateidealPayment(basket);
+          break;
+      }
+      paymentOptions.style.display = 'none'; // Hide options after selection
+    };
     paymentOptions.appendChild(button);
   });
 
@@ -330,19 +327,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (paymentOptionsSection) {
         paymentOptionsSection.style.display = 'none';
     }
-const urlParams = new URLSearchParams(window.location.search);
-  const status = urlParams.get('status');
-  if(status === 'success') {
-    // Display the payment successful message
-    document.getElementById('payment-status-message').textContent = 'Payment Successful. Thank you for your order.';
-    // Redirect back to products page after a delay
-    setTimeout(() => {
-      window.location.href = '/products-page'; // Adjust the URL to your products page
-    }, 5000); // 5 seconds delay
-  } else {
-    // Handle other statuses or lack thereof
-    document.getElementById('payment-status-message').textContent = 'There was an issue with your payment. Please try again.';
-  }
+
     // Toggle to payment options view
     basketButton.addEventListener('click', () => {
         if (basket.length > 0) {
