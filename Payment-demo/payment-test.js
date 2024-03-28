@@ -56,11 +56,15 @@ function handlePaymentResponse() {
   paragraph.textContent = 'Your payment was successful.';
   container.appendChild(paragraph);
 
+  // Get the returnUrl query parameter from the URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const returnUrl = urlParams.get('returnUrl') || '/products-page'; // Default to /products-page if returnUrl is not provided
+
   // Create a "Return to Products" button
   const returnButton = document.createElement('button');
   returnButton.textContent = 'Return to Products';
   returnButton.onclick = () => {
-    window.location.href = '/products-page'; // Replace '/products-page' with the actual path to your products page
+    window.location.href = returnUrl;
   };
   container.appendChild(returnButton);
 
