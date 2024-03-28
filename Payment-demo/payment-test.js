@@ -42,16 +42,40 @@ function handlePaymentResponse() {
   // Display a payment successful message
   alert('Payment successful! Thank you for your order.');
 
-  // Redirect back to the products page
-  const productsSection = document.querySelector('.products');
-  if (productsSection) {
-    productsSection.style.display = 'flex'; // Or 'block', depending on your layout
-  }
+  // Create a container div for the content
+  const container = document.createElement('div');
+  container.style.textAlign = 'center';
 
-  // Reset any necessary state or data
+  // Create a heading
+  const heading = document.createElement('h1');
+  heading.textContent = 'Thank you for your order!';
+  container.appendChild(heading);
+
+  // Create a paragraph
+  const paragraph = document.createElement('p');
+  paragraph.textContent = 'Your payment was successful.';
+  container.appendChild(paragraph);
+
+  // Create a "Return to Products" button
+  const returnButton = document.createElement('button');
+  returnButton.textContent = 'Return to Products';
+  returnButton.onclick = () => {
+    window.location.href = '/products-page'; // Replace '/products-page' with the actual path to your products page
+  };
+  container.appendChild(returnButton);
+
+  // Clear the existing body content
+  document.body.innerHTML = '';
+
+  // Append the container to the body
+  document.body.appendChild(container);
+
+  // Reset the basket and update the basket count
   basket = [];
   updateBasketCount();
-  // Reset any other relevant state
+
+  // Reset any other necessary state or data
+  // ...
 }
 const apiKey = 'c6490381A6ab0A4b18A9960Af3a9182c40ba';
 const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
