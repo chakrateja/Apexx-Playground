@@ -294,22 +294,23 @@ const displayPaymentOptions = () => {
   paymentMethods.forEach(method => {
     const button = document.createElement('button');
     button.textContent = `Pay with ${method}`;
-    button.onclick = () => {
-      switch (method) {
-         case 'CARD':
-          initiatePayment(basket); 
-        case 'SOFORT':
-          initiateSofortPayment(basket);
-          break;
-        case 'Bancontact':
-          initiateBancontactPayment(basket);
-          break;
-        case 'iDEAL':
-          initiateidealPayment(basket);
-          break;
-      }
-      paymentOptions.style.display = 'none'; // Hide options after selection
-    };
+   button.onclick = () => {
+  switch (method) {
+    case 'CARD':
+      initiatePayment(basket);
+      break; // Add break statement here
+    case 'SOFORT':
+      initiateSofortPayment(basket);
+      break;
+    case 'Bancontact':
+      initiateBancontactPayment(basket);
+      break;
+    case 'iDEAL':
+      initiateidealPayment(basket);
+      break;
+  }
+  paymentOptions.style.display = 'none'; // Hide options after selection
+};
     paymentOptions.appendChild(button);
   });
 
