@@ -57,15 +57,16 @@
     }
 
     nav a {
-      text-decoration: none;
-      color: #999;
-      padding: 5px;
-      border-radius: 5px;
-      transition: color 0.3s ease;
+      color: #333; /* Darker text color for navigation links */
+  background-color: #e7e7e7; /* Light background for the links */
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: color 0.3s ease, background-color 0.3s ease;
     }
 
     nav a:hover {
-      color: #005f73;
+     color: #fff; /* White text on hover */
+  background-color: #005f73;
     }
 
     .cart-container {
@@ -80,6 +81,7 @@
       padding-left: 30px;
       border: none;
       cursor: pointer;
+      color: #333;
     }
 
     .payment-methods {
@@ -89,6 +91,11 @@
     #payment-options-form {
       display: none;
     }
+    .apexx-logo {
+  max-width: 100%; /* Ensures the logo is responsive and fits within the header */
+  height: auto; /* Maintains the aspect ratio */
+  /* Add any additional styling you need here, such as padding or positioning */
+}
 
     /* Additional styles can be added here */
   </style>
@@ -96,6 +103,7 @@
 <body>
   <div class="title">APEXX PAYMENT DEMO</div>
   <header>
+    <img src="https://ibsintelligence.com/wp-content/uploads/2022/01/1594302998476.jpeg" alt="Apexx Logo" class="apexx-logo">
     <nav>
       <a href="https://sandboxportalv2.apexx.global/">Portal</a>
       <a href="https://sandbox.apexx.global/atomic/redoc/api/doc#operation/hostedPayUsingPOST">API Reference</a>
