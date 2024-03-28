@@ -329,7 +329,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (paymentOptionsSection) {
         paymentOptionsSection.style.display = 'none';
     }
-
+const urlParams = new URLSearchParams(window.location.search);
+  const status = urlParams.get('status');
+  if(status === 'success') {
+    // Display the payment successful message
+    document.getElementById('payment-status-message').textContent = 'Payment Successful. Thank you for your order.';
+    // Redirect back to products page after a delay
+    setTimeout(() => {
+      window.location.href = '/products-page'; // Adjust the URL to your products page
+    }, 5000); // 5 seconds delay
+  } else {
+    // Handle other statuses or lack thereof
+    document.getElementById('payment-status-message').textContent = 'There was an issue with your payment. Please try again.';
+  }
     // Toggle to payment options view
     basketButton.addEventListener('click', () => {
         if (basket.length > 0) {
