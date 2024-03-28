@@ -81,7 +81,7 @@ const initiatePayment = (basket) => {
         capture_now: true,
         dynamic_descriptor: 'Demo Merchant Test Purchase',
         merchant_reference: 'ref_' + Date.now(), // Dynamically generate a reference
-        return_url: 'https://sandbox.apexx.global/atomic/v1/api/return',
+        return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html',
         webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
         transaction_type: 'first',
         duplicate_check: false,
@@ -204,7 +204,7 @@ organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     bancontact: {
       account_holder_name: 'Test Name',
       redirection_parameters: {
-        return_url: 'https://sandbox.apexx.global/atomic/v1/api/return'
+        return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html'
       } 
     },
     customer: {
@@ -262,7 +262,7 @@ organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     ideal: {
       account_holder_name: 'Test Name',
       redirection_parameters: {
-        return_url: 'https://sandbox.apexx.global/atomic/v1/api/return'
+        return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html'
       } 
     },
     customer: {
