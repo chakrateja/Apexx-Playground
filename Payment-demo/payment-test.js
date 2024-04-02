@@ -40,39 +40,22 @@ class ApiClient {
 }
 function handlePaymentResponse() {
   // Display a payment successful message
-  alert('Payment successful! Thank you for your order.');
+  const paymentMessage = document.getElementById('payment-message');
+  if (paymentMessage) {
+    paymentMessage.textContent = 'Payment successful! Thank you for your order.';
+  }
 
-  // Create a container div for the content
-  const container = document.createElement('div');
-  container.style.textAlign = 'center';
-
-  // Create a heading
-  const heading = document.createElement('h1');
-  heading.textContent = 'Thank you for your order!';
-  container.appendChild(heading);
-
-  // Create a paragraph
-  const paragraph = document.createElement('p');
-  paragraph.textContent = 'Your payment was successful.';
-  container.appendChild(paragraph);
-
-  // Get the returnUrl query parameter from the URL
+  // Get the productUrl query parameter from the URL
   const urlParams = new URLSearchParams(window.location.search);
-  const returnUrl = urlParams.get('returnUrl') || '/products-page'; // Default to /products-page if returnUrl is not provided
+  const productUrl = urlParams.get('productUrl') || '/path/to/product-page.html';
 
-  // Create a "Return to Products" button
-  const returnButton = document.createElement('button');
-  returnButton.textContent = 'Return to Products';
-  returnButton.onclick = () => {
-    window.location.href = returnUrl;
-  };
-  container.appendChild(returnButton);
-
-  // Clear the existing body content
-  document.body.innerHTML = '';
-
-  // Append the container to the body
-  document.body.appendChild(container);
+  // Redirect back to the products page
+  const productsSection = document.querySelector('.products');
+  if (productsSection) {
+    productsSection.style.display = 'flex';
+  } else {
+    window.location.href = productUrl;
+  }
 
   // Reset the basket and update the basket count
   basket = [];
@@ -81,6 +64,91 @@ function handlePaymentResponse() {
   // Reset any other necessary state or data
   // ...
 }
+
+window.onload = handlePaymentResponse;
+In this updated code:
+
+The paymentResponse query parameter is no longer used, and only the productUrl parameter is read from the URL.
+If the .products section exists on the page, it will be displayed by setting its display property to flex.
+If the .products section does not exist, the code will redirect the user to the productUrl using window.location.href = productUrl;.
+With this implementation, when the payment gateway redirects to the payment-response.html URL with the productUrl parameter, the handlePaymentResponse function will execute, displaying the payment successful message and either showing the .products section or redirecting to the specified product page URL.
+
+Make sure to replace 'https://your-website.com/payment-response.html' with the actual URL where your payment-response.html file is hosted, and /path/to/product-page.html with the actual path to your product page HTML file.
+
+This approach should work for your use case where you only need to handle one URL for redirecting to the product page after a successful payment.
+
+Copy
+
+
+Claude does not have the ability to run the code it generates yet.
+P
+when i add updateBasketCount(); in html, i get a console error:Uncaught ReferenceError: updateBasketCount is not defined
+
+at handlePaymentResponse (payment-response.html:32:7)
+
+The error "Uncaught ReferenceError: updateBasketCount is not defined" occurs because the updateBasketCount function is not defined within the scope of the payment-response.html file. It's likely that the updateBasketCount function is defined in your main JavaScript file (payment-test.js or a similar file).
+
+To resolve this issue, you have two options:
+
+Remove the updateBasketCount call from payment-response.html: If you don't need to update the basket count on the payment-response.html page, you can simply remove the line updateBasketCount(); from the handlePaymentResponse function.
+javascript
+
+
+Copy code
+function handlePaymentResponse() {
+  // ...
+
+  // Reset the basket
+  basket = [];
+
+  // Reset any other necessary state or data
+  // ...
+}
+Include your main JavaScript file in payment-response.html: If you need to update the basket count on the payment-response.html page, you'll need to include your main JavaScript file (e.g., payment-test.js) in the payment-response.html file. This will make the updateBasketCount function available within the scope of payment-response.html.
+Add a <script> tag at the bottom of the <body> section in payment-response.html to include your main JavaScript file:
+
+html
+
+
+Copy code
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Payment Response</title>
+  <script>
+    function handlePaymentResponse() {
+      // ...
+
+      // Reset the basket and update the basket count
+      basket = [];
+      updateBasketCount();
+
+      // ...
+    }
+
+    window.onload = handlePaymentResponse;
+  </script>
+</head>
+<body>
+  <!-- Your HTML content -->
+
+  <script src="path/to/payment-test.js"></script>
+</body>
+</html>
+Replace "path/to/payment-test.js" with the actual file path or URL to your main JavaScript file.
+
+By including your main JavaScript file, the updateBasketCount function should be available within the scope of payment-response.html, and the error should be resolved.
+
+Choose the appropriate option based on whether you need to update the basket count on the payment-response.html page or not. If you don't need to update the basket count, simply remove the updateBasketCount() call. If you do need to update the basket count, include your main JavaScript file in payment-response.html.
+
+Copy
+Retry
+
+
+Claude does not have the ability to run the code it generates yet.
+Claude can make mistakes. Please double-check responses.
+
+
 const apiKey = 'c6490381A6ab0A4b18A9960Af3a9182c40ba';
 const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
 const apiClient = new ApiClient(baseUrl, apiKey);
