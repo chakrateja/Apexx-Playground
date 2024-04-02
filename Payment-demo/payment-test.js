@@ -47,7 +47,7 @@ function handlePaymentResponse() {
 
   // Get the productUrl query parameter from the URL
   const urlParams = new URLSearchParams(window.location.search);
-  const productUrl = urlParams.get('productUrl') || '/path/to/product-page.html';
+  const productUrl = urlParams.get('productUrl') || 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html';
 
   // Redirect back to the products page
   const productsSection = document.querySelector('.products');
