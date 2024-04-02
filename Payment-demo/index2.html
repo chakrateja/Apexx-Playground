@@ -7,71 +7,50 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
   <style>
     .page-title {
-    color: #004085; /* Dark blue color */
-    /* other styles you may want to add, like text-align, font-size, etc. */
-  }
+      color: #004085; /* Dark blue color */
+      /* other styles you may want to add, like text-align, font-size, etc. */
+    }
     body {
       font-family: Arial, sans-serif;
       background-color: #fcfdfe; /* Fall-back color */
-      background-image: url('https://wallpapers.com/images/hd/solid-light-blue-background-18zpjd6ypw8q0jnl.jpg'); /* Replace with your actual image URL */
+      background-image: url('path/to/your/image.jpg'); /* Replace with your actual local image file path */
       background-size: cover;
       background-attachment: fixed;
       margin: 0; /* Removes default browser margins */
       padding: 0; /* Removes default browser paddings */
     }
-    <h1>Payment Successful</h1>
-    <p>Thank you for your order. You will be redirected back to the products page shortly.</p>
-    <script>
-        setTimeout(() => {
-            window.location.href = '/products-page'; // Replace '/products-page' with the actual path to your products page.
-        }, 5000); // Redirects after 5 seconds
-    </script>
-.payment-methods h2 {
-    color: #004085; /* Dark blue color for the heading */
-}
-
-.payment-methods label {
-    color: #004085; /* Dark blue color for the labels */
-}
-
-/* If you want to change the button text color to blue */
-.payment-methods button {
-    color: #004085; /* Dark blue color for the button text */
-    /* Additional button styling */
-}
-
-/* If you want to change the button background to blue instead, use this */
-.payment-methods button {
-    background-color: #004085; /* Dark blue color for the button background */
-    color: #FFFFFF; /* White color for the button text */
-    /* Additional button styling */
-}
-
-/* Optional: If you want to change the color when hovering over the buttons */
-.payment-methods button:hover {
-    background-color: #00337d; /* A darker shade of blue for hover state */
-    /* Additional hover styling */
-}
+    .payment-methods h2 {
+      color: #004085; /* Dark blue color for the heading */
+    }
+    .payment-methods label {
+      color: #004085; /* Dark blue color for the labels */
+    }
+    .payment-methods button {
+      background-color: #004085; /* Dark blue color for the button background */
+      color: #FFFFFF; /* White color for the button text */
+      /* Additional button styling */
+    }
+    .payment-methods button:hover {
+      background-color: #00337d; /* A darker shade of blue for hover state */
+      /* Additional hover styling */
+    }
     .title {
       text-align: center;
       margin: 20px 0;
       font-size: 24px;
     }
-
     .products {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       gap: 20px;
       padding: 20px;
     }
-
     .product-image {
-    width: 140px;
-    height: 140px;
-    object-fit: cover;
-    margin-bottom: 10px;
+      width: 140px;
+      height: 140px;
+      object-fit: cover;
+      margin-bottom: 10px;
     }
-
     button {
       background-color: #00449e; /* Example color - use your brand color */
       color: blue;
@@ -80,63 +59,54 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
-
     button:hover {
       background-color: #00337d; /* Darken button on hover for interaction feedback */
     }
-
     nav {
       display: flex;
       justify-content: flex-start;
       gap: 20px;
       padding: 20px;
     }
-
     nav a {
       color: #004085; /* Darker text color for navigation links */
-  background-color: #e7e7e7; /* Light background for the links */
-  padding: 10px 15px;
-  border-radius: 5px;
-  transition: color 0.3s ease, background-color 0.3s ease;
+      background-color: #e7e7e7; /* Light background for the links */
+      padding: 10px 15px;
+      border-radius: 5px;
+      transition: color 0.3s ease, background-color 0.3s ease;
     }
-
     nav a:hover {
-     color: #fff; /* White text on hover */
-  background-color: #005f73;
+      color: #fff; /* White text on hover */
+      background-color: #005f73;
     }
-.basket {
-    color: #004085; /* Dark blue color */
-    /* other styles... */
-}
+    .basket {
+      color: #004085; /* Dark blue color */
+      /* other styles... */
+    }
     .cart-container {
       position: fixed;
       right: 20px;
       top: 20px;
     }
-
     #cart {
-      background: url('https://cdn-icons-png.flaticon.com/512/263/263142.png') no-repeat left center;
+      background: url('path/to/your/cart-icon.png') no-repeat left center; /* Replace with your actual local cart icon file path */
       background-size: 24px 24px;
       padding-left: 30px;
       border: none;
       cursor: pointer;
       color: #333;
     }
-
     .payment-methods {
       display: none; /* Hides payment options by default */
     }
-
     #payment-options-form {
       display: none;
     }
     .product h2, 
-.product p {
-    color: #004085; /* Dark blue color */
-    /* other styles... */
-}
-
-    /* Additional styles can be added here */
+    .product p {
+      color: #004085; /* Dark blue color */
+      /* other styles... */
+    }
   </style>
 </head>
 <body>
@@ -149,7 +119,7 @@
     </nav>
   </header>
   <main class="container">
-    <div class="products active">    
+    <div class="products active">  
       <!-- Product 1 -->
       <section class="product">
         <img src="https://images.unsplash.com/photo-1601597111158-2fceff292cdc" alt="Product 1" class="product-image">
@@ -185,16 +155,22 @@
       <input type="radio" id="pay-with-ideal" name="payment-method" value="ideal">
       <label for="pay-with-ideal">Pay with IDEAL</label><br>
       <button type="button" id="confirm-payment">Confirm Payment</button>
-     <button type="button" id="back-to-products">Back to Products</button>
-      <div id="return-to-products-container" style="text-align: center; margin-top: 20px;">   
+      <button type="button" id="back-to-products">Back to Products</button>
     </div>
   </main>
-  <div class="cart-container">
+    <div class="cart-container">
     <button id="cart">Basket (0)</button>
   </div>
   <div id="payment-form" style="display: none;">
     <iframe id="payment-iframe" src="about:blank" style="width:100%; height:600px; border:none;"></iframe>
   </div>
+  <h1>Payment Successful</h1>
+  <p>Thank you for your order. You will be redirected back to the products page shortly.</p>
+  <script>
+    setTimeout(() => {
+      window.location.href = 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html'; // Replace with the actual path to your products page.
+    }, 5000); // Redirects after 5 seconds
+  </script>
   <script src="payment-test.js"></script>
 </body>
 </html>
