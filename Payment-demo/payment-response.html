@@ -14,22 +14,6 @@
 <body>
   <h1>Payment Response</h1>
   <div id="payment-message"></div>
-
-  <script>
-    function handlePaymentResponse() {
-      // Display a payment successful message
-      const paymentMessage = document.getElementById('payment-message');
-      paymentMessage.innerHTML = 'Payment successful! Thank you for your order.';
-
-      // Redirect back to the products page
-      const productsSection = document.querySelector('.products');
-      if (productsSection) {
-        productsSection.style.display = 'flex';
-      }
-
-    }
-
-    window.onload = handlePaymentResponse;
     <script src="payment-test.js"></script>
   </script>
 </body>
