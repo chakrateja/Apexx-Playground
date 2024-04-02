@@ -3,6 +3,7 @@ class ApiClient {
     this.baseUrl = baseUrl;
     this.apiKey = apiKey;
   }
+
   async sendRequest(endpoint, method = 'POST', requestData = null) {
     const url = `${this.baseUrl}/${endpoint}`;
     const options = {
@@ -19,9 +20,8 @@ class ApiClient {
 
     try {
       const response = await fetch(url, options);
-      
-      // Check if the response is JSON
       const contentType = response.headers.get("content-type");
+
       if (contentType && contentType.indexOf("application/json") !== -1) {
         const responseData = await response.json();
         if (!response.ok) {
@@ -29,7 +29,6 @@ class ApiClient {
         }
         return responseData;
       } else {
-        // Response is not JSON
         const responseText = await response.text();
         throw new Error(`API request failed with status ${response.status}: ${response.statusText}, Response not JSON: ${responseText}`);
       }
@@ -38,6 +37,7 @@ class ApiClient {
     }
   }
 }
+
 function handlePaymentResponse() {
   // Display a payment successful message
   const paymentMessage = document.getElementById('payment-message');
@@ -86,7 +86,7 @@ const displayPaymentForm = () => {
     console.error('Payment form not found');
   }
 };
-const initiatePayment = (basket) => {
+const initiatePayment = async (basket) => {
   if (!paymentInitiated) {
       const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
       const paymentData = {
@@ -120,31 +120,29 @@ const initiatePayment = (basket) => {
           three_ds_version: '2.0'
         }
       };
-   apiClient.sendRequest('', 'POST', paymentData)
-        .then(responseData => {
-          if (responseData && responseData.url) {
-            // Load the payment URL into the iframe and display it
-            const paymentIframe = document.getElementById('payment-iframe');
-            if (paymentIframe) {
-              paymentIframe.src = responseData.url;
-              paymentIframe.style.display = 'block';
-            } else {
-              console.error('Payment iframe not found');
-            }
-            paymentInitiated = true;
-          } else {
-            alert('Failed to initiate payment');
-          }
-        })
-        .catch(error => {
-          console.error('Payment initiation failed:', error);
-          alert('Error initiating payment. Please try again.');
-        });
-    } else {
-      console.log('Payment has already been initiated.');
+  try {
+      const responseData = await apiClient.sendRequest('', 'POST', paymentData);
+      if (responseData && responseData.url) {
+        const paymentIframe = document.getElementById('payment-iframe');
+        if (paymentIframe) {
+          paymentIframe.src = responseData.url;
+          paymentIframe.style.display = 'block';
+        } else {
+          console.error('Payment iframe not found');
+        }
+        paymentInitiated = true;
+      } else {
+        showError('Failed to initiate payment');
+      }
+    } catch (error) {
+      console.error('Payment initiation failed:', error);
+      showError('Error initiating payment. Please try again.');
     }
-  };
-const initiateSofortPayment = (basket) => {
+  } else {
+    console.log('Payment has already been initiated.');
+  }
+};
+const initiateSofortPayment = async (basket) => {
   const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
   const paymentData = {
     organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
@@ -187,21 +185,28 @@ const initiateSofortPayment = (basket) => {
       }
     }
   };
-
-  apiClient.sendRequest('', 'POST', paymentData)
-    .then(responseData => {
-      if (responseData && responseData.url) {
-        // Redirect the customer to the SOFORT payment URL
-window.location.href = responseData.url;      } else {
-        alert('Failed to initiate SOFORT payment');
-      }
-    })
-    .catch(error => {
-      console.error('SOFORT payment initiation failed:', error);
-      alert('Error initiating SOFORT payment. Please try again.');
-    });
+try {
+    const responseData = await apiClient.sendRequest('', 'POST', paymentData);
+    if (responseData && responseData.url) {
+      window.location.href = responseData.url;
+    } else {
+      showError('Failed to initiate SOFORT payment');
+    }
+  } catch (error) {
+    console.error('SOFORT payment initiation failed:', error);
+    showError('Error initiating SOFORT payment. Please try again.');
+  }
 };
-const initiateBancontactPayment = (basket) => {
+const showError = (message) => {
+  const errorElement = document.getElementById('error-message');
+  if (errorElement) {
+    errorElement.textContent = message;
+    errorElement.style.display = 'block';
+  } else {
+    alert(message);
+  }
+};
+const initiateBancontactPayment = async (basket) => {
 const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
 const paymentData = {
 organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
@@ -244,22 +249,27 @@ organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
       }
     }
   };
-apiClient.sendRequest('', 'POST', paymentData)
-.then(responseData => {
-if (responseData && responseData.url) {
-// Redirect the customer to the Bancontact payment URL
-window.open(responseData.url, '_blank');
-} else {
-alert('Failed to initiate bancontact payment');
+try {
+  const responseData = await apiClient.sendRequest('', 'POST', paymentData);
+  if (responseData && responseData.url) {
+    window.location.href = responseData.url;
+  } else {
+    showError('Failed to initiate Bancontact payment');
+  }
+} catch (error) {
+  console.error('Bancontact payment initiation failed:', error);
+  showError('Error initiating Bancontact payment. Please try again.');
 }
-})
-.catch(error => {
-console.error('Bancontact payment initiation failed:', error);
-alert('Error initiating Bancontact payment. Please try again.');
-});
+const showError = (message) => {
+  const errorElement = document.getElementById('error-message');
+  if (errorElement) {
+    errorElement.textContent = message;
+    errorElement.style.display = 'block';
+  } else {
+    alert(message);
+  }
 };
-
-const initiateidealPayment = (basket) => {
+const initiateidealPayment = async (basket) => {
 const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
 const paymentData = {
 organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
@@ -302,20 +312,25 @@ organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
       }
     }
   };
-
-apiClient.sendRequest('', 'POST', paymentData)
-.then(responseData => {
-if (responseData && responseData.url) {
-// Redirect the customer to the Bancontact payment URL
-window.open(responseData.url, '_blank');
-} else {
-alert('Failed to initiate ideal payment');
+try {
+  const responseData = await apiClient.sendRequest('', 'POST', paymentData);
+  if (responseData && responseData.url) {
+    window.location.href = responseData.url;
+  } else {
+    showError('Failed to initiate iDEAL payment');
+  }
+} catch (error) {
+  console.error('iDEAL payment initiation failed:', error);
+  showError('Error initiating iDEAL payment. Please try again.');
 }
-})
-.catch(error => {
-console.error('ideal payment initiation failed:', error);
-alert('Error initiating ideal payment. Please try again.');
-});
+const showError = (message) => {
+  const errorElement = document.getElementById('error-message');
+  if (errorElement) {
+    errorElement.textContent = message;
+    errorElement.style.display = 'block';
+  } else {
+    alert(message);
+  }
 };
 const displayPaymentOptions = () => {
   const paymentMethods = ['SOFORT', 'Bancontact', 'iDEAL']; // Add more methods as needed
@@ -379,26 +394,25 @@ document.addEventListener('DOMContentLoaded', () => {
             productsSection.style.display = 'flex'; // Or 'block', depending on your layout
         });
     }
-document.getElementById('confirm-payment').addEventListener('click', () => {
-  const selectedMethod = document.querySelector('input[name="payment-method"]:checked').value;
-  switch(selectedMethod) {
-    case 'card':
-      // Assume initiateCardPayment is a function like your others
-      initiatePayment(basket); 
-      break;
-    case 'sofort':
-      initiateSofortPayment(basket);
-      break;
-    case 'bancontact':
-      initiateBancontactPayment(basket);
-      break;
-    case 'ideal':
-      initiateidealPayment(basket);
-      break;
-    default:
-      console.error('No payment method selected');
-  }
-});
+document.getElementById('confirm-payment').addEventListener('click', async () => {
+    const selectedMethod = document.querySelector('input[name="payment-method"]:checked').value;
+    switch (selectedMethod) {
+      case 'card':
+        await initiatePayment(basket);
+        break;
+      case 'sofort':
+        await initiateAlternativePayment(basket, 'sofort');
+        break;
+      case 'bancontact':
+        await initiateAlternativePayment(basket, 'bancontact');
+        break;
+      case 'ideal':
+        await initiateAlternativePayment(basket, 'ideal');
+        break;
+      default:
+        console.error('No payment method selected');
+    }
+  });
   document.querySelectorAll('.add-to-basket').forEach(button => {
     button.addEventListener('click', function() {
       const product = {
