@@ -59,7 +59,12 @@ function handlePaymentResponse() {
 
   // Reset the basket and update the basket count
   basket = [];
-  updateBasketCount();
+  const updateBasketCount = () => {
+  const cartButton = document.getElementById('cart');
+  console.log('Cart button:', cartButton); // Add this line
+  console.log('Basket:', basket); // Add this line
+  cartButton.textContent = `Basket (${basket.length})`;
+};
 
   // Reset any other necessary state or data
   // ...
