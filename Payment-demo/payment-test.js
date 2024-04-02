@@ -365,64 +365,64 @@ const displayPaymentOptions = () => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    const basketButton = document.getElementById('cart');
-    const backButton = document.getElementById('back-to-products'); // Ensure this button exists in your HTML
-    const productsSection = document.querySelector('.products'); // The section containing your products
-    const paymentOptionsSection = document.getElementById('payment-options-page'); // Ensure this is the ID of your payment options section
-    if (paymentOptionsSection) {
+  const basketButton = document.getElementById('cart');
+  const backButton = document.getElementById('back-to-products');
+  const productsSection = document.querySelector('.products');
+  const paymentOptionsSection = document.getElementById('payment-options-page');
+  if (paymentOptionsSection) {
+    paymentOptionsSection.style.display = 'none';
+  }
+
+  // Toggle to payment options view
+  basketButton.addEventListener('click', () => {
+    if (basket.length > 0) {
+      productsSection.style.display = 'none';
+      if (paymentOptionsSection) {
+        paymentOptionsSection.style.display = 'block';
+      }
+    } else {
+      alert('Your basket is empty.');
+    }
+  });
+
+  // Back to products view
+  if (backButton) {
+    backButton.addEventListener('click', () => {
+      if (paymentOptionsSection) {
         paymentOptionsSection.style.display = 'none';
-    }
-
-    // Toggle to payment options view
-    basketButton.addEventListener('click', () => {
-        if (basket.length > 0) {
-            productsSection.style.display = 'none';
-            if (paymentOptionsSection) {
-                paymentOptionsSection.style.display = 'block';
-            }
-        } else {
-            alert('Your basket is empty.');
-        }
+      }
+      productsSection.style.display = 'flex';
     });
+  }
 
-    // Back to products view
-    if (backButton) {
-        backButton.addEventListener('click', () => {
-            if (paymentOptionsSection) {
-                paymentOptionsSection.style.display = 'none';
-            }
-            productsSection.style.display = 'flex'; // Or 'block', depending on your layout
-        });
-    }
-document.getElementById('confirm-payment').addEventListener('click', async () => {
+  document.getElementById('confirm-payment').addEventListener('click', async () => {
     const selectedMethod = document.querySelector('input[name="payment-method"]:checked').value;
     switch (selectedMethod) {
       case 'card':
         await initiatePayment(basket);
         break;
       case 'sofort':
-        await initiateAlternativePayment(basket, 'sofort');
+        await initiateSofortPayment(basket);
         break;
       case 'bancontact':
-        await initiateAlternativePayment(basket, 'bancontact');
+        await initiateBancontactPayment(basket);
         break;
       case 'ideal':
-        await initiateAlternativePayment(basket, 'ideal');
+        await initiateidealPayment(basket);
         break;
       default:
         console.error('No payment method selected');
     }
   });
+
   document.querySelectorAll('.add-to-basket').forEach(button => {
     button.addEventListener('click', function() {
       const product = {
         name: this.getAttribute('data-name'),
-        amount: this.getAttribute('data-amount')
+        amount: parseInt(this.getAttribute('data-amount'), 10)
       };
       basket.push(product);
       updateBasketCount();
     });
   });
-
-  // Initialization for payment buttons (SOFORT, Bancontact, iDEAL) omitted for brevity
 });
