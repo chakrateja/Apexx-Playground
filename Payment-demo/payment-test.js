@@ -250,23 +250,15 @@ organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     }
   };
 try {
-  const responseData = await apiClient.sendRequest('', 'POST', paymentData);
-  if (responseData && responseData.url) {
-    window.location.href = responseData.url;
-  } else {
-    showError('Failed to initiate Bancontact payment');
-  }
-} catch (error) {
-  console.error('Bancontact payment initiation failed:', error);
-  showError('Error initiating Bancontact payment. Please try again.');
-}
-const showError = (message) => {
-  const errorElement = document.getElementById('error-message');
-  if (errorElement) {
-    errorElement.textContent = message;
-    errorElement.style.display = 'block';
-  } else {
-    alert(message);
+    const responseData = await apiClient.sendRequest('', 'POST', paymentData);
+    if (responseData && responseData.url) {
+      window.location.href = responseData.url;
+    } else {
+      showError('Failed to initiate Bancontact payment');
+    }
+  } catch (error) {
+    console.error('Bancontact payment initiation failed:', error);
+    showError('Error initiating Bancontact payment. Please try again.');
   }
 };
 const initiateidealPayment = async (basket) => {
@@ -313,23 +305,15 @@ organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     }
   };
 try {
-  const responseData = await apiClient.sendRequest('', 'POST', paymentData);
-  if (responseData && responseData.url) {
-    window.location.href = responseData.url;
-  } else {
-    showError('Failed to initiate iDEAL payment');
-  }
-} catch (error) {
-  console.error('iDEAL payment initiation failed:', error);
-  showError('Error initiating iDEAL payment. Please try again.');
-}
-const showError = (message) => {
-  const errorElement = document.getElementById('error-message');
-  if (errorElement) {
-    errorElement.textContent = message;
-    errorElement.style.display = 'block';
-  } else {
-    alert(message);
+    const responseData = await apiClient.sendRequest('', 'POST', paymentData);
+    if (responseData && responseData.url) {
+      window.location.href = responseData.url;
+    } else {
+      showError('Failed to initiate iDEAL payment');
+    }
+  } catch (error) {
+    console.error('iDEAL payment initiation failed:', error);
+    showError('Error initiating iDEAL payment. Please try again.');
   }
 };
 const displayPaymentOptions = () => {
