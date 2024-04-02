@@ -12,9 +12,15 @@
   </style>
 </head>
 <body>
-  <h1>Payment Response</h1>
+  <h1>Payment Successful</h1>
+  <p>Thank you for your order. You will be redirected back to the products page shortly.</p>
+  <button onclick="window.location.href='path/to/your/products-page.html'">Back to Products</button>
+  <script>
+    setTimeout(() => {
+      window.location.href = '/path/to/your/products-page.html'; // Replace with the actual path to your products page.
+    }, 5000); // Redirects after 5 seconds
+  </script>
   <div id="payment-message"></div>
-  <button onclick="window.location.href='https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html'">Back to Products</button>
   <script src="payment-test.js"></script>
 </body>
 </html>
