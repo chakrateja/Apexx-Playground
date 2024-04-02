@@ -425,4 +425,3 @@ document.addEventListener('DOMContentLoaded', () => {
       updateBasketCount();
     });
   });
-});
