@@ -363,7 +363,6 @@ const displayPaymentOptions = () => {
     document.body.appendChild(paymentOptions);
   }
 };
-
 document.addEventListener('DOMContentLoaded', () => {
   const basketButton = document.getElementById('cart');
   const backButton = document.getElementById('back-to-products');
@@ -425,3 +424,4 @@ document.addEventListener('DOMContentLoaded', () => {
       updateBasketCount();
     });
   });
+});
