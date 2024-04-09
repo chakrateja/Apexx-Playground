@@ -12,6 +12,7 @@ class ApiClient {
     } else {
       throw new Error('Invalid endpoint type');
     }
+    
     const url = `${baseUrl}/${endpoint}`;
     const options = {
       method,
