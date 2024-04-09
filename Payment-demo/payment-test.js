@@ -4,7 +4,7 @@ class ApiClient {
   }
   async sendRequest(endpoint, method = 'POST', requestData = null, endpointType = 'hosted') {
     let baseUrl;
-    
+
     if (endpointType === 'hosted') {
       baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
     } else if (endpointType === 'bnpl') {
@@ -12,7 +12,7 @@ class ApiClient {
     } else {
       throw new Error('Invalid endpoint type');
     }
-    
+
     const url = `${baseUrl}/${endpoint}`;
     const options = {
       method,
@@ -44,19 +44,7 @@ class ApiClient {
   }
 }
 
-function handlePaymentMethodChange() {
-  const alternativeMethodsDiv = document.getElementById('alternative-methods');
-  const selectedMethod = document.querySelector('input[name="payment-method"]:checked').value;
-
-  if (selectedMethod === 'alternative') {
-    alternativeMethodsDiv.style.display = 'block';
-  } else {
-    alternativeMethodsDiv.style.display = 'none';
-    alternativeMethodLogos.forEach(logo => logo.classList.remove('selected'));
-    selectedAlternativeMethod = null;
-  }
-}
-
+function handlePaymentResponse() {
   // Get the productUrl query parameter from the URL
   const urlParams = new URLSearchParams(window.location.search);
   const productUrl = urlParams.get('productUrl') || 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html';
@@ -71,8 +59,6 @@ function handlePaymentMethodChange() {
 
   basket = [];
 }
-
-window.onload = handlePaymentResponse;
 
 const items = [
   {
@@ -116,11 +102,13 @@ const updateBasketCount = () => {
   const cartButton = document.getElementById('cart');
   cartButton.textContent = `Basket (${basket.length})`;
 };
+
 const paymentMethodRadios = document.querySelectorAll('input[name="payment-method"]');
 
 paymentMethodRadios.forEach(radio => {
   radio.addEventListener('change', handlePaymentMethodChange);
 });
+
 const alternativeMethodLogos = document.querySelectorAll('#alternative-methods img');
 let selectedAlternativeMethod = null;
 
@@ -132,6 +120,19 @@ alternativeMethodLogos.forEach(logo => {
   });
 });
 
+function handlePaymentMethodChange() {
+  const alternativeMethodsDiv = document.getElementById('alternative-methods');
+  const selectedMethod = document.querySelector('input[name="payment-method"]:checked').value;
+
+  if (selectedMethod === 'alternative') {
+    alternativeMethodsDiv.style.display = 'block';
+  } else {
+    alternativeMethodsDiv.style.display = 'none';
+    alternativeMethodLogos.forEach(logo => logo.classList.remove('selected'));
+    selectedAlternativeMethod = null;
+  }
+}
+
 const displayPaymentForm = () => {
   const paymentForm = document.getElementById('payment-form');
   if (paymentForm) {
@@ -140,7 +141,6 @@ const displayPaymentForm = () => {
     console.error('Payment form not found');
   }
 };
-
 const initiateKlarnaPayment = async () => {
   const totalAmount = items.reduce((total, item) => total + item.net_unit_price, 0);
   const paymentData = {
