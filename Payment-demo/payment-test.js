@@ -111,16 +111,11 @@ let basket = [];
     const cartButton = document.getElementById('cart');
     cartButton.textContent = `Basket (${basket.length})`;
   };
-const alternativeMethodsContainer = document.getElementById('alternative-methods');
-const paymentMethodRadios = document.querySelectorAll('input[name="payment-method"]');
-
-paymentMethodRadios.forEach(radio => {
-  radio.addEventListener('change', () => {
-    if (radio.value === 'alternative') {
-      alternativeMethodsContainer.style.display = 'block';
-    } else {
-      alternativeMethodsContainer.style.display = 'none';
-    }
+const alternativeMethodLogos = document.querySelectorAll('#alternative-methods img');
+alternativeMethodLogos.forEach(logo => {
+  logo.addEventListener('click', () => {
+    alternativeMethodLogos.forEach(otherLogo => otherLogo.classList.remove('selected'));
+    logo.classList.add('selected');
   });
 });
 const displayPaymentForm = () => {
