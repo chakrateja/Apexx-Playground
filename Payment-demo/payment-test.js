@@ -129,8 +129,8 @@ const initiateKlarnaPayment = async (basket) => {
   const paymentData = {
     organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     currency: 'GBP',
-    amount: totalAmount.toString(),
-    net_amount: totalAmount.toString(),
+    amount: totalAmount,
+    net_amount: totalAmount,
     capture_now: 'true',
     dynamic_descriptor: 'Apexx Test',
     merchant_reference: 'jL9ZJMjoYIuFIrH',
