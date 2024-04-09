@@ -87,45 +87,48 @@ const displayPaymentForm = () => {
 };
 const initiatePayment = async (basket) => {
   if (!paymentInitiated) {
-      const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
-      const paymentData = {
-        organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
-        currency: 'GBP',
-        amount: totalAmount, // Use the calculated total amount
-        capture_now: true,
-        dynamic_descriptor: 'Demo Merchant Test Purchase',
-        merchant_reference: 'ref_' + Date.now(), // Dynamically generate a reference
-        return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html',
-        webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
-        transaction_type: 'first',
-        duplicate_check: false,
-        locale: 'en_GB',
-        card: {
-          create_token: false
-        },
-        billing_address: {
-          first_name: 'John', // Placeholder for real customer data
-          last_name: 'Doe', // Placeholder for real customer data
-          email: 'john.doe@example.com', // Placeholder for real customer data
-          address: '123 Main Street', // Placeholder for real customer data
-          city: 'London', // Placeholder for real customer data
-          state: 'London', // Placeholder for real customer data
-          postal_code: 'SW1A 1AA', // Placeholder for real customer data
-          country: 'GB', // Placeholder for real customer data
-          phone: '441234567890' // Placeholder for real customer data
-        },
-        three_ds: {
-          three_ds_required: true,
-          three_ds_version: '2.0'
-        }
-      };
-  try {
+    const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
+    const paymentData = {
+      organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
+      currency: 'GBP',
+      amount: totalAmount,
+      capture_now: true,
+      dynamic_descriptor: 'Demo Merchant Test Purchase',
+      merchant_reference: 'ref_' + Date.now(),
+      return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html',
+      webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
+      transaction_type: 'first',
+      duplicate_check: false,
+      locale: 'en_GB',
+      card: {
+        create_token: false
+      },
+      billing_address: {
+        first_name: 'John',
+        last_name: 'Doe',
+        email: 'john.doe@example.com',
+        address: '123 Main Street',
+        city: 'London',
+        state: 'London',
+        postal_code: 'SW1A 1AA',
+        country: 'GB',
+        phone: '441234567890'
+      },
+      three_ds: {
+        three_ds_required: true,
+        three_ds_version: '2.0'
+      }
+    };
+
+    try {
       const responseData = await apiClient.sendRequest('', 'POST', paymentData);
       if (responseData && responseData.url) {
         const paymentIframe = document.getElementById('payment-iframe');
         if (paymentIframe) {
+          paymentIframe.onload = () => {
+            paymentIframe.style.display = 'block';
+          };
           paymentIframe.src = responseData.url;
-          paymentIframe.style.display = 'block';
         } else {
           console.error('Payment iframe not found');
         }
