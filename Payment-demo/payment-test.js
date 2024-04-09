@@ -519,22 +519,21 @@ document.getElementById('confirm-payment').addEventListener('click', async () =>
         await initiatePayment(basket);
         break;
       case 'alternative':
+        const selectedAlternativeMethod = document.querySelector('#alternative-methods img.selected');
         if (selectedAlternativeMethod) {
-          switch (selectedAlternativeMethod) {
+          const methodName = selectedAlternativeMethod.value.toLowerCase();
+          switch (methodName) {
             case 'ideal':
               await initiateidealPayment(basket);
               break;
             case 'sofort':
               await initiateSofortPayment(basket);
               break;
-            case 'przelewy24':
-              await initiatePrzelewy24Payment(basket);
-              break;
-            case 'giropay':
-              await initiateGiropayPayment(basket);
-              break;
             case 'klarna':
-              await initiateKlarnaPayment(basket);
+              await initiateKlarnaPayment();
+              break;
+            case 'bancontact':
+              await initiateBancontactPayment(basket);
               break;
             default:
               console.error('Invalid alternative payment method selected');
