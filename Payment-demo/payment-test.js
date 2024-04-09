@@ -1,7 +1,3 @@
-javascript
-
-
-Copy code
 class ApiClient {
   constructor(apiKey) {
     this.apiKey = apiKey;
@@ -468,8 +464,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (paymentOptionsSection) {
     paymentOptionsSection.style.display = 'none';
   }
-
-  // Toggle to payment options view
   basketButton.addEventListener('click', () => {
     if (basket.length > 0) {
       productsSection.style.display = 'none';
@@ -480,8 +474,6 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Your basket is empty.');
     }
   });
-
-  // Back to products view
   if (backButton) {
     backButton.addEventListener('click', () => {
       if (paymentOptionsSection) {
@@ -529,7 +521,6 @@ document.getElementById('confirm-payment').addEventListener('click', async () =>
     console.error('No payment method selected');
   }
 });
-
   document.querySelectorAll('.add-to-basket').forEach(button => {
     button.addEventListener('click', function() {
       const product = {
