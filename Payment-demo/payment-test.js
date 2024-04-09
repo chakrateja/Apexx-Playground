@@ -77,8 +77,7 @@ window.onload = handlePaymentResponse;
 
 
 const apiKey = 'c6490381A6ab0A4b18A9960Af3a9182c40ba';
-const baseUrl = 'https://sandbox.apexx.global/atomic/v1/api/payment/hosted';
-const apiClient = new ApiClient(baseUrl, apiKey);
+const apiClient = new ApiClient(apiKey);
 let paymentInitiated = false;
 let basket = [];
 
