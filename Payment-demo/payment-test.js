@@ -520,23 +520,13 @@ try {
     }
   });
 document.querySelectorAll('.add-to-basket').forEach(button => {
-  button.addEventListener('click', function() {
-    const product = {
-      product_id: this.getAttribute('data-name'),
-      group_id: "stuff",
-      item_description: this.getAttribute('data-name'),
-      net_unit_price: parseInt(this.getAttribute('data-amount'), 10),
-      gross_unit_price: parseInt(this.getAttribute('data-amount'), 10),
-      quantity: 1,
-      vat_percent: 0,
-      vat_amount: 0,
-      discount: 0,
-      product_image_url: "https://www.example.com/product-image.jpg",
-      product_url: "https://www.example.com/product-details",
-      additional_information: "Additional product information",
-      delivery: "email"
-    };
-    basket.push(product);
-    updateBasketCount();
+    button.addEventListener('click', function() {
+      const product = {
+        name: this.getAttribute('data-name'),
+        amount: parseInt(this.getAttribute('data-amount'), 10)
+      };
+      basket.push(product);
+      updateBasketCount();
+    });
   });
 });
