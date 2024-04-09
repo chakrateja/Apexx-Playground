@@ -493,6 +493,27 @@ document.getElementById('confirm-payment').addEventListener('click', async () =>
     case 'card':
       await initiatePayment(basket);
       break;
+    case 'alternative':
+      const selectedAlternativeMethod = document.querySelector('#alternative-methods img.selected');
+      if (selectedAlternativeMethod) {
+        const methodName = selectedAlternativeMethod.alt.toLowerCase();
+        switch (methodName) {
+          case 'sofort':
+            await initiateSofortPayment(basket);
+            break;
+          case 'ideal':
+            await initiateidealPayment(basket);
+            break;
+          case 'klarna':
+            await initiateKlarnaPayment();
+            break;
+          default:
+            console.error('Invalid alternative payment method selected');
+        }
+      } else {
+        console.error('No alternative payment method selected');
+      }
+      break;
     default:
       console.error('No payment method selected');
   }
