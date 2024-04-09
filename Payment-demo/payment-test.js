@@ -216,7 +216,7 @@ const initiatePayment = async (basket) => {
     };
 
     try {
-      const responseData = await apiClient.sendRequest('', 'POST', paymentData);
+      const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
       if (responseData && responseData.url) {
         const paymentIframe = document.getElementById('payment-iframe');
         if (paymentIframe) {
@@ -283,7 +283,7 @@ const initiateSofortPayment = async (basket) => {
     }
   };
 try {
-    const responseData = await apiClient.sendRequest('', 'POST', paymentData);
+    const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
     if (responseData && responseData.url) {
       window.location.href = responseData.url;
     } else {
@@ -347,7 +347,7 @@ organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     }
   };
 try {
-    const responseData = await apiClient.sendRequest('', 'POST', paymentData);
+    const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
     if (responseData && responseData.url) {
       window.location.href = responseData.url;
     } else {
