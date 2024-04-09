@@ -44,12 +44,18 @@ class ApiClient {
   }
 }
 
-function handlePaymentResponse() {
-  // Display a payment successful message
-  const paymentMessage = document.getElementById('payment-message');
-  if (paymentMessage) {
-    paymentMessage.textContent = 'Payment successful! Thank you for your order.';
+function handlePaymentMethodChange() {
+  const alternativeMethodsDiv = document.getElementById('alternative-methods');
+  const selectedMethod = document.querySelector('input[name="payment-method"]:checked').value;
+
+  if (selectedMethod === 'alternative') {
+    alternativeMethodsDiv.style.display = 'block';
+  } else {
+    alternativeMethodsDiv.style.display = 'none';
+    alternativeMethodLogos.forEach(logo => logo.classList.remove('selected'));
+    selectedAlternativeMethod = null;
   }
+}
 
   // Get the productUrl query parameter from the URL
   const urlParams = new URLSearchParams(window.location.search);
@@ -110,7 +116,11 @@ const updateBasketCount = () => {
   const cartButton = document.getElementById('cart');
   cartButton.textContent = `Basket (${basket.length})`;
 };
+const paymentMethodRadios = document.querySelectorAll('input[name="payment-method"]');
 
+paymentMethodRadios.forEach(radio => {
+  radio.addEventListener('change', handlePaymentMethodChange);
+});
 const alternativeMethodLogos = document.querySelectorAll('#alternative-methods img');
 let selectedAlternativeMethod = null;
 
