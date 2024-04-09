@@ -449,14 +449,7 @@ try {
     showError('Error initiating iDEAL payment. Please try again.');
   }
 };
-  const existingOptions = document.getElementById('payment-options');
-  if (existingOptions) {
-    document.body.replaceChild(paymentOptions, existingOptions);
-  } else {
-    document.body.appendChild(paymentOptions);
-  }
-};
-document.addEventListener('DOMContentLoaded', () => {
+ document.addEventListener('DOMContentLoaded', () => {
   const basketButton = document.getElementById('cart');
   const backButton = document.getElementById('back-to-products');
   const productsSection = document.querySelector('.products');
@@ -464,6 +457,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (paymentOptionsSection) {
     paymentOptionsSection.style.display = 'none';
   }
+
+  // Toggle to payment options view
   basketButton.addEventListener('click', () => {
     if (basket.length > 0) {
       productsSection.style.display = 'none';
@@ -474,6 +469,8 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Your basket is empty.');
     }
   });
+
+  // Back to products view
   if (backButton) {
     backButton.addEventListener('click', () => {
       if (paymentOptionsSection) {
@@ -482,45 +479,47 @@ document.addEventListener('DOMContentLoaded', () => {
       productsSection.style.display = 'flex';
     });
   }
-document.getElementById('confirm-payment').addEventListener('click', async () => {
-  const selectedMethodRadio = document.querySelector('input[name="payment-method"]:checked');
-  if (selectedMethodRadio) {
-    const selectedMethod = selectedMethodRadio.value;
-    switch (selectedMethod) {
-      case 'card':
-        await initiatePayment(basket);
-        break;
-      case 'alternative':
-        const selectedAlternativeMethod = document.querySelector('#alternative-methods img.selected');
-        if (selectedAlternativeMethod) {
-          const methodName = selectedAlternativeMethod.alt.toLowerCase();
-          switch (methodName) {
-            case 'sofort':
-              await initiateSofortPayment(basket);
-              break;
-            case 'ideal':
-              await initiateidealPayment(basket);
-              break;
-            case 'klarna':
-              await initiateKlarnaPayment();
-              break;
-            case 'bancontact':
-              await initiateBancontactPayment(basket);
-              break;
-            default:
-              console.error('Invalid alternative payment method selected');
+
+  document.getElementById('confirm-payment').addEventListener('click', async () => {
+    const selectedMethodRadio = document.querySelector('input[name="payment-method"]:checked');
+    if (selectedMethodRadio) {
+      const selectedMethod = selectedMethodRadio.value;
+      switch (selectedMethod) {
+        case 'card':
+          await initiatePayment(basket);
+          break;
+        case 'alternative':
+          const selectedAlternativeMethod = document.querySelector('#alternative-methods img.selected');
+          if (selectedAlternativeMethod) {
+            const methodName = selectedAlternativeMethod.alt.toLowerCase();
+            switch (methodName) {
+              case 'sofort':
+                await initiateSofortPayment(basket);
+                break;
+              case 'ideal':
+                await initiateidealPayment(basket);
+                break;
+              case 'klarna':
+                await initiateKlarnaPayment();
+                break;
+              case 'bancontact':
+                await initiateBancontactPayment(basket);
+                break;
+              default:
+                console.error('Invalid alternative payment method selected');
+            }
+          } else {
+            console.error('No alternative payment method selected');
           }
-        } else {
-          console.error('No alternative payment method selected');
-        }
-        break;
-      default:
-        console.error('Invalid payment method selected');
+          break;
+        default:
+          console.error('Invalid payment method selected');
+      }
+    } else {
+      console.error('No payment method selected');
     }
-  } else {
-    console.error('No payment method selected');
-  }
-});
+  });
+
   document.querySelectorAll('.add-to-basket').forEach(button => {
     button.addEventListener('click', function() {
       const product = {
