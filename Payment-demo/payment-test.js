@@ -169,7 +169,7 @@ const initiateKlarnaPayment = async (basket) => {
   };
 
   try {
-    const responseData = wait apiClient.sendRequest('', 'POST', paymentData, 'bnpl');
+    const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'bnpl');
     if (responseData && responseData.url) {
       window.location.href = responseData.url;
     } else {
