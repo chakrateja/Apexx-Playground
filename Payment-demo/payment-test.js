@@ -111,6 +111,18 @@ let basket = [];
     const cartButton = document.getElementById('cart');
     cartButton.textContent = `Basket (${basket.length})`;
   };
+const alternativeMethodsContainer = document.getElementById('alternative-methods');
+const paymentMethodRadios = document.querySelectorAll('input[name="payment-method"]');
+
+paymentMethodRadios.forEach(radio => {
+  radio.addEventListener('change', () => {
+    if (radio.value === 'alternative') {
+      alternativeMethodsContainer.style.display = 'block';
+    } else {
+      alternativeMethodsContainer.style.display = 'none';
+    }
+  });
+});
 const displayPaymentForm = () => {
   const paymentForm = document.getElementById('payment-form');
   if (paymentForm) {
@@ -436,32 +448,7 @@ try {
     showError('Error initiating iDEAL payment. Please try again.');
   }
 };
-const displayPaymentOptions = () => {
-  const paymentMethods = ['SOFORT', 'Bancontact', 'iDEAL', 'Klarna']; // Add Klarna to the list
-  const paymentOptions = document.createElement('div');
-  paymentOptions.setAttribute('id', 'payment-options');
-  paymentMethods.forEach(method => {
-    const button = document.createElement('button');
-    button.textContent = `Pay with ${method}`;
-    button.onclick = () => {
-      switch (method) {
-        case 'SOFORT':
-          initiateSofortPayment(basket);
-          break;
-        case 'Bancontact':
-          initiateBancontactPayment(basket);
-          break;
-        case 'iDEAL':
-          initiateidealPayment(basket);
-          break;
-        case 'Klarna':
-          initiateKlarnaPayment(basket);
-          break;
-      }
-      paymentOptions.style.display = 'none'; // Hide options after selection
-    };
-    paymentOptions.appendChild(button);
-  });
+
 
   const existingOptions = document.getElementById('payment-options');
   if (existingOptions) {
@@ -505,18 +492,6 @@ document.getElementById('confirm-payment').addEventListener('click', async () =>
   switch (selectedMethod) {
     case 'card':
       await initiatePayment(basket);
-      break;
-    case 'sofort':
-      await initiateSofortPayment(basket);
-      break;
-    case 'bancontact':
-      await initiateBancontactPayment(basket);
-      break;
-    case 'ideal':
-      await initiateidealPayment(basket);
-      break;
-    case 'klarna':
-      await initiateKlarnaPayment(basket);
       break;
     default:
       console.error('No payment method selected');
