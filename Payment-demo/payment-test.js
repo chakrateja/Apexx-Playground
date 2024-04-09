@@ -64,11 +64,8 @@ function handlePaymentResponse() {
     window.location.href = productUrl;
   }
 
-  // Reset the basket and update the basket count
   basket = [];
 
-  // Reset any other necessary state or data
-  // ...
 }
 const items = [
   {
