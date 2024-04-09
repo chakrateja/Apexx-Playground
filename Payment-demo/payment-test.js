@@ -1,3 +1,7 @@
+javascript
+
+
+Copy code
 class ApiClient {
   constructor(apiKey) {
     this.apiKey = apiKey;
@@ -64,10 +68,10 @@ function handlePaymentResponse() {
   }
 
   basket = [];
-
 }
 
 window.onload = handlePaymentResponse;
+
 const items = [
   {
     product_id: "12345",
@@ -106,10 +110,11 @@ const apiClient = new ApiClient(apiKey);
 let paymentInitiated = false;
 let basket = [];
 
-  const updateBasketCount = () => {
-    const cartButton = document.getElementById('cart');
-    cartButton.textContent = `Basket (${basket.length})`;
-  };
+const updateBasketCount = () => {
+  const cartButton = document.getElementById('cart');
+  cartButton.textContent = `Basket (${basket.length})`;
+};
+
 const alternativeMethodLogos = document.querySelectorAll('#alternative-methods img');
 alternativeMethodLogos.forEach(logo => {
   logo.addEventListener('click', () => {
@@ -117,6 +122,7 @@ alternativeMethodLogos.forEach(logo => {
     logo.classList.add('selected');
   });
 });
+
 const displayPaymentForm = () => {
   const paymentForm = document.getElementById('payment-form');
   if (paymentForm) {
@@ -125,6 +131,7 @@ const displayPaymentForm = () => {
     console.error('Payment form not found');
   }
 };
+
 const initiateKlarnaPayment = async () => {
   const totalAmount = items.reduce((total, item) => total + item.net_unit_price, 0);
   const paymentData = {
@@ -209,6 +216,7 @@ const initiateKlarnaPayment = async () => {
     showError('Error initiating Klarna payment. Please try again.');
   }
 };
+
 const initiatePayment = async (basket) => {
   if (!paymentInitiated) {
     const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
@@ -268,6 +276,7 @@ const initiatePayment = async (basket) => {
     console.log('Payment has already been initiated.');
   }
 };
+
 const initiateSofortPayment = async (basket) => {
   const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
   const paymentData = {
@@ -311,7 +320,7 @@ const initiateSofortPayment = async (basket) => {
       }
     }
   };
-try {
+  try {
     const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
     if (responseData && responseData.url) {
       window.location.href = responseData.url;
@@ -323,6 +332,7 @@ try {
     showError('Error initiating SOFORT payment. Please try again.');
   }
 };
+
 const showError = (message) => {
   const errorElement = document.getElementById('error-message');
   if (errorElement) {
@@ -332,10 +342,11 @@ const showError = (message) => {
     alert(message);
   }
 };
+
 const initiateBancontactPayment = async (basket) => {
-const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
-const paymentData = {
-organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
+  const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
+  const paymentData = {
+    organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     capture_now: 'true',
     customer_ip: '10.20.0.186',
     recurring_type: 'first',
@@ -442,8 +453,6 @@ try {
     showError('Error initiating iDEAL payment. Please try again.');
   }
 };
-
-
   const existingOptions = document.getElementById('payment-options');
   if (existingOptions) {
     document.body.replaceChild(paymentOptions, existingOptions);
