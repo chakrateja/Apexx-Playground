@@ -2,7 +2,6 @@ class ApiClient {
   constructor(apiKey) {
     this.apiKey = apiKey;
   }
-
   async sendRequest(endpoint, method = 'POST', requestData = null, endpointType = 'hosted') {
     let baseUrl;
     
