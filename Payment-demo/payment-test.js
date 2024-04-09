@@ -112,10 +112,13 @@ const updateBasketCount = () => {
 };
 
 const alternativeMethodLogos = document.querySelectorAll('#alternative-methods img');
+let selectedAlternativeMethod = null;
+
 alternativeMethodLogos.forEach(logo => {
   logo.addEventListener('click', () => {
     alternativeMethodLogos.forEach(otherLogo => otherLogo.classList.remove('selected'));
     logo.classList.add('selected');
+    selectedAlternativeMethod = logo.value;
   });
 });
 
@@ -488,10 +491,8 @@ document.getElementById('confirm-payment').addEventListener('click', async () =>
         await initiatePayment(basket);
         break;
       case 'alternative':
-        const selectedAlternativeMethod = document.querySelector('#alternative-methods img.selected');
         if (selectedAlternativeMethod) {
-          const methodName = selectedAlternativeMethod.value;
-          switch (methodName) {
+          switch (selectedAlternativeMethod) {
             case 'ideal':
               await initiateidealPayment(basket);
               break;
