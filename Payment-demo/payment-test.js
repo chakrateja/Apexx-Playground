@@ -67,38 +67,6 @@ function handlePaymentResponse() {
   basket = [];
 
 }
-const items = [
-  {
-    product_id: "12345",
-    group_id: "stuff",
-    item_description: "a thing",
-    net_unit_price: 1600,
-    gross_unit_price: 1600,
-    quantity: 1,
-    vat_percent: 0,
-    vat_amount: 0,
-    discount: 0,
-    product_image_url: "https://www.string.com",
-    product_url: "https://www.string.com",
-    additional_information: "string",
-    delivery: "email"
-  },
-  {
-    product_id: "54321",
-    group_id: "other stuff",
-    item_description: "another thing",
-    net_unit_price: 100,
-    gross_unit_price: 100,
-    quantity: 1,
-    vat_percent: 0,
-    vat_amount: 0,
-    discount: 0,
-    product_image_url: "https://www.string.com",
-    product_url: "https://www.string.com",
-    additional_information: "string",
-    delivery: "delivery"
-  }
-];
 
 window.onload = handlePaymentResponse;
 
@@ -120,8 +88,8 @@ const displayPaymentForm = () => {
     console.error('Payment form not found');
   }
 };
-const initiateKlarnaPayment = async (basket) => {
-const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
+const initiateKlarnaPayment = async () => {
+  const totalAmount = items.reduce((total, item) => total + item.net_unit_price, 0);
   const paymentData = {
     organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     currency: 'GBP',
@@ -204,7 +172,6 @@ const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount)
     showError('Error initiating Klarna payment. Please try again.');
   }
 };
-
 const initiatePayment = async (basket) => {
   if (!paymentInitiated) {
     const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
