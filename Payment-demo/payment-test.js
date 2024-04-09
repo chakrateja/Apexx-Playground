@@ -123,9 +123,38 @@ const initiateKlarnaPayment = async (basket) => {
       failed: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html',
       cancelled: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html'
     },
-    items: [
-      // Add the items based on the basket contents
-    ],
+    const items = [
+  {
+    product_id: "12345",
+    group_id: "stuff",
+    item_description: "a thing",
+    net_unit_price: 1600,
+    gross_unit_price: 1600,
+    quantity: 1,
+    vat_percent: 0,
+    vat_amount: 0,
+    discount: 0,
+    product_image_url: "https://www.string.com",
+    product_url: "https://www.string.com",
+    additional_information: "string",
+    delivery: "email"
+  },
+  {
+    product_id: "54321",
+    group_id: "other stuff",
+    item_description: "another thing",
+    net_unit_price: 100,
+    gross_unit_price: 100,
+    quantity: 1,
+    vat_percent: 0,
+    vat_amount: 0,
+    discount: 0,
+    product_image_url: "https://www.string.com",
+    product_url: "https://www.string.com",
+    additional_information: "string",
+    delivery: "delivery"
+  }
+];
     customer: {
       customer_identification_number: 'string',
       identification_type: 'SSN',
