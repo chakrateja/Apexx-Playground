@@ -21,7 +21,6 @@ class ApiClient {
         'X-APIKEY': this.apiKey
       },
     };
-
     if (requestData) {
       options.body = JSON.stringify(requestData);
     }
