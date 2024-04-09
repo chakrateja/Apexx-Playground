@@ -124,12 +124,12 @@ const displayPaymentForm = () => {
   }
 };
 const initiateKlarnaPayment = async (basket) => {
-const totalAmount = basket.reduce((total, item) => total + item.net_unit_price, 0);
+const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
   const paymentData = {
     organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     currency: 'GBP',
-    amount: Math.floor(totalAmount),
-    net_amount: Math.floor(totalAmount),
+    amount: 0,
+    net_amount: 0,
     capture_now: 'true',
     dynamic_descriptor: 'Apexx Test',
     merchant_reference: 'jL9ZJMjoYIuFIrH',
