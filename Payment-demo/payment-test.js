@@ -125,8 +125,8 @@ const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount)
   const paymentData = {
     organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     currency: 'GBP',
-    amount: 0,
-    net_amount: 0,
+    amount: totalAmount,
+    net_amount: totalAmount,
     capture_now: 'true',
     dynamic_descriptor: 'Apexx Test',
     merchant_reference: 'jL9ZJMjoYIuFIrH',
