@@ -479,46 +479,48 @@ try {
       productsSection.style.display = 'flex';
     });
   }
-
-  document.getElementById('confirm-payment').addEventListener('click', async () => {
-    const selectedMethodRadio = document.querySelector('input[name="payment-method"]:checked');
-    if (selectedMethodRadio) {
-      const selectedMethod = selectedMethodRadio.value;
-      switch (selectedMethod) {
-        case 'card':
-          await initiatePayment(basket);
-          break;
-        case 'alternative':
-          const selectedAlternativeMethod = document.querySelector('#alternative-methods img.selected');
-          if (selectedAlternativeMethod) {
-            const methodName = selectedAlternativeMethod.alt.toLowerCase();
-            switch (methodName) {
-              case 'sofort':
-                await initiateSofortPayment(basket);
-                break;
-              case 'ideal':
-                await initiateidealPayment(basket);
-                break;
-              case 'klarna':
-                await initiateKlarnaPayment();
-                break;
-              case 'bancontact':
-                await initiateBancontactPayment(basket);
-                break;
-              default:
-                console.error('Invalid alternative payment method selected');
-            }
-          } else {
-            console.error('No alternative payment method selected');
+document.getElementById('confirm-payment').addEventListener('click', async () => {
+  const selectedMethodRadio = document.querySelector('input[name="payment-method"]:checked');
+  if (selectedMethodRadio) {
+    const selectedMethod = selectedMethodRadio.value;
+    switch (selectedMethod) {
+      case 'card':
+        await initiatePayment(basket);
+        break;
+      case 'alternative':
+        const selectedAlternativeMethod = document.querySelector('#alternative-methods img.selected');
+        if (selectedAlternativeMethod) {
+          const methodName = selectedAlternativeMethod.value;
+          switch (methodName) {
+            case 'ideal':
+              await initiateidealPayment(basket);
+              break;
+            case 'sofort':
+              await initiateSofortPayment(basket);
+              break;
+            case 'przelewy24':
+              await initiatePrzelewy24Payment(basket);
+              break;
+            case 'giropay':
+              await initiateGiropayPayment(basket);
+              break;
+            case 'klarna':
+              await initiateKlarnaPayment(basket);
+              break;
+            default:
+              console.error('Invalid alternative payment method selected');
           }
-          break;
-        default:
-          console.error('Invalid payment method selected');
-      }
-    } else {
-      console.error('No payment method selected');
+        } else {
+          console.error('No alternative payment method selected');
+        }
+        break;
+      default:
+        console.error('Invalid payment method selected');
     }
-  });
+  } else {
+    console.error('No payment method selected');
+  }
+});
 document.querySelectorAll('.add-to-basket').forEach(button => {
     button.addEventListener('click', function() {
       const product = {
