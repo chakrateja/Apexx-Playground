@@ -10,6 +10,18 @@
       color: #004085; /* Dark blue color */
       /* other styles you may want to add, like text-align, font-size, etc. */
     }
+     .payment-methods {
+      display: block;
+    }
+    #alternative-methods {
+      display: none;
+    }
+    #alternative-methods img {
+      width: 100px;
+      height: auto;
+      margin: 10px;
+      cursor: pointer;
+    }
     body {
       font-family: Arial, sans-serif;
       background-color: #fcfdfe; /* Fall-back color */
@@ -143,18 +155,21 @@
         <button class="add-to-basket" data-amount="30000" data-name="Product 3">Add to Basket</button>
       </section>
     </div>
-    <div class="payment-methods" id="payment-options-page">
+   <div class="payment-methods" id="payment-options-page">
       <h2>Choose Payment Method</h2>
-      <input type="radio" id="pay-with-card" name="payment-method" value="card">
-      <label for="pay-with-card">Pay with Card</label><br>
-      <input type="radio" id="pay-with-sofort" name="payment-method" value="sofort">
-      <label for="pay-with-sofort">Pay with SOFORT</label><br>
-      <input type="radio" id="pay-with-bancontact" name="payment-method" value="bancontact">
-      <label for="pay-with-bancontact">Pay with BANCONTACT</label><br>
-      <input type="radio" id="pay-with-ideal" name="payment-method" value="ideal">
-      <label for="pay-with-ideal">Pay with IDEAL</label><br>
-      <input type="radio" id="pay-with-klarna" name="payment-method" value="klarna">
-      <label for="pay-with-klarna">Pay with KLARNA</label><br>
+      <label>
+        <input type="radio" name="payment-method" value="card" checked> Pay with Credit/Debit Card
+      </label>
+      <label>
+        <input type="radio" name="payment-method" value="alternative"> Pay with other Alternative Payments
+      </label>
+      <div id="alternative-methods">
+        <img src="https://getlogo.net/wp-content/uploads/2020/03/sofort-logo-vector.png" alt="SOFORT" onclick="initiateSofortPayment()">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e9/IDEAL_Logo.png" alt="iDeal" onclick="initiateidealPayment()">
+        <img src="https://docs.klarna.com/assets/media/502240a8-506e-44b3-84eb-d8e57609ab93/Marketing_Badge_With_Clear_Space.png" alt="Klarna" onclick="initiateKlarnaPayment()">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bancontact_logo.svg/1280px-Bancontact_logo.svg.png" alt="BANCONTACT" onclick="initiateBancontactPayment()">
+        <!-- Add more payment method logos/icons as needed -->
+      </div>
       <button type="button" id="confirm-payment">Confirm Payment</button>
       <button type="button" id="back-to-products">Back to Products</button>
     </div>
