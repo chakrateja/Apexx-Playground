@@ -113,10 +113,28 @@ const alternativeMethodLogos = document.querySelectorAll('#alternative-methods i
 let selectedAlternativeMethod = null;
 
 alternativeMethodLogos.forEach(logo => {
-  logo.addEventListener('click', () => {
+  logo.addEventListener('click', async () => {
     alternativeMethodLogos.forEach(otherLogo => otherLogo.classList.remove('selected'));
     logo.classList.add('selected');
     selectedAlternativeMethod = logo.value;
+
+    // Call the respective payment initiation function
+    switch (selectedAlternativeMethod.toLowerCase()) {
+      case 'ideal':
+        await initiateidealPayment(basket);
+        break;
+      case 'sofort':
+        await initiateSofortPayment(basket);
+        break;
+      case 'klarna':
+        await initiateKlarnaPayment();
+        break;
+      case 'bancontact':
+        await initiateBancontactPayment(basket);
+        break;
+      default:
+        console.error('Invalid alternative payment method selected');
+    }
   });
 });
 
