@@ -115,7 +115,7 @@ const initiatePayment = async (basket) => {
         phone: '441234567890'
       },
       three_ds: {
-        three_ds_required: true,
+        three_ds_required: false,
         three_ds_version: '2.0'
       }
     };
