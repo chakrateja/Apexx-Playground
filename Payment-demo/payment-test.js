@@ -59,12 +59,6 @@ function handlePaymentResponse() {
 
   // Reset the basket and update the basket count
   basket = [];
-  const updateBasketCount = () => {
-  const cartButton = document.getElementById('cart');
-  console.log('Cart button:', cartButton); // Add this line
-  console.log('Basket:', basket); // Add this line
-  cartButton.textContent = `Basket (${basket.length})`;
-};
 
   // Reset any other necessary state or data
   // ...
@@ -284,7 +278,7 @@ organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
     ideal: {
       account_holder_name: 'Test Name',
       redirection_parameters: {
-        return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html'
+        return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html'
       } 
     },
     customer: {
