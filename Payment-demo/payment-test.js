@@ -25,7 +25,6 @@ class ApiClient {
     if (requestData) {
       options.body = JSON.stringify(requestData);
     }
-
     try {
       const response = await fetch(url, options);
       const contentType = response.headers.get("content-type");
