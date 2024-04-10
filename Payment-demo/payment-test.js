@@ -109,14 +109,11 @@ paymentMethodRadios.forEach(radio => {
   radio.addEventListener('change', handlePaymentMethodChange);
 });
 
-const alternativeMethodLogos = document.querySelectorAll('#alternative-methods img');
-let selectedAlternativeMethod = null;
-
 alternativeMethodLogos.forEach(logo => {
   logo.addEventListener('click', async () => {
     alternativeMethodLogos.forEach(otherLogo => otherLogo.classList.remove('selected'));
     logo.classList.add('selected');
-    selectedAlternativeMethod = logo.value;
+    selectedAlternativeMethod = logo.alt; // Set selectedAlternativeMethod to the alt attribute
 
     // Call the respective payment initiation function
     switch (selectedAlternativeMethod.toLowerCase()) {
@@ -521,7 +518,7 @@ document.getElementById('confirm-payment').addEventListener('click', async () =>
       case 'alternative':
         const selectedAlternativeMethod = document.querySelector('#alternative-methods img.selected');
         if (selectedAlternativeMethod) {
-          const methodName = selectedAlternativeMethod.value.toLowerCase();
+          const methodName = selectedAlternativeMethod.alt.toLowerCase(); // Use the alt attribute
           switch (methodName) {
             case 'ideal':
               await initiateidealPayment(basket);
