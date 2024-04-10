@@ -109,6 +109,9 @@ paymentMethodRadios.forEach(radio => {
   radio.addEventListener('change', handlePaymentMethodChange);
 });
 
+const alternativeMethodLogos = document.querySelectorAll('#alternative-methods img');
+let selectedAlternativeMethod = null;
+
 alternativeMethodLogos.forEach(logo => {
   logo.addEventListener('click', async () => {
     alternativeMethodLogos.forEach(otherLogo => otherLogo.classList.remove('selected'));
