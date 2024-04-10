@@ -12,6 +12,7 @@ class ApiClient {
     } else {
       throw new Error('Invalid endpoint type');
     }
+
     const url = `${baseUrl}/${endpoint}`;
     const options = {
       method,
@@ -101,6 +102,42 @@ const updateBasketCount = () => {
   const cartButton = document.getElementById('cart');
   cartButton.textContent = `Basket (${basket.length})`;
 };
+
+const paymentMethodRadios = document.querySelectorAll('input[name="payment-method"]');
+
+paymentMethodRadios.forEach(radio => {
+  radio.addEventListener('change', handlePaymentMethodChange);
+});
+
+const alternativeMethodLogos = document.querySelectorAll('#alternative-methods img');
+let selectedAlternativeMethod = null;
+
+alternativeMethodLogos.forEach(logo => {
+  logo.addEventListener('click', async () => {
+    alternativeMethodLogos.forEach(otherLogo => otherLogo.classList.remove('selected'));
+    logo.classList.add('selected');
+    selectedAlternativeMethod = logo.alt; // Set selectedAlternativeMethod to the alt attribute
+
+    // Call the respective payment initiation function
+    switch (selectedAlternativeMethod.toLowerCase()) {
+      case 'ideal':
+        await initiateidealPayment(basket);
+        break;
+      case 'sofort':
+        await initiateSofortPayment(basket);
+        break;
+      case 'klarna':
+        await initiateKlarnaPayment();
+        break;
+      case 'bancontact':
+        await initiateBancontactPayment(basket);
+        break;
+      default:
+        console.error('Invalid alternative payment method selected');
+    }
+  });
+});
+
 
 function handlePaymentMethodChange() {
   const alternativeMethodsDiv = document.getElementById('alternative-methods');
@@ -444,7 +481,7 @@ try {
     showError('Error initiating iDEAL payment. Please try again.');
   }
 };
-document.addEventListener('DOMContentLoaded', () => {
+ document.addEventListener('DOMContentLoaded', () => {
   const basketButton = document.getElementById('cart');
   const backButton = document.getElementById('back-to-products');
   const productsSection = document.querySelector('.products');
@@ -460,8 +497,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (paymentOptionsSection) {
         paymentOptionsSection.style.display = 'block';
       }
-      const alternativeMethodsDiv = document.getElementById('alternative-methods');
-      alternativeMethodsDiv.style.display = 'none'; // Hide the APM icons initially
     } else {
       alert('Your basket is empty.');
     }
@@ -476,86 +511,46 @@ document.addEventListener('DOMContentLoaded', () => {
       productsSection.style.display = 'flex';
     });
   }
-
-  const alternativeRadio = document.querySelector('input[name="payment-method"][value="alternative"]');
-  if (alternativeRadio) {
-    alternativeRadio.addEventListener('change', () => {
-      const alternativeMethodsDiv = document.getElementById('alternative-methods');
-      if (alternativeRadio.checked) {
-        alternativeMethodsDiv.style.display = 'block'; // Show the APM icons when "Pay with Alternative" is selected
-      } else {
-        alternativeMethodsDiv.style.display = 'none'; // Hide the APM icons when "Pay with Alternative" is deselected
-      }
-    });
-  }
-
-  alternativeMethodLogos.forEach(logo => {
-    logo.addEventListener('click', async () => {
-      alternativeMethodLogos.forEach(otherLogo => otherLogo.classList.remove('selected'));
-      logo.classList.add('selected');
-      selectedAlternativeMethod = logo.alt; // Set selectedAlternativeMethod to the alt attribute
-
-      // Call the respective payment initiation function
-      switch (selectedAlternativeMethod.toLowerCase()) {
-        case 'ideal':
-          await initiateidealPayment(basket);
-          break;
-        case 'sofort':
-          await initiateSofortPayment(basket);
-          break;
-        case 'klarna':
-          await initiateKlarnaPayment();
-          break;
-        case 'bancontact':
-          await initiateBancontactPayment(basket);
-          break;
-        default:
-          console.error('Invalid alternative payment method selected');
-      }
-    });
-  });
-
-  document.getElementById('confirm-payment').addEventListener('click', async () => {
-    const selectedMethodRadio = document.querySelector('input[name="payment-method"]:checked');
-    if (selectedMethodRadio) {
-      const selectedMethod = selectedMethodRadio.value;
-      switch (selectedMethod) {
-        case 'card':
-          await initiatePayment(basket);
-          break;
-        case 'alternative':
-          const selectedAlternativeMethod = document.querySelector('#alternative-methods img.selected');
-          if (selectedAlternativeMethod) {
-            const methodName = selectedAlternativeMethod.alt.toLowerCase(); // Use the alt attribute
-            switch (methodName) {
-              case 'ideal':
-                await initiateidealPayment(basket);
-                break;
-              case 'sofort':
-                await initiateSofortPayment(basket);
-                break;
-              case 'klarna':
-                await initiateKlarnaPayment();
-                break;
-              case 'bancontact':
-                await initiateBancontactPayment(basket);
-                break;
-              default:
-                console.error('Invalid alternative payment method selected');
-            }
-          } else {
-            console.error('No alternative payment method selected');
+document.getElementById('confirm-payment').addEventListener('click', async () => {
+  const selectedMethodRadio = document.querySelector('input[name="payment-method"]:checked');
+  if (selectedMethodRadio) {
+    const selectedMethod = selectedMethodRadio.value;
+    switch (selectedMethod) {
+      case 'card':
+        await initiatePayment(basket);
+        break;
+      case 'alternative':
+        const selectedAlternativeMethod = document.querySelector('#alternative-methods img.selected');
+        if (selectedAlternativeMethod) {
+          const methodName = selectedAlternativeMethod.alt.toLowerCase(); // Use the alt attribute
+          switch (methodName) {
+            case 'ideal':
+              await initiateidealPayment(basket);
+              break;
+            case 'sofort':
+              await initiateSofortPayment(basket);
+              break;
+            case 'klarna':
+              await initiateKlarnaPayment();
+              break;
+            case 'bancontact':
+              await initiateBancontactPayment(basket);
+              break;
+            default:
+              console.error('Invalid alternative payment method selected');
           }
-          break;
-        default:
-          console.error('Invalid payment method selected');
-      }
-    } else {
-      console.error('No payment method selected');
+        } else {
+          console.error('No alternative payment method selected');
+        }
+        break;
+      default:
+        console.error('Invalid payment method selected');
     }
-  });
-
-  document.querySelectorAll('.add-to-basket').forEach(button => {
+  } else {
+    console.error('No payment method selected');
+  }
+});
+document.querySelectorAll('.add-to-basket').forEach(button => {
     button.addEventListener('click', function() {
       const product = {
         name: this.getAttribute('data-name'),
@@ -565,4 +560,4 @@ document.addEventListener('DOMContentLoaded', () => {
       updateBasketCount();
     });
   });
-});
+}); 
