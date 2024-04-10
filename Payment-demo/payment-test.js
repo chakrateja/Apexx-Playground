@@ -103,10 +103,14 @@ const updateBasketCount = () => {
   cartButton.textContent = `Basket (${basket.length})`;
 };
 
-const paymentMethodRadios = document.querySelectorAll('input[name="payment-method"]');
-
-paymentMethodRadios.forEach(radio => {
-  radio.addEventListener('change', handlePaymentMethodChange);
+const alternativeRadio = document.querySelector('input[name="payment-method"][value="alternative"]');
+alternativeRadio.addEventListener('change', () => {
+  const alternativeMethodsDiv = document.getElementById('alternative-methods');
+  if (alternativeRadio.checked) {
+    alternativeMethodsDiv.style.display = 'block'; // Show the APM icons when "Pay with Alternative" is selected
+  } else {
+    alternativeMethodsDiv.style.display = 'none'; // Hide the APM icons when "Pay with Alternative" is deselected
+  }
 });
 
 const alternativeMethodLogos = document.querySelectorAll('#alternative-methods img');
@@ -491,15 +495,17 @@ try {
 
   // Toggle to payment options view
   basketButton.addEventListener('click', () => {
-    if (basket.length > 0) {
-      productsSection.style.display = 'none';
-      if (paymentOptionsSection) {
-        paymentOptionsSection.style.display = 'block';
-      }
-    } else {
-      alert('Your basket is empty.');
+  if (basket.length > 0) {
+    productsSection.style.display = 'none';
+    if (paymentOptionsSection) {
+      paymentOptionsSection.style.display = 'block';
     }
-  });
+    const alternativeMethodsDiv = document.getElementById('alternative-methods');
+    alternativeMethodsDiv.style.display = 'none'; // Hide the APM icons initially
+  } else {
+    alert('Your basket is empty.');
+  }
+});
 
   // Back to products view
   if (backButton) {
