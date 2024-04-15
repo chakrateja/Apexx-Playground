@@ -132,6 +132,9 @@ alternativeMethodLogos.forEach(logo => {
       case 'bancontact':
         await initiateBancontactPayment(basket);
         break;
+         case 'clearpay':
+        await initiateClearpayPayment(basket);
+        break;
       default:
         console.error('Invalid alternative payment method selected');
     }
@@ -242,6 +245,90 @@ const initiateKlarnaPayment = async () => {
   } catch (error) {
     console.error('Klarna payment initiation failed:', error);
     showError('Error initiating Klarna payment. Please try again.');
+  }
+};
+const initiateClearpayPayment = async () => {
+  const totalAmount = items.reduce((total, item) => total + item.net_unit_price, 0);
+  const paymentData = {
+    organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
+    currency: 'GBP',
+    amount: totalAmount,
+    net_amount: totalAmount,
+    capture_now: 'true',
+    dynamic_descriptor: 'Apexx Test',
+    merchant_reference: 'jL9ZJMjoYIuFIrH',
+    locale: 'EN',
+    customer_ip: '127.5.5.1',
+    user_agent: 'string',
+    webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
+    shopper_interaction: 'ecommerce',
+    bnpl: {
+      payment_method: 'clearpay',
+      payment_type: '',
+      payment_type_data: [
+        {
+          key_name: 'string',
+          value: 'string'
+        }
+      ]
+    },
+    redirect_urls: {
+      success: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html?returnUrl=https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html',
+      failed: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html',
+      cancelled: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html'
+    },
+    items: items,
+    customer: {
+      customer_identification_number: 'string',
+      identification_type: 'SSN',
+      email: 'jong4@mailinator.com',
+      phone: '07777012356',
+      salutation: 'Mr',
+      type: 'company',
+      date_of_birth: '2020-02-02',
+      customer_number: 'string',
+      gender: 'male',
+      employment_type: 'fulltime',
+      residential_status: 'homeowner'
+    },
+    billing_address: {
+      first_name: 'Hello',
+      last_name: 'Anderson',
+      email: 'abc',
+      address: 'string',
+      city: 'Birmingham',
+      state: 'West Mids',
+      postal_code: 'B5 1ST',
+      country: 'GB',
+      phone: '07777123555'
+    },
+    delivery_address: {
+      first_name: 'Tester',
+      last_name: 'McTestface',
+      phone: '07777132462',
+      salutation: 'Mr',
+      type: 'company',
+      care_of: 'string',
+      address: '38 Piccadilly',
+      address2: 'string',
+      city: 'Bradford',
+      state: 'West Yorkshire',
+      postal_code: 'BD1 3LY',
+      country: 'GB',
+      method: 'delivery'
+    }
+  };
+
+  try {
+    const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'bnpl');
+    if (responseData && responseData.url) {
+      window.location.href = responseData.url;
+    } else {
+      showError('Failed to initiate Clearpay payment');
+    }
+  } catch (error) {
+    console.error('Clearpay payment initiation failed:', error);
+    showError('Error initiating Clearpay payment. Please try again.');
   }
 };
 
@@ -535,6 +622,9 @@ document.getElementById('confirm-payment').addEventListener('click', async () =>
               break;
             case 'bancontact':
               await initiateBancontactPayment(basket);
+              break;
+              case 'clearpay':
+              await initiateClearpayPayment(basket);
               break;
             default:
               console.error('Invalid alternative payment method selected');
