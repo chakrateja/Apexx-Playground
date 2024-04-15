@@ -102,7 +102,10 @@ const updateBasketCount = () => {
   const cartButton = document.getElementById('cart');
   cartButton.textContent = `Basket (${basket.length})`;
 };
-
+const displayPaymentForm = () => {
+  const paymentForm = document.getElementById('payment-form');
+  paymentForm.style.display = 'block';
+};
 const paymentMethodRadios = document.querySelectorAll('input[name="payment-method"]');
 
 paymentMethodRadios.forEach(radio => {
