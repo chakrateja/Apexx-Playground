@@ -341,7 +341,7 @@ const initiateCardPayment = async (basket) => {
       capture_now: true,
       dynamic_descriptor: 'Demo Merchant Test Purchase',
       merchant_reference: 'ref_' + Date.now(),
-      return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html',
+      return_url: 'https://sandbox.apexx.global/atomic/v1/api/return',
       webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
       transaction_type: 'first',
       duplicate_check: false,
