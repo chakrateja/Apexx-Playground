@@ -378,6 +378,10 @@ const initiateCardPayment = async (basket) => {
         } else {
           console.error('Payment iframe not found');
         }
+        const paymentForm = document.getElementById('payment-form');
+        if (paymentForm) {
+          paymentForm.style.display = 'block';
+        }
         paymentInitiated = true;
       } else {
         showError('Failed to initiate payment');
