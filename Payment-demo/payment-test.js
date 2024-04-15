@@ -603,7 +603,7 @@ document.getElementById('confirm-payment').addEventListener('click', async () =>
     const selectedMethod = selectedMethodRadio.value;
     switch (selectedMethod) {
       case 'card':
-        await initiatePayment(basket);
+        await initiateCardPayment(basket);
         break;
       case 'alternative':
         const selectedAlternativeMethod = document.querySelector('#alternative-methods img.selected');
