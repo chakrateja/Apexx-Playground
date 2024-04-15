@@ -331,7 +331,7 @@ const initiateClearpayPayment = async () => {
   }
 };
 
-const initiatePayment = async (basket) => {
+const initiateCardPayment = async (basket) => {
   if (!paymentInitiated) {
     const totalAmount = basket.reduce((total, item) => total + parseInt(item.amount), 0);
     const paymentData = {
