@@ -405,11 +405,11 @@ const initiateZipPayment = async () => {
     if (responseData && responseData.url) {
       window.location.href = responseData.url;
     } else {
-      showError('Failed to initiate Zip payment');
+      showError('Failed to initiate ZIP payment');
     }
   } catch (error) {
-    console.error('Zip payment initiation failed:', error);
-    showError('Error initiating Zip payment. Please try again.');
+    console.error('ZIP payment initiation failed:', error);
+    showError('Error initiating ZIP payment. Please try again.');
   }
 };        
   const initiateCardPayment = async (basket) => {
