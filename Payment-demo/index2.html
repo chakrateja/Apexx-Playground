@@ -6,6 +6,38 @@
   <title>Apexx Payment Demo</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
   <style>
+    .payment-iframe {
+    background-color: #f5f5f5;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+
+  .payment-iframe label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  .payment-iframe input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+
+  .payment-iframe button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .payment-iframe button:hover {
+    background-color: #0056b3;
+  }
     .page-title {
       color: #004085; /* Dark blue color */
       /* other styles you may want to add, like text-align, font-size, etc. */
