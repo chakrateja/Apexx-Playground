@@ -332,7 +332,7 @@ const initiateZipPayment = async () => {
   const totalAmount = items.reduce((total, item) => total + item.net_unit_price, 0);
   const paymentData = {
     organisation: 'ff439f6eAc78dA4667Ab05aAc89f92e27f76',
-    currency: 'GBP',
+    currency: 'AUD',
     amount: totalAmount,
     net_amount: totalAmount,
     capture_now: 'true',
