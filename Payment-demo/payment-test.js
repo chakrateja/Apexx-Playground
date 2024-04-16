@@ -139,7 +139,6 @@ alternativeMethodLogos.forEach(logo => {
   });
 });
 
-
 function handlePaymentMethodChange() {
   const alternativeMethodsDiv = document.getElementById('alternative-methods');
   const selectedMethod = document.querySelector('input[name="payment-method"]:checked').value;
