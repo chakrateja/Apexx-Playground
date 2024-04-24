@@ -133,6 +133,15 @@ alternativeMethodLogos.forEach(logo => {
          case 'clearpay':
         await initiateClearpayPayment(basket);
         break;
+         case 'sezzle':
+        await initiateSezzlePayment();
+        break;
+      case 'zip':
+        await initiateZipPayment(basket);
+        break;
+         case 'affirm':
+        await initiateAffirmPayment(basket);
+        break;
       default:
         console.error('Invalid alternative payment method selected');
     }
