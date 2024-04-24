@@ -710,6 +710,15 @@ document.getElementById('confirm-payment').addEventListener('click', async () =>
               case 'clearpay':
               await initiateClearpayPayment(basket);
               break;
+              case 'affirm':
+              await initiateAffirmPayment();
+              break;
+            case 'sezzle':
+              await initiateSezzlePayment();
+              break;
+            case 'zip':
+              await initiateZipPayment();
+              break;
             default:
               console.error('Invalid alternative payment method selected');
           }
