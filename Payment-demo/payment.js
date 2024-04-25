@@ -544,7 +544,7 @@ const initiateSezzlePayment = async () => {
       const responseData = await apiClient.sendRequest('', 'POST', paymentData, 'hosted');
       if (responseData && responseData.url) {
         // Open the payment form in a new window
-        window.open(responseData.url, '_blank');
+        window.location.href = responseData.url;
         paymentInitiated = true;
       } else {
         showError('Failed to initiate payment');
