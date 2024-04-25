@@ -437,7 +437,7 @@ const initiateSezzlePayment = async () => {
     webhook_transaction_update: 'https://webhook.site/db694c36-9e0b-4c45-bbd8-596ea98fe358',
     shopper_interaction: 'ecommerce',
     bnpl: {
-      payment_method: 'zip',
+      payment_method: 'sezzle',
       payment_type: '',
       payment_type_data: [
         {
@@ -515,7 +515,7 @@ const initiateSezzlePayment = async () => {
       capture_now: true,
       dynamic_descriptor: 'Demo Merchant Test Purchase',
       merchant_reference: 'ref_' + Date.now(),
-      return_url: 'https://sandbox.apexx.global/atomic/v1/api/return',
+      return_url: 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/payment-response.html',
       webhook_transaction_update: 'https://webhook.site/63250144-1263-4a3e-a073-1707374c5296',
       transaction_type: 'first',
       duplicate_check: false,
