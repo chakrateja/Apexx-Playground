@@ -473,7 +473,7 @@ const initiateSezzlePayment = async () => {
       city: 'Birmingham',
       state: 'West Mids',
       postal_code: 'B5 1ST',
-      country: 'GB',
+      country: 'US',
       phone: '07777123555'
     },
     delivery_address: {
@@ -488,7 +488,7 @@ const initiateSezzlePayment = async () => {
       city: 'Bradford',
       state: 'West Yorkshire',
       postal_code: 'BD1 3LY',
-      country: 'GB',
+      country: 'US',
       method: 'delivery'
     }
   };
