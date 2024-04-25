@@ -12,15 +12,36 @@
   </style>
 </head>
 <body>
-  <h1>Payment Successful</h1>
-  <p>Thank you for your order. You will be redirected back to the products page shortly.</p>
-  <button onclick="window.location.href='https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html'">Back to Products</button>
   <div id="payment-message"></div>
-  <script src="payment-test.js"></script>
+  <button id="back-to-products">Back to Products</button>
+
   <script>
+    // Parse the status query parameter from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
+
+    const messageElement = document.getElementById('payment-message');
+
+    if (status === 'success') {
+      messageElement.textContent = 'Payment successful! Thank you for your order.';
+    } else if (status === 'failed') {
+      messageElement.textContent = 'Payment failed. Please try again.';
+    } else if (status === 'cancelled') {
+      messageElement.textContent = 'Payment cancelled.';
+    } else {
+      messageElement.textContent = 'Invalid payment status.';
+    }
+
+    // Redirect to the products page after a delay
     setTimeout(() => {
-      window.location.href = 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html'; // Replace with the actual path to your products page.
-    }, 20000); // Redirects after 5 seconds
+      window.location.href = 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html';
+    }, 5000);
+
+    // Handle "Back to Products" button click
+    const backButton = document.getElementById('back-to-products');
+    backButton.addEventListener('click', () => {
+      window.location.href = 'https://pm-apexx.github.io/Apexx-Playground/Payment-demo/index2.html';
+    });
   </script>
 </body>
 </html>
