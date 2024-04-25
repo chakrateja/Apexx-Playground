@@ -79,6 +79,11 @@
     // Generate a random 8-digit number and display it
     var randomNumber = Math.floor(Math.random() * 90000000) + 10000000;
     document.getElementById("random-number").textContent = randomNumber;
+    document.querySelector('button[type="submit"]').addEventListener('click', function(event) {
+      event.preventDefault();
+      window.opener.location.href = 'payment-response.html?status=success';
+      window.close();
+    });
   </script>
 </body>
 </html>
